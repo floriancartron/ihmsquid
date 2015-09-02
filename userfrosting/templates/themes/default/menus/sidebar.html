@@ -22,7 +22,7 @@
             <ul class="nav nav-second-level">
                 {% if checkAccess('uri_access') %}
                 <li>
-                    <a href="{{site.uri.public}}/access"><i class="fa fa-toggle-on fa-fw"></i> Gérer la salle</a>
+                    <a href="{{site.uri.public}}/access"><i class="fa fa-toggle-on fa-fw"></i> Gestion de la salle</a>
                 </li>
                 {% endif %}
                 {% if checkAccess('uri_filterconf') %}
@@ -42,20 +42,20 @@
         {% endif %} 
         {% if checkAccess('uri_stats') or checkAccess('uri_app_admin') %}
         <li>
-            <a href="#"><i class="fa fa-line-chart fa-fw"></i> Statistiques<span class="fa arrow"></span></a>
+            <a href="#"><i class="fa fa-line-chart fa-fw"></i> Visualisations<span class="fa arrow"></span></a>
 
             <ul class="nav nav-second-level">
                 {% if checkAccess('uri_stats') %}
                 <li>
-                    <a href="{{site.uri.public}}/stats_global"><i class="fa fa-toggle-on fa-fw"></i> Globales</a>
+                    <a href="{{site.uri.public}}/stats_global"><i class="fa fa-pie-chart fa-fw"></i> Statistiques Globales</a>
                 </li>
                 <li>
-                    <a href="{{site.uri.public}}/stats_salle"><i class="fa fa-list-ul fa-fw"></i> Par Salle</a>
+                    <a href="{{site.uri.public}}/stats_salle"><i class="fa fa-bar-chart fa-fw"></i> Statistiques par Salle</a>
                 </li>
                 {% endif %}
                 {% if checkAccess('uri_app_admin') %}
                 <li>
-                    <a href="{{site.uri.public}}/logs"><i class="fa fa-list-ul fa-fw"></i> Consulter les logs</a>
+                    <a href="{{site.uri.public}}/logs"><i class="fa fa-file-text fa-fw"></i> Consultation des logs</a>
                 </li>
                 {% endif %}
 

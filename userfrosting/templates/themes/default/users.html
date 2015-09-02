@@ -19,9 +19,9 @@
                         <table class="tablesorter table table-bordered table-hover table-striped tablesorter-bootstrap" data-sortlist="[[0, 0]]">
                             <thead>
                                 <tr>
-                                    <th class="sorter-metatext">User/Info <i class="fa fa-sort"></i></th>
-                                    <th class="sorter-metanum">Registered Since <i class="fa fa-sort"></i></th>
-                                    <th class="sorter-metanum">Last Sign-in <i class="fa fa-sort"></i></th>
+                                    <th class="sorter-metatext">Utilisateur <i class="fa fa-sort"></i></th>
+                                    <th class="sorter-metanum">Enregistré depuis <i class="fa fa-sort"></i></th>
+                                    <th class="sorter-metanum">Dernière connexion <i class="fa fa-sort"></i></th>
                                     <th>Status/Actions <i class="fa fa-sort"></i></th>
                                 </tr>
                             </thead>
@@ -40,11 +40,11 @@
                                         </div>
                                     </td>
                                     <td data-num="{{user.sign_up_stamp | date('U')}}">
-                                        {{user.sign_up_stamp | date("l")}}<br>{{user.sign_up_stamp | date("M j, Y g:i a")}}
+                                        {{user.sign_up_stamp | date("Y-m-d H:i:s")}}
                                     </td>
                                     {% if user.last_sign_in_stamp %}
                                     <td data-num="{{user.last_sign_in_stamp | date('U')}}">
-                                        {{user.last_sign_in_stamp | date("l")}}<br>{{user.last_sign_in_stamp | date("M j, Y g:i a")}}
+                                        {{user.last_sign_in_stamp | date("Y-m-d H:i:s")}}
                                     </td>
                                     {% else %}
                                     <td data-num="0">
@@ -55,7 +55,7 @@
                                         <div class="btn-group">
                                             {% if user.enabled == 0 %}
                                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                    Disabled
+                                                    Désactivé
                                                     <span class="caret"></span>
                                                 </button>
                                             {% elseif user.active == 0 %}
@@ -65,7 +65,7 @@
                                                 </button>            
                                             {% else %}
                                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                    Active
+                                                    Actif
                                                     <span class="caret"></span>
                                                 </button>            
                                             {% endif %}
@@ -73,29 +73,29 @@
                                                 {% if user.active == 0 %}
                                                 <li>
                                                     <a href="#" data-id="{{user.id}}" class="js-user-activate">
-                                                    <i class="fa fa-bolt"></i> Activate user
+                                                    <i class="fa fa-bolt"></i> Activer
                                                     </a>
                                                 </li>
                                                 {% endif %}
                                                 <li>
                                                     <a href="#" data-id="{{user.id}}" class="js-user-edit" data-target="#dialog-user-edit" data-toggle="modal">
-                                                    <i class="fa fa-edit"></i> Edit user
+                                                    <i class="fa fa-edit"></i> Editer
                                                     </a>
                                                 </li>
                                                 <li>
                                                 {% if user.enabled == 1 %}
                                                     <a href="#" data-id="{{user.id}}" class="js-user-disable">
-                                                    <i class="fa fa-minus-circle"></i> Disable user
+                                                    <i class="fa fa-minus-circle"></i> Désactiver
                                                     </a>
                                                 {% else %}
                                                     <a href="#" data-id="{{user.id}}" class="js-user-enable">
-                                                    <i class="fa fa-plus-circle"></i> Enable user
+                                                    <i class="fa fa-plus-circle"></i> Activer
                                                     </a> 
                                                 {% endif %}
                                                 </li>
                                                 <li>
                                                     <a href="#" data-id="{{user.id}}" class="js-user-delete" data-user_name="{{user.user_name}}" data-target="#dialog-user-delete" data-toggle="modal">
-                                                    <i class="fa fa-trash-o"></i> Delete user</a>
+                                                    <i class="fa fa-trash-o"></i> Supprimer</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -111,8 +111,8 @@
                             <span class='pager-control next' title='Next page'><i class='fa fa-angle-right'></i></span>
                             <span class='pager-control last' title= 'Last page'><i class='fa fa-angle-double-right'></i></span>
                             <br><br>
-                            Jump to Page: <select class='gotoPage'></select>
-                            &bull; Show: <select class='pagesize'>
+                            Aller à: <select class='gotoPage'></select>
+                            &bull; Voir: <select class='pagesize'>
                                 <option value='2'>2</option>
                                 <option value='5'>5</option>
                                 <option value='10'>10</option>
@@ -123,11 +123,11 @@
                     <div class="row">
                         <div class="col-md-6 ">
                             <button type="button" class="btn btn-success js-user-create" data-toggle="modal" data-target="#dialog-user-create">
-                                <i class="fa fa-plus-square"></i>  Create New User
+                                <i class="fa fa-plus-square"></i>  Créer un utilisateur
                             </button>
                         </div>
                         <div class="col-md-6 text-right ">
-                            <a href="#">View All Users <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="#">Voir tous les utilisateurs <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>

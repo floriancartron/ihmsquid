@@ -12,17 +12,17 @@
                 <div class="col-md-12">
                 <div class='panel panel-primary'>
                 <div class='panel-heading'>
-                    <h3 class='panel-title'><i class='fa fa-users'></i> Groups</h3>
+                    <h3 class='panel-title'><i class='fa fa-users'></i> Groupes</h3>
                 </div>
                 <div class='panel-body'>
                     <div class="table-responsive">
                         <table class="tablesorter table table-bordered table-hover table-striped tablesorter-bootstrap" data-sortlist="[[0, 0]]">
                             <thead>
                                 <tr>
-                                    <th class="sorter-metatext">Group Name <i class="fa fa-sort"></i></th>
-                                    <th class="sorter-metatext">Landing Page <i class="fa fa-sort"></i></th>
-                                    <th class="sorter-metatext">New User Title <i class="fa fa-sort"></i></th>
-                                    <th class="sorter-metatext">Theme <i class="fa fa-sort"></i></th>
+                                    <th class="sorter-metatext">Nom du groupe <i class="fa fa-sort"></i></th>
+                                    <th class="sorter-metatext">Page d'accueil <i class="fa fa-sort"></i></th>
+                                    <th class="sorter-metatext">Titre par défaut <i class="fa fa-sort"></i></th>
+                                    <th class="sorter-metatext">Thême <i class="fa fa-sort"></i></th>
                                     <th>Actions <i class="fa fa-sort"></i></th>
                                 </tr>
                             </thead>
@@ -35,9 +35,9 @@
                                         </strong>
                                         <div>
                                             {% if group.is_default == "2" %}
-                                                <i>Default Primary Group</i>
+                                                <i>Groupe primaire par défaut</i>
                                             {% elseif group.is_default == "1" %}
-                                                <i>Default Group</i>
+                                                <i>Groupe par défaut</i>
                                             {% endif %}
                                         </div>
                                     </td>
@@ -59,18 +59,18 @@
                                             <ul class="dropdown-menu" role="menu">
                                                 <li>
                                                     <a href="#" data-id="{{group.id}}" class="js-group-edit" data-target="#dialog-group-edit" data-toggle="modal">
-                                                    <i class="fa fa-edit"></i> Edit group
+                                                    <i class="fa fa-edit"></i> Editer
                                                     </a>
                                                 </li>
-                                                <li class="disabled">
+<!--                                                <li class="disabled">
                                                     <a href="#" data-id="{{group.id}}">
                                                     <i class="fa fa-key"></i> Authorization rules
                                                     </a>
-                                                </li>
+                                                </li>-->
                                                 <li>
                                                 {% if group.can_delete == 1 %}
                                                     <a href="#" data-id="{{group.id}}" class="js-group-delete" data-name="{{group.name}}" data-target="#dialog-group-delete" data-toggle="modal">
-                                                    <i class="fa fa-trash-o"></i> Delete group
+                                                    <i class="fa fa-trash-o"></i> Supprimer
                                                     </a>
                                                 {% endif %}
                                                 </li>
@@ -88,8 +88,8 @@
                             <span class='pager-control next' title='Next page'><i class='fa fa-angle-right'></i></span>
                             <span class='pager-control last' title= 'Last page'><i class='fa fa-angle-double-right'></i></span>
                             <br><br>
-                            Jump to Page: <select class='gotoPage'></select>
-                            &bull; Show: <select class='pagesize'>
+                            Aller à: <select class='gotoPage'></select>
+                            &bull; Voir: <select class='pagesize'>
                                 <option value='2'>2</option>
                                 <option value='5'>5</option>
                                 <option value='10'>10</option>
@@ -100,11 +100,11 @@
                     <div class="row">
                         <div class="col-md-6 ">
                             <button type="button" class="btn btn-success js-group-create" data-toggle="modal" data-target="#dialog-group-create">
-                                <i class="fa fa-plus-square"></i>  Create New Group
+                                <i class="fa fa-plus-square"></i>  Créer un groupe
                             </button>
                         </div>
                         <div class="col-md-6 text-right ">
-                            <a href="#">View All Groups <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="#">Voir tous les groupes <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>

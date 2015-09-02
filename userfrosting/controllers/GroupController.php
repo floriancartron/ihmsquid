@@ -26,8 +26,8 @@ class GroupController extends \UserFrosting\BaseController {
         $this->_app->render('groups.html', [
             'page' => [
                 'author' =>         $this->_app->site->author,
-                'title' =>          "Groups",
-                'description' =>    "Group management, authorization rules, add/remove groups, etc.",
+                'title' =>          "Groupes",
+                'description' =>    "",
                 'alerts' =>         $this->_app->alerts->getAndClearMessages()
             ],
             "groups" => $groups
@@ -54,7 +54,7 @@ class GroupController extends \UserFrosting\BaseController {
         // Set default values
         $data['is_default'] = "0";
         // Set default title for new users
-        $data['new_user_title'] = "New User";
+        $data['new_user_title'] = "Nouvel Utilisateur";
         // Set default theme
         $data['theme'] = "default";
         // Set default icon
@@ -87,8 +87,8 @@ class GroupController extends \UserFrosting\BaseController {
         
         $this->_app->render($template, [
             "box_id" => $get['box_id'],
-            "box_title" => "New Group",
-            "submit_button" => "Create group",
+            "box_title" => "Nouveau groupe",
+            "submit_button" => "Créer le groupe",
             "form_action" => $this->_app->site->uri['public'] . "/groups",
             "group" => $group,
             "themes" => $theme_list,
@@ -150,8 +150,8 @@ class GroupController extends \UserFrosting\BaseController {
         
         $this->_app->render($template, [
             "box_id" => $get['box_id'],
-            "box_title" => "Edit Group",
-            "submit_button" => "Update group",
+            "box_title" => "Modifier un groupe",
+            "submit_button" => "Modifier le groupe",
             "form_action" => $this->_app->site->uri['public'] . "/groups/g/$group_id",
             "group" => $group,
             "themes" => $theme_list,
@@ -226,7 +226,7 @@ class GroupController extends \UserFrosting\BaseController {
     
         if (!isset($data['new_user_title']) || !$this->_app->user->checkAccess("update_group_setting", ["property" => "new_user_title"])) {
             // Set default title for new users
-            $data['new_user_title'] = "New User";
+            $data['new_user_title'] = "Nouvel utilisateur";
         }
         
         if (!isset($data['landing_page']) || !$this->_app->user->checkAccess("update_group_setting", ["property" => "landing_page"])) {

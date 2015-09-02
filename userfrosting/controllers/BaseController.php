@@ -16,8 +16,8 @@ class BaseController {
         $this->_app->render('common/404.html', [
             'page' => [
                 'author' =>         $this->_app->site->author,
-                'title' =>          "404 Error",
-                'description' =>    "We couldn't deliver.  We're sorry."
+                'title' =>          "Erreur 404",
+                'description' =>    ""
             ]
         ]);
     }
@@ -28,8 +28,8 @@ class BaseController {
         $this->_app->render('common/database.html', [
             'page' => [
                 'author' =>         $this->_app->site->author,
-                'title' =>          "Database Error",
-                'description' =>    "There's something wrong. We can't connect to the database."
+                'title' =>          "Erreur de connexion à la base de données",
+                'description' =>    ""
             ]
         ]);
     }

@@ -39,7 +39,7 @@ class UserController extends \UserFrosting\BaseController {
             }
             
             $users = UserLoader::fetchAll();
-            $name = "Users";
+            $name = "Utilisateurs";
             $icon = "fa fa-users";
         }
         
@@ -47,7 +47,7 @@ class UserController extends \UserFrosting\BaseController {
             'page' => [
                 'author' =>         $this->_app->site->author,
                 'title' =>          $name,
-                'description' =>    "A listing of the users for your site.  Provides management tools including the ability to edit user details, manually activate users, enable/disable users, and more.",
+                'description' =>    "",
                 'alerts' =>         $this->_app->alerts->getAndClearMessages()
             ],
             "box_title" => $name,
@@ -102,8 +102,8 @@ class UserController extends \UserFrosting\BaseController {
         $this->_app->render('user_info.html', [
             'page' => [
                 'author' =>         $this->_app->site->author,
-                'title' =>          "Users | " . $target_user->user_name,
-                'description' =>    "User information page for " . $target_user->user_name,
+                'title' =>          "Utilisateurs | " . $target_user->user_name,
+                'description' =>    "",
                 'alerts' =>         $this->_app->alerts->getAndClearMessages()
             ],
             "box_id" => 'view-user',
@@ -191,8 +191,8 @@ class UserController extends \UserFrosting\BaseController {
         
         $this->_app->render($template, [
             "box_id" => $get['box_id'],
-            "box_title" => "Create User",
-            "submit_button" => "Create user",
+            "box_title" => "Créer un utilisateur",
+            "submit_button" => "Créer l'utilisateur",
             "form_action" => $this->_app->site->uri['public'] . "/users",
             "target_user" => $target_user,
             "groups" => $group_list,
@@ -274,8 +274,8 @@ class UserController extends \UserFrosting\BaseController {
         
         $this->_app->render($template, [
             "box_id" => $get['box_id'],
-            "box_title" => "Edit User",
-            "submit_button" => "Update user",
+            "box_title" => "Modifier un utilisateur",
+            "submit_button" => "Modifier l'utilisateur",
             "form_action" => $this->_app->site->uri['public'] . "/users/u/$user_id",
             "target_user" => $target_user,
             "groups" => $group_list,

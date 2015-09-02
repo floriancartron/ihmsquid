@@ -39,10 +39,10 @@ class AccountController extends \UserFrosting\BaseController {
         $this->_app->render('common/login.html', [
             'page' => [
                 'author' =>         $this->_app->site->author,
-                'title' =>          "Login",
-                'description' =>    "Login to your UserFrosting account.",
+                'title' =>          "Connexion",
+                'description' =>    "",
                 'alerts' =>         $this->_app->alerts->getAndClearMessages(),     // Starting to violate the Law of Demeter here...
-                'active_page' =>    "account/login",
+                'active_page' =>    "",
             ],
             'validators' => $validators->formValidationRulesJson()
         ]);
@@ -96,8 +96,8 @@ class AccountController extends \UserFrosting\BaseController {
        $this->_app->render('common/forgot-password.html', [
             'page' => [
                 'author' =>         $this->_app->site->author,
-                'title' =>          "Reset Password",
-                'description' =>    "Reset your UserFrosting password.",
+                'title' =>          "Réinitialiser le mot de passe",
+                'description' =>    "",
                 'alerts' =>         $this->_app->alerts->getAndClearMessages(), 
                 'active_page' =>    ""
             ],
@@ -232,6 +232,7 @@ class AccountController extends \UserFrosting\BaseController {
             $_SESSION["userfrosting"]["user"] = $user;
             $this->_app->user = $_SESSION["userfrosting"]["user"];
             $ms->addMessageTranslated("success", "ACCOUNT_WELCOME", $this->_app->user->export());
+            $this->_app->redirect($this->_app->urlFor('uri_home'));
         } else {
             //Again, we know the password is at fault here, but lets not give away the combination in case of someone bruteforcing
             $ms->addMessageTranslated("danger", "ACCOUNT_USER_OR_PASS_INVALID");

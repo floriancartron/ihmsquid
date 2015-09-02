@@ -2,7 +2,7 @@
     require_once "../userfrosting/initialize.php";
 
     use UserFrosting as UF;
-   
+                      
     // Front page
     $app->get('/', function () use ($app) {
         // Forward to installation if not complete
@@ -12,7 +12,8 @@
         // Forward to the user's landing page (if logged in), otherwise take them to the home page
         if ($app->user->isGuest()){
             $controller = new UF\AccountController($app);
-            $controller->pageHome();
+            $controller->pageLogin();
+            
         // If this is the first the root user is logging in, take them to site settings
         } else if ($app->user->id == $app->config('user_id_master') && $app->site->install_status == "new"){
             $app->site->install_status = "complete";

@@ -3,7 +3,7 @@
     require_once 'auth/password.php';
    
     // Set your timezone here
-    date_default_timezone_set('America/New_York');
+    date_default_timezone_set('Europe/Paris');
     
     // Do not send fatal errors to the response body!
     ini_set("display_errors", "off");

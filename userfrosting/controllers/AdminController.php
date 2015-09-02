@@ -27,8 +27,8 @@ class AdminController extends \UserFrosting\BaseController {
         $this->_app->render('site-settings.html', [
             'page' => [
                 'author' =>         $this->_app->site->author,
-                'title' =>          "Site Settings",
-                'description' =>    "Global settings for the site, including registration and activation settings, site title, admin emails, and default languages.",
+                'title' =>          "Paramètres du site",
+                'description' =>    "",
                 'alerts' =>         $this->_app->alerts->getAndClearMessages()
             ],
             'settings' => $this->_app->site->getRegisteredSettings(),

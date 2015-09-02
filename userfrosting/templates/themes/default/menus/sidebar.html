@@ -3,22 +3,92 @@
         <li>
             <a href="{{site.uri.public}}/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
         </li>
-        
-<!--        {% if checkAccess('uri_zerg') %}
+
+        <!--        {% if checkAccess('uri_zerg') %}
+                <li>
+                    <a href="{{site.uri.public}}/zerg"><i class="sc sc-zerg fa fa-fw"></i> Zerg</a>
+                </li>
+                {% endif %}-->
+
+        <!--        {% if checkAccess('uri_group_users', { ('primary_group_id') : 4 }) %}
+                <li>
+                    <a href="{{site.uri.public}}/users/zerglings"><i class="sc sc-zergling fa-fw"></i> Zerglings</a>
+                </li>
+                {% endif %}-->
+        {% if checkAccess('uri_access') or checkAccess('uri_filterconf') %}
         <li>
-            <a href="{{site.uri.public}}/zerg"><i class="sc sc-zerg fa fa-fw"></i> Zerg</a>
+            <a href="#"><i class="fa fa-globe fa-fw"></i> Accès Internet<span class="fa arrow"></span></a>
+
+            <ul class="nav nav-second-level">
+                {% if checkAccess('uri_access') %}
+                <li>
+                    <a href="{{site.uri.public}}/access"><i class="fa fa-toggle-on fa-fw"></i> Gérer la salle</a>
+                </li>
+                {% endif %}
+                {% if checkAccess('uri_filterconf') %}
+                <li>
+                    <a href="{{site.uri.public}}/addblacklist"><i class="fa fa-ban fa-fw"></i> Sites interdits</a>
+                </li>
+                {% endif %}
+                {% if checkAccess('uri_filterconf') %}
+                <li>
+                    <a href="{{site.uri.public}}/customfilter"><i class="fa fa-list-ul fa-fw"></i> Filtrage personnalisé</a>
+                </li>
+                {% endif %}
+
+            </ul>
+            <!-- /.nav-second-level -->
         </li>
-        {% endif %}-->
-        {% if checkAccess('uri_users') %}
+        {% endif %} 
+        {% if checkAccess('uri_stats') or checkAccess('uri_app_admin') %}
         <li>
-            <a href="{{site.uri.public}}/users"><i class="fa fa-users fa-fw"></i> {{ translate("MENU_USERS") }}</a>
+            <a href="#"><i class="fa fa-line-chart fa-fw"></i> Statistiques<span class="fa arrow"></span></a>
+
+            <ul class="nav nav-second-level">
+                {% if checkAccess('uri_stats') %}
+                <li>
+                    <a href="{{site.uri.public}}/stats_global"><i class="fa fa-toggle-on fa-fw"></i> Globales</a>
+                </li>
+                <li>
+                    <a href="{{site.uri.public}}/stats_salle"><i class="fa fa-list-ul fa-fw"></i> Par Salle</a>
+                </li>
+                {% endif %}
+                {% if checkAccess('uri_app_admin') %}
+                <li>
+                    <a href="{{site.uri.public}}/logs"><i class="fa fa-list-ul fa-fw"></i> Consulter les logs</a>
+                </li>
+                {% endif %}
+
+            </ul>
+            <!-- /.nav-second-level -->
         </li>
         {% endif %}
-<!--        {% if checkAccess('uri_group_users', { ('primary_group_id') : 4 }) %}
+        {% if checkAccess('uri_app_admin') %}
         <li>
-            <a href="{{site.uri.public}}/users/zerglings"><i class="sc sc-zergling fa-fw"></i> Zerglings</a>
+            <a href="#"><i class="fa fa-cog fa-fw"></i>Administration de l'application<span class="fa arrow"></span></a>
+
+            <ul class="nav nav-second-level">
+                {% if checkAccess('uri_users') %}
+                <li>
+                    <a href="{{site.uri.public}}/users"><i class="fa fa-users fa-fw"></i> {{ translate("MENU_USERS") }}</a>
+                </li>
+                {% endif %}
+                <li>
+                    <a href="{{site.uri.public}}/salles"><i class="fa fa-building fa-fw"></i> Salles </a>
+                </li>
+                <li>
+                    <a href="{{site.uri.public}}/horaires"><i class="fa fa-calendar fa-fw"></i> Horaires de cours </a>
+                </li>
+                <li>
+                    <a href="{{site.uri.public}}/blacklist"><i class="fa fa-minus-circle fa-fw"></i> Liste noire </a>
+                </li>
+                <li>
+                    <a href="{{site.uri.public}}/confgen"><i class="fa fa-gears fa-fw"></i> Configuration générale </a>
+                </li> 
+            </ul>
+            <!-- /.nav-second-level -->
         </li>
-        {% endif %}-->
+        {% endif %} 
         {% if checkAccess('uri_site_settings') or checkAccess('uri_manage_groups') %}
         <li>
             <a href="#"><i class="fa fa-wrench fa-fw"></i> {{ translate("MENU_CONFIGURATION") }}<span class="fa arrow"></span></a>

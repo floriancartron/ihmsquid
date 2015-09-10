@@ -116,7 +116,6 @@ class SalleController extends \UserFrosting\BaseController {
         $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
 
         $rf->sanitize();
-        error_log(print_r($post, true));
         // Validate, and halt on validation errors.
         $error = !$rf->validate(true);
 

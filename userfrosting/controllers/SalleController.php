@@ -99,7 +99,7 @@ class SalleController extends \UserFrosting\BaseController {
         $post = $this->_app->request->post();
 
         // DEBUG: view posted data
-        error_log(print_r($post, true));
+//        error_log(print_r($post, true));
         // Load the request schema
         $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/salle-create.json");
 
@@ -115,15 +115,15 @@ class SalleController extends \UserFrosting\BaseController {
         // Set up Fortress to process the request
         $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
 
+        $rf->sanitize();
+        error_log(print_r($post, true));
         // Validate, and halt on validation errors.
         $error = !$rf->validate(true);
 
         // Get the filtered data
         $data = $rf->data();
-
         // Remove csrf_token from object data
         $rf->removeFields(['csrf_token']);
-
 
         // Check if group name already exists
         if (MySqlSalleLoader::exists($data['name'], 'name')) {
@@ -188,7 +188,7 @@ class SalleController extends \UserFrosting\BaseController {
         $salle = MySqlSalleLoader::fetch($salle_id);
 
         $template = "components/salle-info-modal.html";
-        
+
         $masks = array();
         for ($x = 8; $x <= 30; $x++) {
             $masks[] = $x;
@@ -220,6 +220,64 @@ class SalleController extends \UserFrosting\BaseController {
             ],
             "validators" => $validators->formValidationRulesJson()
         ]);
+    }
+
+    // Update salle details
+    public function updateSalle($salle_id) {
+        $post = $this->_app->request->post();
+
+        // DEBUG: view posted data
+        //error_log(print_r($post, true));
+        // Load the request schema
+        $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/salle-create.json");
+
+        // Get the alert message stream
+        $ms = $this->_app->alerts;
+
+        // Get the target salle
+        $salle = MySqlSalleLoader::fetch($salle_id);
+
+        // If desired, put route-level authorization check here
+        // Remove csrf_token
+        unset($post['csrf_token']);
+
+
+        // Check that name is not already in use
+        if (isset($post['name']) && $post['name'] != $salle->name && MySqlSalleLoader::exists($post['name'], 'name')) {
+            $ms->addMessageTranslated("danger", "Nom de salle déjà utilisé", $post);
+            $this->_app->halt(400);
+        }
+
+        // Check that name is not already in use
+        if (isset($post['network']) && $post['network'] != $salle->network && MySqlSalleLoader::exists($post['network'], 'network')) {
+            $ms->addMessageTranslated("danger", "Réseau déjà utilisé", $post);
+            $this->_app->halt(400);
+        }
+
+        // TODO: validate landing page route, theme, icon?
+        // Set up Fortress to process the request
+        $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
+
+        // Sanitize
+        $rf->sanitize();
+
+        // Validate, and halt on validation errors.
+        if (!$rf->validate()) {
+            $this->_app->halt(400);
+        }
+
+        // Get the filtered data
+        $data = $rf->data();
+
+        // Update the salle
+        foreach ($data as $name => $value) {
+            if ($value != $salle->$name) {
+                $salle->$name = $value;
+            }
+        }
+
+        $ms->addMessageTranslated("success", "Salle '{{name}} mise à jour'", ["name" => $salle->name]);
+        $salle->store();
     }
 
 }

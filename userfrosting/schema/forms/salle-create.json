@@ -34,5 +34,12 @@
                 "message": "VALIDATE_REQUIRED"
             }
         }
+    },
+    "mask_cidr": {
+        "validators": {
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        }
     }
 }

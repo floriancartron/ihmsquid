@@ -80,6 +80,13 @@ $table_group = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] .
     "icon"
 ]);
 
+$table_salle = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "salle", [
+    "name",
+    "description",
+    "network",
+    "mask_cidr"
+]);
+
 $table_group_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "group_user");
 $table_configuration = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "configuration");
 $table_authorize_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "authorize_user");
@@ -87,6 +94,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 
 \UserFrosting\Database::setTable("user", $table_user);
 \UserFrosting\Database::setTable("group", $table_group);    
+\UserFrosting\Database::setTable("salle", $table_salle);
 \UserFrosting\Database::setTable("group_user", $table_group_user);
 \UserFrosting\Database::setTable("configuration", $table_configuration);
 \UserFrosting\Database::setTable("authorize_user", $table_authorize_user);
@@ -95,6 +103,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 // Initialize static loader classes
 \UserFrosting\UserLoader::init($table_user);
 \UserFrosting\GroupLoader::init($table_group);
+\UserFrosting\MySqlSalleLoader::init($table_salle);
 
 
 /* Load UserFrosting site settings */
@@ -333,6 +342,8 @@ $app->hook('includes.js.register', function () use ($app){
     // Groups JS
     $app->schema->registerJS("group", "widget-groups.js");
     
+    // Salles JS
+    $app->schema->registerJS("salle", "widget-salles.js");
 }, 1);  
 
 /* TODO: enable Twig caching?

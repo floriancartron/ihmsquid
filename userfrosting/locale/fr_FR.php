@@ -98,10 +98,10 @@ $lang = array_merge($lang,array(
 
 // Generic validation
 $lang = array_merge($lang, array(
-	"VALIDATE_REQUIRED" => "Le champ '{{self}}' doit être renseigné.",
-	"VALIDATE_BOOLEAN" => "La valeur de '{{self}}' doit être '0' ou '1'.",
-	"VALIDATE_INTEGER" => "La valeur de '{{self}}' doit être un entier.",
-	"VALIDATE_ARRAY" => "Les valeurs de '{{self}}' doivent être dans un tableau."
+	"VALIDATE_REQUIRED" => "Le champ doit être renseigné.",
+	"VALIDATE_BOOLEAN" => "La valeur doit être '0' ou '1'.",
+	"VALIDATE_INTEGER" => "La valeur doit être un entier.",
+	"VALIDATE_ARRAY" => "Les valeurs doivent être dans un tableau."
 ));
 
 // Configuration

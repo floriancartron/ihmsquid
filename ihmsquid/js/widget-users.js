@@ -119,9 +119,9 @@ function deleteUserDialog(box_id, user_id, name){
     
 	var data = {
 		box_id: box_id,
-		box_title: "Delete User",
-		confirm_message: "Are you sure you want to delete the user " + name + "?",
-		confirm_button: "Yes, delete user"
+		box_title: "Suppression de l'utilisateur",
+		confirm_message: "Voulez-vous vraiment supprimer l'utilisateur " + name + "?",
+		confirm_button: "Oui, supprimer l'utilisateur"
 	}
 	
 	// Generate the form

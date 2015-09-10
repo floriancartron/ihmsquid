@@ -165,9 +165,9 @@ function deleteGroupDialog(box_id, group_id, name){
     
 	var data = {
 		box_id: box_id,
-		box_title: "Delete Group",
-		confirm_message: "Are you sure you want to delete the group " + name + "?",
-		confirm_button: "Yes, delete group"
+		box_title: "Supprimer le groupe",
+		confirm_message: "Voulez-vous vraiment supprimer le groupe " + name + "?",
+		confirm_button: "Oui, supprimer le groupe"
 	}
 	
 	// Generate the form

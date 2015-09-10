@@ -40,7 +40,7 @@
             <!-- /.nav-second-level -->
         </li>
         {% endif %} 
-        {% if checkAccess('uri_stats') or checkAccess('uri_app_admin') %}
+        {% if checkAccess('uri_stats') or checkAccess('app_admin') %}
         <li>
             <a href="#"><i class="fa fa-line-chart fa-fw"></i> Visualisations<span class="fa arrow"></span></a>
 
@@ -53,7 +53,7 @@
                     <a href="{{site.uri.public}}/stats_salle"><i class="fa fa-bar-chart fa-fw"></i> Statistiques par Salle</a>
                 </li>
                 {% endif %}
-                {% if checkAccess('uri_app_admin') %}
+                {% if checkAccess('app_admin') %}
                 <li>
                     <a href="{{site.uri.public}}/logs"><i class="fa fa-file-text fa-fw"></i> Consultation des logs</a>
                 </li>
@@ -63,7 +63,7 @@
             <!-- /.nav-second-level -->
         </li>
         {% endif %}
-        {% if checkAccess('uri_app_admin') %}
+        {% if checkAccess('app_admin') %}
         <li>
             <a href="#"><i class="fa fa-cog fa-fw"></i>Administration de l'application<span class="fa arrow"></span></a>
 

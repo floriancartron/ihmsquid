@@ -254,7 +254,7 @@ class SalleController extends \UserFrosting\BaseController {
             $this->_app->halt(400);
         }
 
-        // TODO: validate landing page route, theme, icon?
+
         // Set up Fortress to process the request
         $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
 

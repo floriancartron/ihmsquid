@@ -275,7 +275,7 @@ class SalleController extends \UserFrosting\BaseController {
             }
         }
 
-        $ms->addMessageTranslated("success", "Salle '{{name}} mise à jour'", ["name" => $salle->name]);
+        $ms->addMessageTranslated("success", "Salle '{{name}}' mise à jour", ["name" => $salle->name]);
         $salle->store();
     }
 

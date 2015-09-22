@@ -50,7 +50,7 @@ var pagerOptions = {
 
 // Initialize tablesorters
 if (jQuery().tablesorter){
-    $('.tablesorter-bootstrap').tablesorter({
+    $('.tablesorter-std').tablesorter({
         debug: false,
         theme: 'bootstrap',
         widthFixed: true,

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'components/head.html' %}
+  
+<body>
+    <div id="wrapper">
+        {% include 'components/nav-account.html' %}
+        <div id="page-wrapper">
+            {% include 'components/alerts.html' %}
+            <div class="row">
+                <div class="col-m-12">
+                <div class='panel panel-primary'>
+                <div class='panel-heading'>
+                    <h3 class='panel-title'><i class='fa fa-globe'></i> Configuration de Squid</h3>
+                </div>
+                <div class='panel-body'>
+                    
+					
+					<form name="salle" method="post" action="{{form_action}}">
+
+					
+					
+					
+					<div class="form-group">
+                                    <label for="input_site_title" class="col-sm-4 control-label">Nom du serveur</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_title" class="form-control" name="userfrosting[srv_title]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">C'est le nom qui sera inscrit dans la configuration du serveur.</p>
+                                    </div>
+                                </div>
+                             
+                                <div class="form-group">
+                                    <label for="input_site_location" class="col-sm-4 control-label">Adresse IP du serveur</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_ip" class="form-control" name="userfrosting[srv_ip]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">Merci d'inscrire l'adresse IP du serveur Squid ( si le serveur squid est le sur même serveur, vous pouvez inscrire localhost).</p>
+                                    </div>
+                                </div>
+                             
+                                <div class="form-group">
+                                    <label for="input_author" class="col-sm-4 control-label">Port d'écoute</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_port" class="form-control" name="userfrosting[srv_port]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">C'est le port sur lequel squid attendera les connections.</p>
+                                    </div>
+                                </div>
+								
+								
+								<div class="form-group">
+                                    <label for="input_minify_css" class="col-sm-4 control-label">Mode transparent</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='checkbox' id="input_srv_transparent" class="form-control bootstrapswitch" name="userfrosting[srv_transparent]" value="0" data-off-text="Off" data-on-text="On" >
+                                                                                <p class="help-block">Faut-il activer le mode transparent ?</p>
+                                    </div>
+                                </div>
+                             
+								
+                             
+                                <div class="form-group">
+                                    <label for="input_admin_email" class="col-sm-4 control-label">Taille du cache en RAM ( en MB )</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_ramcache" class="form-control" name="userfrosting[srv_ramcache]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block"> Il est recommandé de mettre les 3/4 de votre RAM dans ce paramètre.</p>
+                                    </div>
+                                </div>
+								
+								<div class="form-group">
+                                    <label for="input_admin_email" class="col-sm-4 control-label">Taille du cache sur le disque ( en MB )</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_diskcache" class="form-control" name="userfrosting[srv_diskcache]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">Mettez 5000MB minimum.</p>
+                                    </div>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label for="input_can_register" class="col-sm-4 control-label">Emplacement du répertoire de cache</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_cachefile" class="form-control" name="userfrosting[srv_cachefile]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">Par defaut : /var/cache/squid</p>
+                                    </div>
+                                </div>
+                             
+                             
+                                <div class="form-group">
+                                    <label for="input_can_register" class="col-sm-4 control-label">Emplacement du fichier de log du cache</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_logcachefile" class="form-control" name="userfrosting[srv_logcachefile]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">Par defaut : /var/log/squid3/cache.log</p>
+                                    </div>
+                                </div>
+								
+								<div class="form-group">
+                                    <label for="input_can_register" class="col-sm-4 control-label">Emplacement du fichier de log store</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_logstorefile" class="form-control" name="userfrosting[srv_logstorefile]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">Par defaut : /var/log/squid3/store.log</p>
+                                    </div>
+                                </div>
+								
+								<div class="form-group">
+                                    <label for="input_can_register" class="col-sm-4 control-label">Emplacement du fichier de log des accès</label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_logaccesfile" class="form-control" name="userfrosting[srv_logaccesfile]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">Par defaut : /var/cache/acces.log</p>
+                                    </div>
+                                </div>
+								
+								<div class="form-group">
+                                    <label for="input_can_register" class="col-sm-4 control-label">Emplacement du fichier de configuration de SquidGuard </label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='text' id="input_srv_logaccesfile" class="form-control" name="userfrosting[srv_logaccesfile]" value='' style="width: 50%;"/>
+                                                                                <p class="help-block">Par defaut : /etc/squidguard/squidguard.conf</p>
+                                    </div>
+                                </div>
+								
+								
+								<div class="form-group">
+                                    <label for="input_minify_css" class="col-sm-4 control-label">Activation de Clamav </label>
+                                    <div class="col-sm-8">
+                                                                                    <input type='checkbox' id="input_srv_clamav" class="form-control bootstrapswitch" name="userfrosting[srv_clamav]" value="1" data-off-text="Off" data-on-text="On" >
+                                                                                <p class="help-block">Activation du module antivirale.</p>
+                                    </div>
+                                </div>
+                             
+								
+                                          
+					
+                <div class="col-xs-8 col-sm-4">
+				<br /><br /><br />
+            <div class="vert-pad">
+				
+                <button type="button" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter...">
+                    Appliquer et redémarrer Squid !
+                </button>
+            </div>      
+
+			
+        </div>
+                                        
+
+					
+					
+					
+					</form>
+					
+					
+					
+                </div>
+                </div>
+                </div>
+
+            </div>
+
+            {% include 'components/footer.html' %}    
+        </div>
+    </div>
+    
+<script>
+    $(document).ready(function() {                   
+        var timer;
+        
+        // Autosave text fields
+        $("form[name='settings'] input[type=text]").keyup(function () {
+            clearTimeout(timer); // Clear the timer so we don't end up with dupes.
+            $("#settings-alerts").html("<div class='alert alert-warning'>Saving...</div>");
+            timer = setTimeout(function() { // assign timer a new timeout 
+                $("form[name='settings']").submit()
+            }, 700);
+        });
+        
+        // Autosave switches and selects
+        $("form[name='settings'] input[type=checkbox]").on("change", function () {
+            $("#settings-alerts").html("<div class='alert alert-warning'>Saving...</div>");
+            $("form[name='settings']").submit()
+        });
+        
+        $("form[name='settings'] select").on("change", function () {
+            $("#settings-alerts").html("<div class='alert alert-warning'>Saving...</div>");
+            $("form[name='settings']").submit()
+        });
+        
+              
+      // Process form 
+      $("form[name='settings']").formValidation({
+        framework: 'bootstrap',
+        // Feedback icons
+        icon: {
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
+        },
+        fields: { none: "none"}
+      }).on('success.form.fv', function(e) {
+        // Prevent double form 
+        e.preventDefault();
+
+        // Get the form instance
+        var form = $(e.target);
+
+        // Serialize and post to the backend script in ajax mode
+        var serializedData = form.find('input, textarea, select').not(':checkbox').serialize();
+        // Get unchecked checkbox values, set them to 0
+        form.find('input[type=checkbox]').each(function() {
+            if ($(this).is(':checked'))
+                serializedData += "&" + encodeURIComponent(this.name) + "=1";
+            else
+                serializedData += "&" + encodeURIComponent(this.name) + "=0";
+        });
+
+        var url = form.attr('action');
+        return $.ajax({  
+          type: "POST",  
+          url: url,  
+          data: serializedData       
+        }).done(function(data, statusText, jqXHR) {
+            $('#userfrosting-alerts').flashAlerts().done(function() {
+                $("#settings-alerts").html("<div class='alert alert-success'>All settings have been saved</div>");
+            });
+        }).fail(function(jqXHR) {
+            if (site['debug'] == true) {
+                document.body.innerHTML = jqXHR.responseText;
+            } else {
+                console.log("Error (" + jqXHR.status + "): " + jqXHR.responseText );
+                // Display errors on failure
+                $('#userfrosting-alerts').flashAlerts().done(function() {
+                    $("#settings-alerts").html("<div class='alert alert-danger'>Could not save settings.</div>");
+                });
+            }
+        });
+      });
+
+    });
+    /*
+     * end site settings form submit
+     */
+</script>
+</body>
+</html>
+

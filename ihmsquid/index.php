@@ -383,4 +383,29 @@ $app->post('/salles/s/:salle_id/?', function ($salle_id) use ($app) {
 });
 
 
+//EG : Gestion de la configuration générale
+$app->get('/confgen/?', function () use ($app) {
+    $controller = new UF\AdminController($app);
+    return $controller->pageSquidSettings();
+})->name('uri_settings');
+
+/* $app->post('/confgen/?', function () use ($app) {
+    $controller = new UF\AdminController($app);
+    return $controller->siteSettings();
+});
+ */
+
+
+
+
+
+
+//EG : Gestion de l'activation d'internet sur certaines salles.
+$app->get('/access/?', function () use ($app) {
+    $controller = new UF\AdminController($app);
+    return $controller->pageAccess();
+})->name('uri_settings');
+
+
+
 $app->run();

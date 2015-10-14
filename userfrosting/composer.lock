@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "070f56ebeceda820b11ec247b1a05c15",
+    "hash": "e2c11fa0bb1e3a6d21f877317cd787b9",
+    "content-hash": "20c4c73c60b554fef93716d21d83740c",
     "packages": [
         {
             "name": "alexweissman/fortress",
@@ -12,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/alexweissman/fortress.git",
-                "reference": "26769c00c6bc927db17c5dcc220d7e15449cc9d6"
+                "reference": "22b20d04b9f9bd5372d62ffb28dbefa937b59d3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alexweissman/fortress/zipball/26769c00c6bc927db17c5dcc220d7e15449cc9d6",
-                "reference": "26769c00c6bc927db17c5dcc220d7e15449cc9d6",
+                "url": "https://api.github.com/repos/alexweissman/fortress/zipball/22b20d04b9f9bd5372d62ffb28dbefa937b59d3c",
+                "reference": "22b20d04b9f9bd5372d62ffb28dbefa937b59d3c",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +48,7 @@
                 "php sanitization",
                 "php validation"
             ],
-            "time": "2015-07-09 19:20:22"
+            "time": "2015-10-07 03:22:48"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -95,16 +96,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "196f177cfefa0f1f7166c0a05d8255889be12418"
+                "reference": "f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/196f177cfefa0f1f7166c0a05d8255889be12418",
-                "reference": "196f177cfefa0f1f7166c0a05d8255889be12418",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51",
+                "reference": "f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +137,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-07-14 17:31:05"
+            "time": "2015-09-19 14:15:08"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -294,16 +295,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.21.2",
+            "version": "v1.22.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "ddce1136beb8db29b9cd7dffa8ab518b978c9db3"
+                "reference": "ebfc36b7e77b0c1175afe30459cf943010245540"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ddce1136beb8db29b9cd7dffa8ab518b978c9db3",
-                "reference": "ddce1136beb8db29b9cd7dffa8ab518b978c9db3",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ebfc36b7e77b0c1175afe30459cf943010245540",
+                "reference": "ebfc36b7e77b0c1175afe30459cf943010245540",
                 "shasum": ""
             },
             "require": {
@@ -316,7 +317,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.21-dev"
+                    "dev-master": "1.22-dev"
                 }
             },
             "autoload": {
@@ -351,7 +352,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-09-09 05:28:51"
+            "time": "2015-10-13 07:07:02"
         },
         {
             "name": "vlucas/valitron",

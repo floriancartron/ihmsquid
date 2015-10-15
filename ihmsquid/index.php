@@ -402,7 +402,7 @@ $app->get('/confgen/?', function () use ($app) {
 
 //EG : Gestion de l'activation d'internet sur certaines salles.
 $app->get('/access/?', function () use ($app) {
-    $controller = new UF\AdminController($app);
+    $controller = new UF\FilterController($app);
     return $controller->pageAccess();
 });
 

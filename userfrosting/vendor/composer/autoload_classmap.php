@@ -33,6 +33,7 @@ return array(
     'UserFrosting\\DatabaseObjectInterface' => $baseDir . '/models/DatabaseInterface.php',
     'UserFrosting\\DatabaseTable' => $baseDir . '/models/DatabaseTable.php',
     'UserFrosting\\DatabaseTableInterface' => $baseDir . '/models/DatabaseInterface.php',
+    'UserFrosting\\FilterController' => $baseDir . '/controllers/FilterController.php',
     'UserFrosting\\GroupController' => $baseDir . '/controllers/GroupController.php',
     'UserFrosting\\GroupLoaderInterface' => $baseDir . '/models/DatabaseInterface.php',
     'UserFrosting\\GroupObjectInterface' => $baseDir . '/models/DatabaseInterface.php',

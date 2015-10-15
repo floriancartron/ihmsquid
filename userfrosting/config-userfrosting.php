@@ -41,7 +41,7 @@
                 'db_host'  => 'localhost',
                 'db_name'  => 'ihmsquid',
                 'db_user'  => 'root',
-                'db_pass'  => 'mdp',
+                'db_pass'  => '',
                 'db_prefix'=> 'uf_'
             ],
             'user_id_guest'  => 0,
@@ -68,7 +68,7 @@
                 'db_host'  => 'localhost',
                 'db_name'  => 'ihmsquid',
                 'db_user'  => 'root',
-                'db_pass'  => 'mdp',
+                'db_pass'  => '',
                 'db_prefix'=> 'uf_'
             ],
             'user_id_guest'  => 0,

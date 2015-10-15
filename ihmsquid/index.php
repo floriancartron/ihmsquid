@@ -387,7 +387,7 @@ $app->post('/salles/s/:salle_id/?', function ($salle_id) use ($app) {
 $app->get('/confgen/?', function () use ($app) {
     $controller = new UF\AdminController($app);
     return $controller->pageSquidSettings();
-})->name('uri_settings');
+});
 
 /* $app->post('/confgen/?', function () use ($app) {
     $controller = new UF\AdminController($app);
@@ -404,7 +404,7 @@ $app->get('/confgen/?', function () use ($app) {
 $app->get('/access/?', function () use ($app) {
     $controller = new UF\AdminController($app);
     return $controller->pageAccess();
-})->name('uri_settings');
+});
 
 
 

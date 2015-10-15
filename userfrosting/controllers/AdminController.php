@@ -18,13 +18,10 @@ class AdminController extends \UserFrosting\BaseController {
 	// EG : Page de la configuration générale de Squid 3
     public function pageSquidSettings(){
         // On vérifie que le user à le droit d'être ici
-        if (!$this->_app->user->checkAccess('uri_site_settings')){
+        if (!$this->_app->user->checkAccess('app_admin')){
             $this->_app->notFound();
         }
-        
-        // Hook for core and plugins to register their settings
-        $this->_app->applyHook("settings.register");
-        
+
 		//On fait le rendu de la page, il faudra créer une bdd pour la rémanence des informations. 
         $this->_app->render('confgen.html', [
             'page' => [
@@ -32,10 +29,7 @@ class AdminController extends \UserFrosting\BaseController {
                 'title' =>          "Paramètres de Squid",
                 'description' =>    "",
                 'alerts' =>         $this->_app->alerts->getAndClearMessages()
-            ],
-            'settings' => $this->_app->site->getRegisteredSettings(),
-            'info'     => $this->_app->site->getSystemInfo(),
-            'error_log'=> $this->_app->site->getLog(50)
+            ]
         ]);    
     }
 	
@@ -43,12 +37,10 @@ class AdminController extends \UserFrosting\BaseController {
 	// EG : Page de l'acces à internet
     public function pageAccess(){
         // On vérifie que le user à le droit d'être ici
-        if (!$this->_app->user->checkAccess('uri_site_settings')){
+        if (!$this->_app->user->checkAccess('uri_access')){
             $this->_app->notFound();
         }
-        
-        // Hook for core and plugins to register their settings
-        $this->_app->applyHook("settings.register");
+
         
 		//On fait le rendu de la page, il faudra créer une bdd pour la rémanence des informations. 
         $this->_app->render('access.html', [
@@ -57,10 +49,7 @@ class AdminController extends \UserFrosting\BaseController {
                 'title' =>          "Paramètres de l'accès à internet.",
                 'description' =>    "",
                 'alerts' =>         $this->_app->alerts->getAndClearMessages()
-            ],
-            'settings' => $this->_app->site->getRegisteredSettings(),
-            'info'     => $this->_app->site->getSystemInfo(),
-            'error_log'=> $this->_app->site->getLog(50)
+            ]
         ]);    
     }
 	

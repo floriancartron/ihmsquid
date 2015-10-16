@@ -1,184 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include 'components/head.html' %}
-  
-<body>
-    <div id="wrapper">
-        {% include 'components/nav-account.html' %}
-        <div id="page-wrapper">
-            {% include 'components/alerts.html' %}
-            <div class="row">
-                <div class="col-m-4">
-                <div class='panel panel-primary'>
-                <div class='panel-heading'>
-                    <h3 class='panel-title'><i class='fa fa-globe'></i> Configuration de l'accès à internet.</h3>
-                </div>
-                <div class='panel-body'>
-                    
-					
-					<form name="salle" method="post" action="{{form_action}}">
+    {% include 'components/head.html' %}
 
-					
-	
-                             
-                                <div class="form-group">
-                                    <label for="input_default_locale" class="col-sm-6	 control-label">Selectionnez votre salle :</label>
-                                    <div class="col-sm-4">
-                                                                                    <select id="input_default_locale" class='form-control select2' name="userfrosting[default_locale]">
-                                                                                                <option value="de_DE" >Salle 001</option>
-                                                                                                <option value="en_US" >Salle 002</option>
-                                                                                                <option value="es_ES" >Salle 003</option>
-                                                                                                <option value="es_ES" >Salle 004</option>                                                                                                <option value="de_DE" >Salle 001</option>
-                                                                                                <option value="en_US" >Salle 100</option>
-                                                                                                <option value="en_US" >Salle 101</option>
-                                                                                                <option value="en_US" >Salle 102</option>
-                                                                                                <option value="es_ES" >Salle 103</option>
-                                                                                                <option value="es_ES" >Salle 104</option>                                                                                                <option value="de_DE" >Salle 001</option>
-                                                                                                <option value="en_US" >Salle 200</option>
-                                                                                                <option value="es_ES" >Salle 201</option>
-                                                                                                <option value="es_ES" >Salle 202</option>                                                                                                <option value="de_DE" >Salle 001</option>
-                                                                                                <option value="en_US" >Salle 203</option>
-                                                                                                <option value="en_US" >Salle 204</option>
-                                                                                                <option value="es_ES" >Salle 300</option>
-                                                                                                <option value="es_ES" >Salle 301</option>
-                                                                                                <option value="es_ES" >Salle 302</option>
-                                                                                                <option value="es_ES" >Salle 303</option>
-                                                                                                <option value="es_ES" >Salle 304</option>
-                                                                                            </select>
-																							<br /> <br />
-                                                                          
+    <body>
+        <div id="wrapper">
+            {% include 'components/nav-account.html' %}
+            <div id="page-wrapper">
+                {% include 'components/alerts.html' %}
+                <div class="row">
+                    <div class="col-m-4">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-globe'></i> Configuration de l'accès à internet.</h3>
+                            </div>
+                            <div class='panel-body'>
+
+
+                                <form name="salle" method="post" action="{{form_action}}">
+
+
+
+
+                                    <div class="form-group">
+                                        <label for="input_default_locale" class="col-sm-6	 control-label">Selectionnez votre salle :</label>
+                                        <div class="col-sm-4">
+                                            <select id="input_default_locale" class='form-control select2' name="userfrosting[default_locale]">
+                                                <option value="de_DE" >Salle 001</option>
+                                                <option value="en_US" >Salle 002</option>
+                                                <option value="es_ES" >Salle 003</option>
+                                                <option value="es_ES" >Salle 004</option>                                                                                                <option value="de_DE" >Salle 001</option>
+                                                <option value="en_US" >Salle 100</option>
+                                                <option value="en_US" >Salle 101</option>
+                                                <option value="en_US" >Salle 102</option>
+                                                <option value="es_ES" >Salle 103</option>
+                                                <option value="es_ES" >Salle 104</option>                                                                                                <option value="de_DE" >Salle 001</option>
+                                                <option value="en_US" >Salle 200</option>
+                                                <option value="es_ES" >Salle 201</option>
+                                                <option value="es_ES" >Salle 202</option>                                                                                                <option value="de_DE" >Salle 001</option>
+                                                <option value="en_US" >Salle 203</option>
+                                                <option value="en_US" >Salle 204</option>
+                                                <option value="es_ES" >Salle 300</option>
+                                                <option value="es_ES" >Salle 301</option>
+                                                <option value="es_ES" >Salle 302</option>
+                                                <option value="es_ES" >Salle 303</option>
+                                                <option value="es_ES" >Salle 304</option>
+                                            </select>
+                                            <br /> <br />
+
+                                        </div>
                                     </div>
-                                </div>
-								
-								
-								
-								                                      <div class="form-group">
-                                    <label for="input_default_locale" class="col-sm-6 control-label">Choix du niveau de filtrage :</label>
-                                    <div class="col-sm-4">
-                                                                                    <select id="input_default_locale" class='form-control select2' name="userfrosting[default_locale]">
-                                                                                                <option value="de_DE" >Aucun accès</option>
-                                                                                                <option value="de_DE" >niveau personnalisé 1</option>
-                                                                                                <option value="de_DE" >niveau personnalisé 2</option>
-                                                                                                <option value="de_DE" >Accès Total</option>
-                                                                                            </select>
-                                                                            
+
+
+
+                                    <div class="form-group">
+                                        <label for="input_default_locale" class="col-sm-6 control-label">Choix du niveau de filtrage :</label>
+                                        <div class="col-sm-4">
+                                            <select id="input_default_locale" class='form-control select2' name="userfrosting[default_locale]">
+                                                <option value="de_DE" >Aucun accès</option>
+                                                <option value="de_DE" >niveau personnalisé 1</option>
+                                                <option value="de_DE" >niveau personnalisé 2</option>
+                                                <option value="de_DE" >Accès Total</option>
+                                            </select>
+
+                                        </div>
                                     </div>
-                                </div>
-								
-                             
-                             
-								
-                                          
-					
-                <div class="col-xs-4 col-sm-4">
-				<br /><br /><br />
-            <div class="vert-pad">
-				
-                <button type="button" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter...">
-                    Appliquer !
-                </button>
-            </div>      
 
-			
-        </div>
-                                        
 
-					
-					
-					
-					</form>
-					
-					
-					
-                </div>
-                </div>
+
+
+
+
+                                    <div class="col-sm-4 col-sm-offset-4">
+                                        <br /><br /><br />
+                                        <div class="vert-pad">
+
+                                            <button type="button" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter...">
+                                                Appliquer
+                                            </button>
+                                        </div>      
+
+
+                                    </div>
+
+
+
+
+
+                                </form>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
+                {% include 'components/footer.html' %}    
             </div>
-
-            {% include 'components/footer.html' %}    
         </div>
-    </div>
-    
-<script>
-    $(document).ready(function() {                   
-        var timer;
-        
-        // Autosave text fields
-        $("form[name='settings'] input[type=text]").keyup(function () {
-            clearTimeout(timer); // Clear the timer so we don't end up with dupes.
-            $("#settings-alerts").html("<div class='alert alert-warning'>Saving...</div>");
-            timer = setTimeout(function() { // assign timer a new timeout 
-                $("form[name='settings']").submit()
-            }, 700);
-        });
-        
-        // Autosave switches and selects
-        $("form[name='settings'] input[type=checkbox]").on("change", function () {
-            $("#settings-alerts").html("<div class='alert alert-warning'>Saving...</div>");
-            $("form[name='settings']").submit()
-        });
-        
-        $("form[name='settings'] select").on("change", function () {
-            $("#settings-alerts").html("<div class='alert alert-warning'>Saving...</div>");
-            $("form[name='settings']").submit()
-        });
-        
-              
-      // Process form 
-      $("form[name='settings']").formValidation({
-        framework: 'bootstrap',
-        // Feedback icons
-        icon: {
-            valid: 'fa fa-check',
-            invalid: 'fa fa-times',
-            validating: 'fa fa-refresh'
-        },
-        fields: { none: "none"}
-      }).on('success.form.fv', function(e) {
-        // Prevent double form 
-        e.preventDefault();
 
-        // Get the form instance
-        var form = $(e.target);
-
-        // Serialize and post to the backend script in ajax mode
-        var serializedData = form.find('input, textarea, select').not(':checkbox').serialize();
-        // Get unchecked checkbox values, set them to 0
-        form.find('input[type=checkbox]').each(function() {
-            if ($(this).is(':checked'))
-                serializedData += "&" + encodeURIComponent(this.name) + "=1";
-            else
-                serializedData += "&" + encodeURIComponent(this.name) + "=0";
-        });
-
-        var url = form.attr('action');
-        return $.ajax({  
-          type: "POST",  
-          url: url,  
-          data: serializedData       
-        }).done(function(data, statusText, jqXHR) {
-            $('#userfrosting-alerts').flashAlerts().done(function() {
-                $("#settings-alerts").html("<div class='alert alert-success'>All settings have been saved</div>");
-            });
-        }).fail(function(jqXHR) {
-            if (site['debug'] == true) {
-                document.body.innerHTML = jqXHR.responseText;
-            } else {
-                console.log("Error (" + jqXHR.status + "): " + jqXHR.responseText );
-                // Display errors on failure
-                $('#userfrosting-alerts').flashAlerts().done(function() {
-                    $("#settings-alerts").html("<div class='alert alert-danger'>Could not save settings.</div>");
-                });
-            }
-        });
-      });
-
-    });
-    /*
-     * end site settings form submit
-     */
-</script>
-</body>
+    </body>
 </html>
 

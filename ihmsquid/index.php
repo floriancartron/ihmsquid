@@ -406,6 +406,12 @@ $app->get('/access/?', function () use ($app) {
     return $controller->pageAccess();
 });
 
+//Consultation des logs
+$app->get('/logs/?', function () use ($app) {
+    $controller = new UF\StatsController($app);
+    return $controller->pageLogs();
+});
+
 
 
 $app->run();

@@ -87,6 +87,28 @@ $table_salle = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] .
     "mask_cidr"
 ]);
 
+$table_salle = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "salle", [
+    "name",
+    "description",
+    "network",
+    "mask_cidr"
+]);
+
+$table_logline = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "logline", [
+    "datelog", 
+    "duration",
+    "host_ip",
+    "cache_result",
+    "result_code",
+    "bytes",
+    "request_method",
+    "url",
+    "username",
+    "access_type",
+    "ressource_ip",
+    "object_type"
+]);
+
 $table_group_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "group_user");
 $table_configuration = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "configuration");
 $table_authorize_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "authorize_user");
@@ -95,6 +117,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\Database::setTable("user", $table_user);
 \UserFrosting\Database::setTable("group", $table_group);    
 \UserFrosting\Database::setTable("salle", $table_salle);
+\UserFrosting\Database::setTable("logline", $table_logline);
 \UserFrosting\Database::setTable("group_user", $table_group_user);
 \UserFrosting\Database::setTable("configuration", $table_configuration);
 \UserFrosting\Database::setTable("authorize_user", $table_authorize_user);
@@ -104,6 +127,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\UserLoader::init($table_user);
 \UserFrosting\GroupLoader::init($table_group);
 \UserFrosting\MySqlSalleLoader::init($table_salle);
+\UserFrosting\MySqlLoglineLoader::init($table_logline);
 
 
 /* Load UserFrosting site settings */

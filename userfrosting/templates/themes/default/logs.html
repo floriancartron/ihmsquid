@@ -19,7 +19,8 @@
                                     <table class="tablesorter table table-bordered table-hover table-striped tablesorter-bootstrap tablesorter-std" data-sortlist="[[0, 0]]">
                                         <thead>
                                             <tr>
-                                                <th class="sorter-metatext">Date et Heure<i class="fa fa-sort"></i></th>
+                                                <th class="sorter-metatext">Date<i class="fa fa-sort"></i></th>
+                                                <th class="sorter-metatext">Heure<i class="fa fa-sort"></i></th>
                                                 <th class="sorter-metatext">Durée en ms<i class="fa fa-sort"></i></th>
                                                 <th class="sorter-metatext">IP source<i class="fa fa-sort"></i></th>
                                                 <th class="sorter-metatext">Résultat<i class="fa fa-sort"></i></th>
@@ -36,9 +37,8 @@
                                         <tbody>
                                             {% for logline in loglines %}
                                             <tr>
-                                                <td>
-                                                    {{logline.datelog}}
-                                                </td>
+                                                <td>{{logline.datelog|date("d/m/Y")}}</td>
+                                                <td>{{logline.datelog|date("H:i:s")}}</td>
                                                 <td>
                                                     {{logline.duration}}
                                                 </td>

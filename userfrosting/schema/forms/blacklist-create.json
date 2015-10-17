@@ -1,9 +1,9 @@
 {
-    "name": {
+    "url": {
         "validators": {
             "length": {
                 "min": 1,
-                "max": 50
+                "max": 200
             },
             "required": {
                 "message": "VALIDATE_REQUIRED"
@@ -25,20 +25,6 @@
         },
         "sanitizers": {
             "raw": ""
-        }
-    },
-    "network": {
-        "validators": {
-            "required": {
-                "message": "VALIDATE_REQUIRED"
-            }
-        }
-    },
-    "mask_cidr": {
-        "validators": {
-            "required": {
-                "message": "VALIDATE_REQUIRED"
-            }
         }
     }
 }

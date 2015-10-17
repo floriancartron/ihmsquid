@@ -148,7 +148,6 @@ class SalleController extends \UserFrosting\BaseController {
     }
 
     public function deleteSalle($salle_id) {
-        $post = $this->_app->request->post();
 
 
         $salle = MySqlSalleLoader::fetch($salle_id);
@@ -165,7 +164,7 @@ class SalleController extends \UserFrosting\BaseController {
 
 
         $ms->addMessageTranslated("success", "Salle '{{name}}' supprimée", ["name" => $salle->name]);
-        $salle->delete();       // TODO: implement Group function
+        $salle->delete();       
         unset($salle);
     }
 

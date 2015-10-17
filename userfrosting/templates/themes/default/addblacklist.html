@@ -1,4 +1,4 @@
-{% set page_group = "salle" %}
+{% set page_group = "blacklist" %}
 <!DOCTYPE html>
 <html lang="en">
     {% include 'components/head.html' %}
@@ -12,54 +12,35 @@
                     <div class="col-md-12">
                         <div class='panel panel-primary'>
                             <div class='panel-heading'>
-                                <h3 class='panel-title'><i class='fa fa-building'></i> Salles</h3>
+                                <h3 class='panel-title'><i class='fa fa-ban'></i> Sites interdits</h3>
                             </div>
                             <div class='panel-body'>
                                 <div class="table-responsive">
                                     <table class="tablesorter table table-bordered table-hover table-striped tablesorter-bootstrap tablesorter-std" data-sortlist="[[0, 0]]">
                                         <thead>
                                             <tr>
-                                                <th class="sorter-metatext">Nom de la salle <i class="fa fa-sort"></i></th>
-                                                <th class="sorter-metatext">Description <i class="fa fa-sort"></i></th>
-                                                <th class="sorter-metatext">Réseau <i class="fa fa-sort"></i></th>
-                                                <th class="sorter-metatext">Masque <i class="fa fa-sort"></i></th>
-                                                <th class="sorter-metatext">Actions <i class="fa fa-sort"></i></th>
+                                                <th class="sorter-metatext">URL<i class="fa fa-sort"></i></th>
+                                                <th class="sorter-metatext">Description<i class="fa fa-sort"></i></th>
+                                                <th class="sorter-metatext">Utilisateur responsable<i class="fa fa-sort"></i></th>
+                                                <th class="sorter-metatext">Action<i class="fa fa-sort"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for salle in salles %}
+                                            {% for blacklistitem in blacklist %}
                                             <tr>
                                                 <td>
-                                                    {{salle.name}}
+                                                    {{blacklistitem.url}}
                                                 </td>
                                                 <td>
-                                                    {{salle.description}}
+                                                    {{blacklistitem.description}}
                                                 </td>
                                                 <td>
-                                                    {{salle.network}}
-                                                </td>
+                                                    {{blacklistitem.id_user}}
+                                                </td>                                 
                                                 <td>
-                                                    {{salle.mask_cidr}}
-                                                </td>                                    
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                            Actions
-                                                            <span class="caret"></span>
-                                                        </button>            
-                                                        <ul class="dropdown-menu" role="menu">
-                                                            <li>
-                                                                <a href="#" data-id="{{salle.id}}" class="js-salle-edit" data-target="#dialog-salle-edit" data-toggle="modal">
-                                                                    <i class="fa fa-edit"></i> Editer
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" data-id="{{salle.id}}" class="js-salle-delete" data-name="{{salle.name}}" data-target="#dialog-salle-delete" data-toggle="modal">
-                                                                    <i class="fa fa-trash-o"></i> Supprimer
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    <a href="#" data-id="{{blacklistitem.id}}" class="js-blacklist-delete" data-name="{{blacklistitem.url}}" data-target="#dialog-blacklist-delete" data-toggle="modal">
+                                                        <i class="fa fa-trash-o"></i> Supprimer
+                                                    </a>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -83,8 +64,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 ">
-                                        <button type="button" class="btn btn-success js-salle-create" data-toggle="modal" data-target="#dialog-salle-create">
-                                            <i class="fa fa-plus-square"></i>  Créer une salle
+                                        <button type="button" class="btn btn-success js-blacklist-create" data-toggle="modal" data-target="#dialog-blacklist-create">
+                                            <i class="fa fa-plus-square"></i>  Ajouter un site
                                         </button>
                                     </div>
                                     <!--                        <div class="col-md-6 text-right ">

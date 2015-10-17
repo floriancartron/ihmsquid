@@ -412,6 +412,28 @@ $app->get('/logs/?', function () use ($app) {
     return $controller->pageLogs();
 });
 
+//Consultation des sites interdits
+$app->get('/addblacklist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->pageCustomBlacklist();
+});
+
+//Suppression item blacklist
+$app->post('/addblacklist/b/:bl_id/delete/?', function ($bl_id) use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->deleteBlacklist($bl_id);
+});
+
+//Blacklist creation form
+$app->get('/forms/blacklist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->formBlacklistCreate();
+});
+// Create salles
+$app->post('/addblacklist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->createBlacklist($app->user->id);
+});
 
 
 $app->run();

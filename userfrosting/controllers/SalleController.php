@@ -8,7 +8,7 @@ namespace UserFrosting;
 
  * ***** */
 
-// Handles group-related activities
+// Handles salles-related activities
 class SalleController extends \UserFrosting\BaseController {
 
     public function __construct($app) {

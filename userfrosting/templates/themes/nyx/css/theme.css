@@ -61,11 +61,11 @@ body {
 }
 
 .navbar-userfrosting .nav > li > a:hover {
-  background-color: #000000;
+  background-color: #2e6da4;
 }
 
 .navbar-userfrosting .nav > li.open > a {
-  background-color: #000000;
+  background-color: #2e6da4;
 }
 
 .navbar-userfrosting .navbar-top-links .dropdown-menu li {
@@ -111,7 +111,7 @@ body {
     height: 100%;
     border-radius: 0;
     border: none;
-    background-color: #222;
+    background-color: #337ab7;
   }
 }
 .sidebar .sidebar-nav.navbar-collapse {
@@ -122,22 +122,22 @@ body {
   padding: 15px;
 }
 .sidebar ul {
-  background-color: #222;
+  background-color: #337ab7;
 }
 .sidebar ul li {
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #2e6da4;
 }
 .sidebar ul li a {
   color: #ffffff;
 }
 .sidebar ul li a.active {
-  background-color: #000;
+  background-color: #2e6da4;
 }
 .sidebar ul li a:hover {
-  background-color: #000;
+  background-color: #2e6da4;
 }
 .sidebar ul li a:focus {
-  background-color: #000;
+  background-color: #2e6da4;
 }
 .sidebar .arrow {
   float: right;

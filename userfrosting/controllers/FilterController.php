@@ -8,7 +8,7 @@ namespace UserFrosting;
 
  * ***** */
 
-// Handles admin-related activities, including site settings, user management, etc
+// Handles filtering configuration activities
 class FilterController extends \UserFrosting\BaseController {
 
     public function __construct($app) {

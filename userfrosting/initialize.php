@@ -115,6 +115,13 @@ $table_customblacklist = new \UserFrosting\DatabaseTable($app->config('db')['db_
     "id_user"
 ]);
 
+$table_workinghours = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "workinghours", [
+    "hourstartam", 
+    "hourendam",
+    "hourstartpm",
+    "hourendpm"
+]);
+
 $table_group_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "group_user");
 $table_configuration = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "configuration");
 $table_authorize_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "authorize_user");
@@ -125,6 +132,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\Database::setTable("salle", $table_salle);
 \UserFrosting\Database::setTable("logline", $table_logline);
 \UserFrosting\Database::setTable("customblacklist", $table_customblacklist);
+\UserFrosting\Database::setTable("workinghours", $table_workinghours);
 \UserFrosting\Database::setTable("group_user", $table_group_user);
 \UserFrosting\Database::setTable("configuration", $table_configuration);
 \UserFrosting\Database::setTable("authorize_user", $table_authorize_user);
@@ -136,6 +144,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\MySqlSalleLoader::init($table_salle);
 \UserFrosting\MySqlLoglineLoader::init($table_logline);
 \UserFrosting\MySqlCustomBlacklistLoader::init($table_customblacklist);
+\UserFrosting\MySqlWorkingHoursLoader::init($table_workinghours);
 
 
 /* Load UserFrosting site settings */
@@ -331,6 +340,7 @@ $app->hook('includes.css.register', function () use ($app){
     $app->schema->registerCSS("common", "select2/select2.css");
     $app->schema->registerCSS("common", "select2/select2-bootstrap.css");
     $app->schema->registerCSS("common", "bootstrapradio.css");
+    $app->schema->registerCSS("common", "bootstrap-timepicker.min.css");
     
     // Dashboard CSS
     $app->schema->registerCSS("dashboard", "timeline.css");
@@ -361,6 +371,7 @@ $app->hook('includes.js.register', function () use ($app){
     $app->schema->registerJS("common", "bootstrapradio.js");
     $app->schema->registerJS("common", "bootstrap-switch.js");
     $app->schema->registerJS("common", "userfrosting.js");
+    $app->schema->registerJS("common", "bootstrap-timepicker.min.js");
     
     // Dashboard JS
     $app->schema->registerJS("dashboard", "lib/raphael.js");

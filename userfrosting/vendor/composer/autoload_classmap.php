@@ -53,6 +53,8 @@ return array(
     'UserFrosting\\MySqlSiteSettings' => $baseDir . '/models/mysql/MySqlSiteSettings.php',
     'UserFrosting\\MySqlUser' => $baseDir . '/models/mysql/MySqlUser.php',
     'UserFrosting\\MySqlUserLoader' => $baseDir . '/models/mysql/MySqlUserLoader.php',
+    'UserFrosting\\MySqlWorkingHours' => $baseDir . '/models/mysql/MySqlWorkingHours.php',
+    'UserFrosting\\MySqlWorkingHoursLoader' => $baseDir . '/models/mysql/MySqlWorkingHoursLoader.php',
     'UserFrosting\\ObjectLoaderInterface' => $baseDir . '/models/DatabaseInterface.php',
     'UserFrosting\\PageSchema' => $baseDir . '/models/PageSchema.php',
     'UserFrosting\\SalleController' => $baseDir . '/controllers/SalleController.php',

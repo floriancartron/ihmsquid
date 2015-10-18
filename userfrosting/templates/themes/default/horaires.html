@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'components/head.html' %}
+
+    <body>
+        <div id="wrapper">
+            {% include 'components/nav-account.html' %}
+            <div id="page-wrapper">
+                {% include 'components/alerts.html' %}
+                <div class="row">
+                    <div class="col-m-4">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-calendar'></i> Horaires de cours</h3>
+                            </div>
+                            <div class='panel-body'>
+
+
+                                <form name="horaires" method="post" action="{{page.form_action}}">
+
+
+
+
+                                    <div class="form-group">
+                                        <label  class="col-sm-6	 control-label">Heure de début de la matinée :</label>
+                                        <div class="input-group bootstrap-timepicker timepicker">
+                                            <input id="timepicker1" type="text" class="form-control input-small">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                        </div>
+                                        <br><br>
+                                        <label  class="col-sm-6	 control-label">Heure de fin de la matinée :</label>
+                                        <div class="input-group bootstrap-timepicker timepicker">
+                                            <input id="timepicker2" type="text" class="form-control input-small">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                        </div>
+                                        <br><br>
+                                        <label  class="col-sm-6	 control-label">Heure de début de l'après-midi :</label>
+                                        <div class="input-group bootstrap-timepicker timepicker">
+                                            <input id="timepicker3" type="text" class="form-control input-small">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                        </div>
+                                        <br><br>
+                                        <label  class="col-sm-6	 control-label">Heure de fin de l'après-midi :</label>
+                                        <div class="input-group bootstrap-timepicker timepicker">
+                                            <input id="timepicker4" type="text" class="form-control input-small">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="{{csrf_key}}" id="{{csrf_key}}" value="{{csrf_token}}">
+
+
+
+                                           <div class="col-sm-4 col-sm-offset-4">
+                                           <br /><br /><br />
+                                    <div class="vert-pad">
+
+                                        <button type="submit" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter...">
+                                            Appliquer
+                                        </button>
+                                    </div>      
+
+
+                            </div>
+
+
+
+
+
+                            </form>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% include 'components/footer.html' %}    
+            <script type="text/javascript">
+                $('#timepicker1').timepicker({
+                    minuteStep: 15,
+                    showMeridian: false,
+                    defaultTime: '{{horaires.hourstartam}}',
+                });
+                $('#timepicker2').timepicker({
+                    minuteStep: 15,
+                    showMeridian: false,
+                    defaultTime: '{{horaires.hourendam}}'
+                });
+                $('#timepicker3').timepicker({
+                    minuteStep: 15,
+                    showMeridian: false,
+                    defaultTime: '{{horaires.hourstartpm}}'
+                });
+                $('#timepicker4').timepicker({
+                    minuteStep: 15,
+                    showMeridian: false,
+                    defaultTime: '{{horaires.hourendpm}}'
+                });
+            </script>
+        </div>
+    </div>
+
+</body>
+</html>
+

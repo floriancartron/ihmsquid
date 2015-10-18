@@ -435,5 +435,16 @@ $app->post('/addblacklist/?', function () use ($app) {
     return $controller->createBlacklist($app->user->id);
 });
 
+//Affichage de la page de configuration des horaires de cours
+$app->get('/horaires/?', function () use ($app) {
+    $controller = new UF\AdminController($app);
+    return $controller->pageHoraires();
+});
+
+//Changement des horaires de cours
+$app->post('/horaires/?', function () use ($app) {
+    $controller = new UF\AdminController($app);
+    return $controller->changeHoraires();
+});
 
 $app->run();

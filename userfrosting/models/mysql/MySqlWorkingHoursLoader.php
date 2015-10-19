@@ -31,5 +31,26 @@ class MySqlWorkingHoursLoader extends MySqlObjectLoader {
         return $results;
     }
     
+    public static function update($id, $hourstartam, $hourendam, $hourstartpm, $hourendpm){
+        $db = static::connection();
+        
+        $table= static::$tables['workinghours']->name;
+        
+        $sqlVars[":id"] = $id;
+        $sqlVars[":hourstartam"] = $hourstartam;
+        $sqlVars[":hourendam"] = $hourendam;
+        $sqlVars[":hourstartpm"] = $hourstartpm;
+        $sqlVars[":hourendpm"] = $hourendpm;
+        
+        $query= "UPDATE $table"
+                . "SET hourstartam = :hourstartam, hourendam = :hourendam,"
+                . " hourstartpm = :hourstartpm, hourendpm = :hourendpm"
+                . "WHERE id = :id";
+        
+        $stmt= $db->prepare($query);
+        $result = $stmt->execute($sqlVars);
+        
+        return $result;
+    }
 }
 

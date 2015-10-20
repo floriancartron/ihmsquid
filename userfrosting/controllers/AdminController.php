@@ -39,8 +39,8 @@ class AdminController extends \UserFrosting\BaseController {
         if (!$this->_app->user->checkAccess('app_admin')) {
             $this->_app->notFound();
         }
-        
-        $horaires=  MySqlWorkingHoursLoader::fetch(1);
+
+        $horaires = MySqlWorkingHoursLoader::fetch(1);
         //On fait le rendu de la page, il faudra créer une bdd pour la rémanence des informations. 
         $this->_app->render('horaires.html', [
             'page' => [
@@ -53,8 +53,26 @@ class AdminController extends \UserFrosting\BaseController {
             "horaires" => $horaires
         ]);
     }
-    
-    public function changeHoraires(){
+
+    //mise à jour des horaires
+    public function changeHoraires() {
+        $post = $this->_app->request->post();
+        $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/change-horaires.json");
+        $ms = $this->_app->alerts;
+        unset($post['csrf_token']);
+        $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
+        // Sanitize
+        $rf->sanitize();
+        // Validate, and halt on validation errors.
+        if (!$rf->validate()) {
+            $this->_app->halt(400);
+        }
+        $data = $rf->data();
+        if (MySqlWorkingHoursLoader::update(1, $data["timepicker1"], $data["timepicker2"],$data["timepicker3"],$data["timepicker4"])){
+            $ms->addMessageTranslated("success", "Mise à jour des horaires réussie");
+        }else{
+            $ms->addMessageTranslated("error", "La mise à jour des horaires a échoué");
+        }
         $this->pageHoraires();
     }
 

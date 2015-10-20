@@ -182,7 +182,7 @@ CREATE TABLE `uf_customblacklist` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `uf_customblacklist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `uf_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,6 +191,7 @@ CREATE TABLE `uf_customblacklist` (
 
 LOCK TABLES `uf_customblacklist` WRITE;
 /*!40000 ALTER TABLE `uf_customblacklist` DISABLE KEYS */;
+INSERT INTO `uf_customblacklist` VALUES (2,'google.fr','google',1),(3,'&','a',NULL);
 /*!40000 ALTER TABLE `uf_customblacklist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +221,7 @@ CREATE TABLE `uf_group` (
 
 LOCK TABLES `uf_group` WRITE;
 /*!40000 ALTER TABLE `uf_group` DISABLE KEYS */;
-INSERT INTO `uf_group` VALUES (1,'Utilisateurs',1,0,'nyx','dashboard','Utilisateur du site','fa fa-user'),(2,'Administrateur',0,0,'nyx','dashboard','Administrateur du site','fa fa-flag'),(5,'Accès de la salle',2,1,'nyx','dashboard','Formateur','fa fa-user'),(6,'Gestion du filtrage',0,1,'nyx','dashboard','Formateur','fa fa-user'),(7,'Statistiques d\'utilisation',0,1,'nyx','dashboard','Personnel Administratif','fa fa-user');
+INSERT INTO `uf_group` VALUES (1,'Utilisateurs du site',1,0,'nyx','dashboard','Utilisateur du site','fa fa-user'),(2,'Administrateur',0,0,'nyx','dashboard','Administrateur du site','fa fa-flag'),(5,'Accès de la salle',2,1,'nyx','access','Formateur','fa fa-user'),(6,'Gestion du filtrage',0,1,'nyx','dashboard','Formateur','fa fa-user'),(7,'Statistiques d\'utilisation',0,1,'nyx','dashboard','Personnel Administratif','fa fa-user');
 /*!40000 ALTER TABLE `uf_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,7 +246,7 @@ CREATE TABLE `uf_group_user` (
 
 LOCK TABLES `uf_group_user` WRITE;
 /*!40000 ALTER TABLE `uf_group_user` DISABLE KEYS */;
-INSERT INTO `uf_group_user` VALUES (1,1,1),(2,2,1),(3,2,2),(4,2,5),(5,2,6),(6,2,7);
+INSERT INTO `uf_group_user` VALUES (1,1,1),(3,2,2),(4,2,5),(5,2,6),(6,2,7);
 /*!40000 ALTER TABLE `uf_group_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +308,7 @@ CREATE TABLE `uf_salle` (
 
 LOCK TABLES `uf_salle` WRITE;
 /*!40000 ALTER TABLE `uf_salle` DISABLE KEYS */;
-INSERT INTO `uf_salle` VALUES (14,'1','rez de chaussée','10.0.0.0',8);
+INSERT INTO `uf_salle` VALUES (14,'1','rez de chaussée','10.0.0.0',9);
 /*!40000 ALTER TABLE `uf_salle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -345,8 +346,35 @@ CREATE TABLE `uf_user` (
 
 LOCK TABLES `uf_user` WRITE;
 /*!40000 ALTER TABLE `uf_user` DISABLE KEYS */;
-INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-10-14 00:20:09',1,1,'fr_FR'),(2,'florian','Florian Cartron','$2y$10$zlKxcGNxF0Yzuc0SgFOdk.ccvON3ogz7tPdc6MV79w80nRizvBP/.','florian.cartron@gmail.com','cd52c33fb49f568960305b53af55980e','2015-09-02 15:45:56',0,'2015-09-02 15:45:56',1,'New User','2015-09-01 17:54:49','2015-09-29 15:37:00',1,1,'fr_FR');
+INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-10-18 18:36:14',1,1,'fr_FR'),(2,'florian','Florian Cartron','$2y$10$zlKxcGNxF0Yzuc0SgFOdk.ccvON3ogz7tPdc6MV79w80nRizvBP/.','florian.cartron@gmail.com','cd52c33fb49f568960305b53af55980e','2015-09-02 15:45:56',0,'2015-09-02 15:45:56',1,'New User','2015-09-01 17:54:49','2015-10-17 16:44:48',1,5,'fr_FR');
 /*!40000 ALTER TABLE `uf_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `uf_workinghours`
+--
+
+DROP TABLE IF EXISTS `uf_workinghours`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `uf_workinghours` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `hourstartam` varchar(5) COLLATE utf8_bin DEFAULT NULL,
+  `hourendam` varchar(5) COLLATE utf8_bin DEFAULT NULL,
+  `hourstartpm` varchar(5) COLLATE utf8_bin DEFAULT NULL,
+  `hourendpm` varchar(5) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `uf_workinghours`
+--
+
+LOCK TABLES `uf_workinghours` WRITE;
+/*!40000 ALTER TABLE `uf_workinghours` DISABLE KEYS */;
+INSERT INTO `uf_workinghours` VALUES (1,'9:00','12:30','14:00','17:30');
+/*!40000 ALTER TABLE `uf_workinghours` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -358,4 +386,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-14 22:36:44
+-- Dump completed on 2015-10-20 19:11:45

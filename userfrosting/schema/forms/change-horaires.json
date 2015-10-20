@@ -1,0 +1,58 @@
+{
+    "timepicker1": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 50
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "timepicker2": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 50
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "timepicker3": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 50
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "timepicker4": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 50
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    }
+}

@@ -2,9 +2,7 @@
 
 namespace UserFrosting;
 
-/* This class is responsible for retrieving workinghours object(s) from the database, checking for existence, etc. */
-
-class MySqlWorkingHoursLoader extends MySqlObjectLoader {
+class MySqlCustomConfItemLoader extends MySqlObjectLoader {
 
     protected static $_table;       // The table whose rows this class represents. Must be set in the child concrete class.   
 
@@ -16,7 +14,7 @@ class MySqlWorkingHoursLoader extends MySqlObjectLoader {
         $results = parent::fetch($value, $name);
 
         if ($results)
-            return new MySqlWorkingHours($results, $results['id']);
+            return new MySqlCustomConfItem($results, $results['id']);
         else
             return false;
     }
@@ -26,7 +24,7 @@ class MySqlWorkingHoursLoader extends MySqlObjectLoader {
 
         $results = [];
         foreach ($resultArr as $id => $group)
-            $results[$id] = new MySqlWorkingHours($group, $id);
+            $results[$id] = new MySqlCustomConfItem($group, $id);
 
         return $results;
     }

@@ -122,6 +122,16 @@ $table_workinghours = new \UserFrosting\DatabaseTable($app->config('db')['db_pre
     "hourendpm"
 ]);
 
+$table_custom_conf = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "custom_conf", [
+    "name", 
+    "description"
+]);
+
+$table_custom_conf_items = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "custom_conf_items", [
+    "url", 
+    "id_custom_conf"
+]);
+
 $table_group_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "group_user");
 $table_configuration = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "configuration");
 $table_authorize_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "authorize_user");
@@ -133,6 +143,8 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\Database::setTable("logline", $table_logline);
 \UserFrosting\Database::setTable("customblacklist", $table_customblacklist);
 \UserFrosting\Database::setTable("workinghours", $table_workinghours);
+\UserFrosting\Database::setTable("custom_conf", $table_custom_conf);
+\UserFrosting\Database::setTable("custom_conf_items", $table_custom_conf_items);
 \UserFrosting\Database::setTable("group_user", $table_group_user);
 \UserFrosting\Database::setTable("configuration", $table_configuration);
 \UserFrosting\Database::setTable("authorize_user", $table_authorize_user);
@@ -144,6 +156,8 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\MySqlSalleLoader::init($table_salle);
 \UserFrosting\MySqlLoglineLoader::init($table_logline);
 \UserFrosting\MySqlCustomBlacklistLoader::init($table_customblacklist);
+\UserFrosting\MySqlCustomConfLoader::init($table_custom_conf);
+\UserFrosting\MySqlCustomConfItemLoader::init($table_custom_conf_items);
 \UserFrosting\MySqlWorkingHoursLoader::init($table_workinghours);
 
 
@@ -390,6 +404,9 @@ $app->hook('includes.js.register', function () use ($app){
     
         // Blacklist JS
     $app->schema->registerJS("blacklist", "widget-blacklist.js");
+    
+            // Blacklist JS
+    $app->schema->registerJS("customlist", "widget-listes.js");
 }, 1);  
 
 /* TODO: enable Twig caching?

@@ -1,0 +1,30 @@
+{
+    "name": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 20
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "description": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 100
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    }
+}

@@ -390,9 +390,9 @@ $app->get('/confgen/?', function () use ($app) {
 });
 
 /* $app->post('/confgen/?', function () use ($app) {
-    $controller = new UF\AdminController($app);
-    return $controller->siteSettings();
-});
+  $controller = new UF\AdminController($app);
+  return $controller->siteSettings();
+  });
  */
 
 
@@ -429,7 +429,7 @@ $app->get('/forms/blacklist/?', function () use ($app) {
     $controller = new UF\FilterController($app);
     return $controller->formBlacklistCreate();
 });
-// Create salles
+// Create 
 $app->post('/addblacklist/?', function () use ($app) {
     $controller = new UF\FilterController($app);
     return $controller->createBlacklist($app->user->id);
@@ -445,6 +445,33 @@ $app->get('/horaires/?', function () use ($app) {
 $app->post('/horaires/?', function () use ($app) {
     $controller = new UF\AdminController($app);
     return $controller->changeHoraires();
+});
+
+
+//Affichage des listes de filtrage perso
+$app->get('/customfilter/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    if (isset($_GET["listselect"])) {
+        $idlist = $_GET["listselect"];
+    } else {
+        $idlist = 0;
+    }
+    return $controller->pageCustomFilter($idlist);
+});
+//Ajout nouvelle liste
+$app->post('/customfilter/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->createCustomFilterList();
+});
+//Formulaire de création d'une nouvelle liste
+$app->get('/forms/customlist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->formCustomFilterListCreate();
+});
+//Suppression d'une liste de filtrage
+$app->post('/customfilter/b/:list_id/delete/?', function ($list_id) use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->deleteCustomFilterList($list_id);
 });
 
 $app->run();

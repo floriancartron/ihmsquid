@@ -1,0 +1,105 @@
+{% set page_group = "customlist" %}
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'components/head.html' %}
+
+    <body>
+        <div id="wrapper">
+            {% include 'components/nav-account.html' %}
+            <div id="page-wrapper">
+                {% include 'components/alerts.html' %}
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-list-ul'></i> Gestion des listes</h3>
+                            </div>
+                            <div class='panel-body'>
+
+
+                                <form name="list" method="get" action="{{form_action}}">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-12">Selectionnez une liste de filtrage :</label>
+                                        <br /> <br />
+                                        <div class="col-sm-12">
+
+                                            <select id="listselect" class='form-control select2' name="listselect" onchange='this.form.submit()'>
+                                                {% for list in lists %}
+                                                <option value="{{list.id}}" {% if list.id == selectedlist.id %}selected{% endif %}>{{list.name}}</option>
+                                                {% endfor %}       
+                                            </select>
+                                            <br /> <br />
+
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                                    <div class="col-sm-4 ">
+                                        <button type="button" class="btn btn-success js-list-create" data-toggle="modal" data-target="#dialog-list-create">
+                                            <i class="fa fa-plus-square"></i>  Créer une nouvelle liste
+                                        </button>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-list-ul'></i> Détail de la liste "{{selectedlist.name}}"</h3>
+                            </div>
+                            <div class='panel-body'>
+                                Description: {{selectedlist.description}}<br /> <br />
+                                <div class="table-responsive">
+                                    <table class="tablesorter table table-bordered table-hover table-striped tablesorter-bootstrap tablesorter-std" data-sortlist="[[0, 0]]">
+                                        <thead>
+                                            <tr>
+                                                <th class="sorter-metatext">url<i class="fa fa-sort"></i></th>
+                                                <th class="sorter-metatext">Action<i class="fa fa-sort"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for site in sites %}
+                                            <tr>
+                                                <td>
+                                                    {{site.url}}
+                                                </td>                                  
+                                                <td>
+                                                    <a href="#" data-id="{{blacklistitem.id}}" class="js-blacklist-delete" data-name="{{blacklistitem.url}}" data-target="#dialog-blacklist-delete" data-toggle="modal">
+                                                        <i class="fa fa-trash-o"></i> Supprimer
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <div class="pager pager-lg tablesorter-pager">
+                                        <span class='pager-control first' title='First page'><i class='fa fa-angle-double-left'></i></span>
+                                        <span class='pager-control prev' title='Previous page'><i class='fa fa-angle-left'></i></span>
+                                        <span class='pagedisplay'></span> <!-- this can be any element, including an input -->
+                                        <span class='pager-control next' title='Next page'><i class='fa fa-angle-right'></i></span>
+                                        <span class='pager-control last' title= 'Last page'><i class='fa fa-angle-double-right'></i></span>
+                                        <br><br>
+                                        Aller à: <select class='gotoPage'></select>
+                                        &bull; Voir: <select class='pagesize'>
+                                            <option value='2'>2</option>
+                                            <option value='5'>5</option>
+                                            <option value='10'>10</option>
+                                            <option value='100'>100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+
+                {% include 'components/footer.html' %}    
+            </div>
+        </div>
+
+    </body>
+</html>
+

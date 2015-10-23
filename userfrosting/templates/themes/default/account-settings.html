@@ -40,15 +40,15 @@
                                 {% endif %}
                                 {% if checkAccess('update_account_setting', {('user'): user, ('property'): 'locale'}) %}
                                 <div class="form-group">
-                                    <label for="input_locale" class="col-sm-4 control-label">Localisation</label>
-                                    <div class="col-sm-8">
-                                        <select id="input_locale" class='form-control select2' name="locale">
+                                    <!--<label for="input_locale" class="col-sm-4 control-label">Localisation</label>-->
+                                    <!--<div class="col-sm-8">-->
+                                        <select id="input_locale" class='form-control select2' name="locale" style="visibility:hidden;">
                                             {% for option, label in locales %}
                                             <option value="{{option}}" {% if (option == user.locale) %}selected{% endif %}>{{label}}</option>
                                             {% endfor %}
                                         </select>
-                                        <p class="help-block">La langue et la localisation de votre compte.</p>
-                                    </div>
+                                        <!--<p class="help-block">La langue et la localisation de votre compte.</p>-->
+                                    <!--</div>-->
                                 </div>
                                 {% endif %}
                                 {% if checkAccess('update_account_setting', {('user'): user, ('property'): 'password'}) %}

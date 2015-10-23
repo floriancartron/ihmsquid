@@ -70,7 +70,7 @@
                 <label for="input_locale">Zone géographique</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-language"></i></span>
-                    <select id="input_locale" class='form-control select2' name="locale" {% if 'locale' in fields.disabled %}disabled{% endif %}>
+                    <select id="input_locale" class='form-control select2' name="locale" disabled>
                         {% for option, label in locales %}
                         <option value="{{option}}" {% if (option == target_user.locale) %}selected{% endif %}>{{label}}</option>
                         {% endfor %}

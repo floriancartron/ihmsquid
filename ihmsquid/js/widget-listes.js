@@ -165,9 +165,9 @@ function deleteSalleDialog(box_id, list_id, name){
     
 	var data = {
 		box_id: box_id,
-		box_title: "Suppression de la list",
-		confirm_message: "Voulez-vous vraiment supprimer la list " + name + "?",
-		confirm_button: "Oui supprimer la list"
+		box_title: "Suppression de la liste",
+		confirm_message: "Voulez-vous vraiment supprimer la liste \"" + name + "\"?",
+		confirm_button: "Oui supprimer la liste"
 	}
 	
 	// Generate the form

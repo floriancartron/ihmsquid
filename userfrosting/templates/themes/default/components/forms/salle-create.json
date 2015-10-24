@@ -1,0 +1,44 @@
+{
+    "name": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 50
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "description": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 100
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "network": {
+        "validators": {
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        }
+    },
+    "mask_cidr": {
+        "validators": {
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        }
+    }
+}

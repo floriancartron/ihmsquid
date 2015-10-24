@@ -1,0 +1,16 @@
+{
+    "url": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 200
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    }
+}

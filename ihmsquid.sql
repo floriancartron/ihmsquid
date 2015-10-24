@@ -127,8 +127,9 @@ DROP TABLE IF EXISTS `uf_custom_conf`;
 CREATE TABLE `uf_custom_conf` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `description` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,6 +138,7 @@ CREATE TABLE `uf_custom_conf` (
 
 LOCK TABLES `uf_custom_conf` WRITE;
 /*!40000 ALTER TABLE `uf_custom_conf` DISABLE KEYS */;
+INSERT INTO `uf_custom_conf` VALUES (1,'Aucun accès',''),(2,'Accès total','');
 /*!40000 ALTER TABLE `uf_custom_conf` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,11 +152,10 @@ DROP TABLE IF EXISTS `uf_custom_conf_items`;
 CREATE TABLE `uf_custom_conf_items` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `url` varchar(200) COLLATE utf8_bin DEFAULT NULL,
-  `description` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `id_user` int(11) DEFAULT NULL,
+  `id_custom_conf` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`),
-  CONSTRAINT `uf_custom_conf_items_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `uf_user` (`id`)
+  KEY `id_custom_conf` (`id_custom_conf`),
+  CONSTRAINT `uf_custom_conf_items_ibfk_1` FOREIGN KEY (`id_custom_conf`) REFERENCES `uf_custom_conf` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -182,7 +183,7 @@ CREATE TABLE `uf_customblacklist` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `uf_customblacklist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `uf_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,7 +347,7 @@ CREATE TABLE `uf_user` (
 
 LOCK TABLES `uf_user` WRITE;
 /*!40000 ALTER TABLE `uf_user` DISABLE KEYS */;
-INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-10-18 18:36:14',1,1,'fr_FR'),(2,'florian','Florian Cartron','$2y$10$zlKxcGNxF0Yzuc0SgFOdk.ccvON3ogz7tPdc6MV79w80nRizvBP/.','florian.cartron@gmail.com','cd52c33fb49f568960305b53af55980e','2015-09-02 15:45:56',0,'2015-09-02 15:45:56',1,'New User','2015-09-01 17:54:49','2015-10-17 16:44:48',1,5,'fr_FR');
+INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-10-23 01:05:00',1,1,'fr_FR'),(2,'florian','Florian Cartron','$2y$10$zlKxcGNxF0Yzuc0SgFOdk.ccvON3ogz7tPdc6MV79w80nRizvBP/.','florian.cartron@gmail.com','cd52c33fb49f568960305b53af55980e','2015-09-02 15:45:56',0,'2015-09-02 15:45:56',1,'New User','2015-09-01 17:54:49','2015-10-17 16:44:48',1,5,'fr_FR');
 /*!40000 ALTER TABLE `uf_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,4 +387,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-20 19:11:45
+-- Dump completed on 2015-10-24 13:23:08

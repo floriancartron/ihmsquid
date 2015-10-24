@@ -469,9 +469,24 @@ $app->get('/forms/customlist/?', function () use ($app) {
     return $controller->formCustomFilterListCreate();
 });
 //Suppression d'une liste de filtrage
-$app->post('/customfilter/b/:list_id/delete/?', function ($list_id) use ($app) {
+$app->post('/customfilter/c/:list_id/delete/?', function ($list_id) use ($app) {
     $controller = new UF\FilterController($app);
     return $controller->deleteCustomFilterList($list_id);
 });
 
+//Suppression d'un site d'une liste de filtrage
+$app->post('/customfilteritem/c/:list_id/delete/?', function ($list_id) use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->deleteCustomFilterItem($list_id);
+});
+//Formulaire de création d'un site de liste de filtrage
+$app->get('/forms/customlistitem/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->formCustomFilterListItemCreate();
+});
+//Ajout nouvelle liste
+$app->post('/customlistitem/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->createCustomFilterListItem();
+});
 $app->run();

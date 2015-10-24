@@ -99,10 +99,6 @@ class FilterController extends \UserFrosting\BaseController {
 
         $template = "components/blacklist-info-modal.html";
 
-        $masks = array();
-        for ($x = 8; $x <= 30; $x++) {
-            $masks[] = $x;
-        }
 
 //        // Determine authorized fields
 //        $show_fields = ['name', 'new_user_title', 'landing_page', 'theme', 'is_default', 'icon'];
@@ -189,11 +185,16 @@ class FilterController extends \UserFrosting\BaseController {
         if (!$this->_app->user->checkAccess('uri_filterconf')) {
             $this->_app->notFound();
         }
-
+        $showitems = true;
         $lists = MySqlCustomConfLoader::fetchAllExceptStandard();
         if ($idlist == 0) {
-            $idlist = array_values($lists)[0]->id;
+            if (isset(array_values($lists)[0])) {
+                $idlist = array_values($lists)[0]->id;
+            } else {
+                $showitems = false;
+            }
         }
+
         $sites = MySqlCustomConfItemLoader::fetchAll($idlist, "id_custom_conf");
         $selectedlist = MySqlCustomConfLoader::fetch($idlist);
         $this->_app->render('customfilter.html', [
@@ -205,7 +206,8 @@ class FilterController extends \UserFrosting\BaseController {
             ],
             "lists" => $lists,
             "selectedlist" => $selectedlist,
-            "sites" => $sites
+            "sites" => $sites,
+            "showitems" => $showitems   
         ]);
     }
 
@@ -311,6 +313,148 @@ class FilterController extends \UserFrosting\BaseController {
 
         // Success message
         $ms->addMessageTranslated("success", "Liste '{{name}}' ajoutée", $data);
+    }
+
+    public function deleteCustomFilterList($list_id) {
+
+        $l = MySqlCustomConfLoader::fetch($list_id);
+
+        // Get the alert message stream
+        $ms = $this->_app->alerts;
+
+        // Check authorization
+        if (!$this->_app->user->checkAccess('uri_filterconf')) {
+            $ms->addMessageTranslated("danger", "ACCESS_DENIED");
+            $this->_app->halt(403);
+        }
+
+
+
+        $ms->addMessageTranslated("success", "Liste '{{name}}' supprimée", ["name" => $l->name]);
+        $l->delete();
+        unset($l);
+    }
+
+    public function deleteCustomFilterItem($list_id) {
+
+        $l = MySqlCustomConfItemLoader::fetch($list_id);
+
+        // Get the alert message stream
+        $ms = $this->_app->alerts;
+
+        // Check authorization
+        if (!$this->_app->user->checkAccess('uri_filterconf')) {
+            $ms->addMessageTranslated("danger", "ACCESS_DENIED");
+            $this->_app->halt(403);
+        }
+
+
+
+        $ms->addMessageTranslated("success", "Site '{{url}}' supprimé", ["url" => $l->url]);
+        $l->delete();
+        unset($l);
+    }
+    
+    // Display the form for creating a new list item
+    public function formCustomFilterListItemCreate() {
+
+        // Access-controlled resource
+        if (!$this->_app->user->checkAccess('uri_filterconf')) {
+            $this->_app->notFound();
+        }
+
+        $get = $this->_app->request->get();
+
+        if (isset($get['render']))
+            $render = $get['render'];
+        else
+            $render = "modal";
+
+
+        // Set default values
+        $data['url'] = "";
+
+        // Create a dummy Salle to prepopulate fields
+        $l = new MySqlCustomConfItem($data);
+
+
+        $template = "components/customlistitem-info-modal.html";
+
+
+//        // Determine authorized fields
+//        $show_fields = ['name', 'new_user_title', 'landing_page', 'theme', 'is_default', 'icon'];
+        $disabled_fields = [];
+
+// Load validator rules
+        $schema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/customlistitem-create.json");
+        $validators = new \Fortress\ClientSideValidator($schema, $this->_app->translator);
+
+        $this->_app->render($template, [
+            "box_id" => $get['box_id'],
+            "box_title" => "Ajout d'un site à une liste personnalisée",
+            "submit_button" => "Ajouter le site",
+            "form_action" => $this->_app->site->uri['public'] . "/customlistitem",
+            "l" => $l,
+            "fields" => [
+                "disabled" => $disabled_fields,
+                "hidden" => []
+            ],
+            "buttons" => [
+                "hidden" => [
+                    "edit", "delete"
+                ]
+            ],
+            "validators" => $validators->formValidationRulesJson()
+        ]);
+    }
+    public function createCustomFilterListItem() {
+        $post = $this->_app->request->post();
+
+        // DEBUG: view posted data
+//        error_log(print_r($post, true));
+        // Load the request schema
+        $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/customlistitem-create.json");
+
+        // Get the alert message stream
+        $ms = $this->_app->alerts;
+
+        // Access-controlled resource
+        if (!$this->_app->user->checkAccess('uri_filterconf')) {
+            $ms->addMessageTranslated("danger", "ACCESS_DENIED");
+            $this->_app->halt(403);
+        }
+
+        // Set up Fortress to process the request
+        $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
+
+        $rf->sanitize();
+        // Validate, and halt on validation errors.
+        $error = !$rf->validate(true);
+
+        // Get the filtered data
+        $data = $rf->data();
+
+//        
+        // Remove csrf_token from object data
+        $rf->removeFields(['csrf_token']);
+
+        // Check if name already exists
+//        if (MySqlCustomConfLoader::exists($data['name'], 'name')) {
+//            $ms->addMessageTranslated("danger", "Le nom existe déjà", $post);
+//            $error = true;
+//        }
+
+        // Halt on any validation errors
+        if ($error) {
+            $this->_app->halt(400);
+        }
+
+
+        $l = new MySqlCustomConfItem($data);
+        $l->store();
+
+        // Success message
+        $ms->addMessageTranslated("success", "Site '{{url}}' ajouté à la liste", $data);
     }
 
 }

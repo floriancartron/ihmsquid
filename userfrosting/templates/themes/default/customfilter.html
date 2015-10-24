@@ -45,6 +45,7 @@
                             </div>
                         </div>
                     </div>
+                    {% if showitems %}
                     <div class="col-sm-8">
                         <div class='panel panel-primary'>
                             <div class='panel-heading'>
@@ -67,7 +68,7 @@
                                                     {{site.url}}
                                                 </td>                                  
                                                 <td>
-                                                    <a href="#" data-id="{{blacklistitem.id}}" class="js-blacklist-delete" data-name="{{blacklistitem.url}}" data-target="#dialog-blacklist-delete" data-toggle="modal">
+                                                    <a href="#" data-id="{{site.id}}" class="js-listitem-delete" data-name="{{site.url}}" data-target="#dialog-listitem-delete" data-toggle="modal">
                                                         <i class="fa fa-trash-o"></i> Supprimer
                                                     </a>
                                                 </td>
@@ -90,15 +91,22 @@
                                             <option value='100'>100</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-sm-4 ">
-                                    <button type="button" class="btn btn-danger js-list-delete" data-toggle="modal" data-id="{{selectedlist.id}}" data-name="{{selectedlist.name}}" data-target="#dialog-list-delete">
+                                </div
+                                <div class="col-sm-12 ">
+                                    <button type="button" class="col-sm-4 btn btn-success js-listitem-create" data-toggle="modal" data-id="{{selectedlist.id}}" data-target="#dialog-listitem-create">
+                                        <i class="fa fa-plus-square"></i>  Ajouter un site à la liste
+                                    </button>
+                                    <button type="button" class="col-sm-4 col-sm-offset-4 btn btn-danger js-list-delete" data-toggle="modal" data-id="{{selectedlist.id}}" data-name="{{selectedlist.name}}" data-target="#dialog-list-delete">
                                         <i class="fa fa-trash-o"></i>  Supprimer cette liste
                                     </button>
                                 </div>
+                                <div class="col-sm-4 ">
+
+                                </div>
                             </div>
                         </div>
-                    </div>   
+                    </div>  
+                    {% endif %}
                 </div>
 
                 {% include 'components/footer.html' %}    

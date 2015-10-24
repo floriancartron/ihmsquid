@@ -1,0 +1,23 @@
+{
+    "url": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 200
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "id_custom_conf": {
+        "validators": {
+            "integer": {
+                "message": "VALIDATE_INTEGER"
+            }
+        }
+    }
+}

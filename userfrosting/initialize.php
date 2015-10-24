@@ -405,8 +405,9 @@ $app->hook('includes.js.register', function () use ($app){
         // Blacklist JS
     $app->schema->registerJS("blacklist", "widget-blacklist.js");
     
-            // Blacklist JS
+            // customlist JS
     $app->schema->registerJS("customlist", "widget-listes.js");
+    $app->schema->registerJS("customlist", "widget-listitems.js");
 }, 1);  
 
 /* TODO: enable Twig caching?

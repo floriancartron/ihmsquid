@@ -26,21 +26,21 @@
 
 $(document).ready(function () {
     // Link buttons
-    $('.js-list-create').click(function () {
-        listForm('dialog-list-create');
+    $('.js-listitem-create').click(function () {
+        listItemForm('dialog-list-create');
     });
 
-    $('.js-list-edit').click(function () {
+    $('.js-listitem-edit').click(function () {
         var btn = $(this);
         var list_id = btn.data('id');
-        listForm('dialog-list-edit', list_id);
+        listItemForm('dialog-listitem-edit', list_id);
     });
 
-    $('.js-list-delete').click(function () {
+    $('.js-listitem-delete').click(function () {
         var btn = $(this);
         var list_id = btn.data('id');
         var name = btn.data('name');
-        deleteDialog('dialog-list-delete', list_id, name);
+        deleteListItemDialog('dialog-listitem-delete', list_id, name);
     });
 });
 
@@ -48,7 +48,7 @@ $(document).ready(function () {
 
 /* Display a modal form for updating/creating a list */
 // TODO: This function is highly redundant with userForm.  Can we refactor?
-function listForm(box_id, list_id) {
+function listItemForm(box_id, list_id) {
     list_id = typeof list_id !== 'undefined' ? list_id : "";
 
     // Delete any existing instance of the form with the same name
@@ -61,7 +61,7 @@ function listForm(box_id, list_id) {
         render: 'modal'
     };
 
-    var url = site['uri']['public'] + "/forms/customlist";
+    var url = site['uri']['public'] + "/forms/customlistitem";
 
     // If we are updating an existing list
     if (list_id) {
@@ -103,7 +103,7 @@ function listForm(box_id, list_id) {
                 });
 
                 // Link submission buttons
-                $("form[name='customlist']").formValidation({
+                $("form[name='customlistitem']").formValidation({
                     framework: 'bootstrap',
                     // Feedback icons
                     icon: {
@@ -128,11 +128,15 @@ function listForm(box_id, list_id) {
                         else
                             serializedData += "&" + encodeURIComponent(this.name) + "=0";
                     });
+                    //Append id_customconf
+                    var e = document.getElementById("listselect");
+                    var id_custom_conf = e.options[e.selectedIndex].value;
+                    serializedData += "&id_custom_conf=" + encodeURIComponent(id_custom_conf);
+                    var url = form.attr('action');
                     // Append page CSRF token
                     var csrf_token = $("meta[name=csrf_token]").attr("content");
                     serializedData += "&csrf_token=" + encodeURIComponent(csrf_token);
 
-                    var url = form.attr('action');
                     return $.ajax({
                         type: "POST",
                         url: url,
@@ -155,8 +159,7 @@ function listForm(box_id, list_id) {
             });
 }
 
-function deleteDialog(box_id, list_id, name) {
-
+function deleteListItemDialog(box_id, list_id, name) {
     // Delete any existing instance of the form with the same name
     if ($('#' + box_id).length) {
         $('#' + box_id).remove();
@@ -166,9 +169,9 @@ function deleteDialog(box_id, list_id, name) {
 
     var data = {
         box_id: box_id,
-        box_title: "Suppression de la liste",
-        confirm_message: "Voulez-vous vraiment supprimer la liste \"" + name + "\"?",
-        confirm_button: "Oui supprimer la liste"
+        box_title: "Suppression de site",
+        confirm_message: "Voulez-vous vraiment supprimer le site \"" + name + "\"?",
+        confirm_button: "Oui supprimer le site"
     }
 
     // Generate the form
@@ -188,7 +191,7 @@ function deleteDialog(box_id, list_id, name) {
                 $('#' + box_id).modal('show');
                 $('#' + box_id + ' .js-confirm').click(function () {
 
-                    var url = site['uri']['public'] + "/customfilter/c/" + list_id + "/delete";
+                    var url = site['uri']['public'] + "/customfilteritem/c/" + list_id + "/delete";
 
                     csrf_token = $("meta[name=csrf_token]").attr("content");
                     var data = {
@@ -202,9 +205,7 @@ function deleteDialog(box_id, list_id, name) {
                         data: data
                     }).done(function (result) {
                         // Reload the page
-                        var urltogo = window.location.href;
-                        urltogo = urltogo.substring(0, urltogo.indexOf('?'));
-                        window.location.assign(urltogo);
+                        window.location.reload();
                     }).fail(function (jqXHR) {
                         if (site['debug'] == true) {
                             document.body.innerHTML = jqXHR.responseText;

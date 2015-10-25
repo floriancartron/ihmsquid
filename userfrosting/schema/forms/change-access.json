@@ -1,0 +1,16 @@
+{
+    "salle": {
+        "validators": {
+            "integer": {
+                "message": "VALIDATE_INTEGER"
+            }
+        }
+    },
+    "filter": {
+        "validators": {
+            "integer": {
+                "message": "VALIDATE_INTEGER"
+            }
+        }
+    }
+}

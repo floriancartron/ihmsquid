@@ -406,6 +406,11 @@ $app->get('/access/?', function () use ($app) {
     return $controller->pageAccess();
 });
 
+$app->post('/access/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->changeAccess();
+});
+
 //Consultation des logs
 $app->get('/logs/?', function () use ($app) {
     $controller = new UF\StatsController($app);
@@ -451,12 +456,8 @@ $app->post('/horaires/?', function () use ($app) {
 //Affichage des listes de filtrage perso
 $app->get('/customfilter/?', function () use ($app) {
     $controller = new UF\FilterController($app);
-    if (isset($_GET["listselect"])) {
-        $idlist = $_GET["listselect"];
-    } else {
-        $idlist = 0;
-    }
-    return $controller->pageCustomFilter($idlist);
+
+    return $controller->pageCustomFilter();
 });
 //Ajout nouvelle liste
 $app->post('/customfilter/?', function () use ($app) {

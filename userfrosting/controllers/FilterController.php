@@ -16,22 +16,69 @@ class FilterController extends \UserFrosting\BaseController {
     }
 
     // EG : Page de l'acces à internet
-    public function pageAccess() {
+    public function pageAccess($id = 0) {
         // On vérifie que le user à le droit d'être ici
         if (!$this->_app->user->checkAccess('uri_access')) {
             $this->_app->notFound();
         }
 
+        $salles = MySqlSalleLoader::fetchAll();
+        $customconfs = MySqlCustomConfLoader::fetchAll();
 
+        $get = $this->_app->request->get();
+        $disableapply = false;
+        if (isset($get["salle"])) {
+            $idsalle = $get["salle"];
+        } else {
+            if (isset(array_values($salles)[0])) {
+                $idsalle = array_values($salles)[0]->id;
+            } else {
+                $disableapply = true;
+            }
+        }
+        if ($id != 0) {
+            $idsalle = $id;
+        }
+
+        $selectedsalle = MySqlSalleLoader::fetch($idsalle);
         //On fait le rendu de la page, il faudra créer une bdd pour la rémanence des informations. 
         $this->_app->render('access.html', [
             'page' => [
                 'author' => $this->_app->site->author,
-                'title' => "Paramètres de l'accès à internet.",
+                'title' => "Gestion de la salle",
                 'description' => "",
                 'alerts' => $this->_app->alerts->getAndClearMessages()
-            ]
+            ],
+            'form_action' => $this->_app->site->uri['public'] . "/access",
+            'salles' => $salles,
+            'filters' => $customconfs,
+            'selectedsalle' => $selectedsalle,
+            'disableapply' => $disableapply
         ]);
+    }
+
+    public function changeAccess() {
+        $post = $this->_app->request->post();
+        $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/change-access.json");
+        $ms = $this->_app->alerts;
+        unset($post['csrf_token']);
+        $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
+        // Sanitize
+        $rf->sanitize();
+        // Validate, and halt on validation errors.
+        if (!$rf->validate()) {
+            $this->_app->halt(400);
+        }
+        $data = $rf->data();
+        var_dump($data);
+        $salle = MySqlSalleLoader::fetch($data['salle']);
+        $salle->id_customconf = $data['filter'];
+        if ($salle->store()) {
+            $ms->addMessageTranslated("success", "Mise à jour de l'accès de la salle réussi");
+        } else {
+            $ms->addMessageTranslated("error", "La mise à jour de l'accès a échoué");
+        }
+        $this->pageAccess($salle->id);
     }
 
     public function pageCustomBlacklist() {
@@ -180,20 +227,25 @@ class FilterController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Site '{{url}}' ajouté", $data);
     }
 
-    public function pageCustomFilter($idlist) {
+    public function pageCustomFilter() {
         // Access-controlled page
         if (!$this->_app->user->checkAccess('uri_filterconf')) {
             $this->_app->notFound();
         }
         $showitems = true;
         $lists = MySqlCustomConfLoader::fetchAllExceptStandard();
-        if ($idlist == 0) {
+        $get = $this->_app->request->get();
+        if (isset($get["listselect"])) {
+            $idlist = $get["listselect"];
+        } else {
             if (isset(array_values($lists)[0])) {
                 $idlist = array_values($lists)[0]->id;
             } else {
+                $idlist = 0;
                 $showitems = false;
             }
         }
+
 
         $sites = MySqlCustomConfItemLoader::fetchAll($idlist, "id_custom_conf");
         $selectedlist = MySqlCustomConfLoader::fetch($idlist);
@@ -207,7 +259,7 @@ class FilterController extends \UserFrosting\BaseController {
             "lists" => $lists,
             "selectedlist" => $selectedlist,
             "sites" => $sites,
-            "showitems" => $showitems   
+            "showitems" => $showitems
         ]);
     }
 
@@ -354,7 +406,7 @@ class FilterController extends \UserFrosting\BaseController {
         $l->delete();
         unset($l);
     }
-    
+
     // Display the form for creating a new list item
     public function formCustomFilterListItemCreate() {
 
@@ -407,6 +459,7 @@ class FilterController extends \UserFrosting\BaseController {
             "validators" => $validators->formValidationRulesJson()
         ]);
     }
+
     public function createCustomFilterListItem() {
         $post = $this->_app->request->post();
 
@@ -443,7 +496,6 @@ class FilterController extends \UserFrosting\BaseController {
 //            $ms->addMessageTranslated("danger", "Le nom existe déjà", $post);
 //            $error = true;
 //        }
-
         // Halt on any validation errors
         if ($error) {
             $this->_app->halt(400);

@@ -16,90 +16,63 @@
                             <div class='panel-body'>
 
 
-                                <form name="salle" method="post" action="{{form_action}}">
 
+                                <form name="changesalle" method="get" action="{{form_action}}">
 
 
 
                                     <div class="form-group">
-                                        <label for="input_default_locale" class="col-sm-6	 control-label">Selectionnez votre salle :</label>
+                                        <label class="col-sm-6 control-label">Selectionnez votre salle :</label>
                                         <div class="col-sm-4">
-                                            <select id="input_default_locale" class='form-control select2' name="userfrosting[default_locale]">
-                                                <option value="de_DE" >Salle 001</option>
-                                                <option value="en_US" >Salle 002</option>
-                                                <option value="es_ES" >Salle 003</option>
-                                                <option value="es_ES" >Salle 004</option>                                                                                                <option value="de_DE" >Salle 001</option>
-                                                <option value="en_US" >Salle 100</option>
-                                                <option value="en_US" >Salle 101</option>
-                                                <option value="en_US" >Salle 102</option>
-                                                <option value="es_ES" >Salle 103</option>
-                                                <option value="es_ES" >Salle 104</option>                                                                                                <option value="de_DE" >Salle 001</option>
-                                                <option value="en_US" >Salle 200</option>
-                                                <option value="es_ES" >Salle 201</option>
-                                                <option value="es_ES" >Salle 202</option>                                                                                                <option value="de_DE" >Salle 001</option>
-                                                <option value="en_US" >Salle 203</option>
-                                                <option value="en_US" >Salle 204</option>
-                                                <option value="es_ES" >Salle 300</option>
-                                                <option value="es_ES" >Salle 301</option>
-                                                <option value="es_ES" >Salle 302</option>
-                                                <option value="es_ES" >Salle 303</option>
-                                                <option value="es_ES" >Salle 304</option>
+                                            <select id="salle" class='form-control select2' name="salle" onchange='this.form.submit()'>
+                                                {% for salle in salles %}
+                                                <option value="{{salle.id}}" {% if salle.id == selectedsalle.id %}selected{% endif %}>{{salle.name}}</option>
+                                                {% endfor %}
                                             </select>
                                             <br /> <br />
 
                                         </div>
                                     </div>
 
-
-
+                                </form>
+                                <form name="access" method="post" action="{{form_action}}">
                                     <div class="form-group">
-                                        <label for="input_default_locale" class="col-sm-6 control-label">Choix du niveau de filtrage :</label>
+                                        <input type="hidden" id="salle" name="salle" value="{{selectedsalle.id}}"/>
+                                        <input type="hidden" name="{{csrf_key}}" id="{{csrf_key}}" value="{{csrf_token}}">
+                                        <label class="col-sm-6 control-label">Choix du niveau de filtrage :</label>
                                         <div class="col-sm-4">
-                                            <select id="input_default_locale" class='form-control select2' name="userfrosting[default_locale]">
-                                                <option value="de_DE" >Aucun accès</option>
-                                                <option value="de_DE" >niveau personnalisé 1</option>
-                                                <option value="de_DE" >niveau personnalisé 2</option>
-                                                <option value="de_DE" >Accès Total</option>
+                                            <select id="filter" class='form-control select2' name="filter">
+                                                {% for filter in filters %}
+                                                <option value="{{filter.id}}" {% if filter.id == selectedsalle.id_customconf %}selected{% endif %}>{{filter.name}} {% if filter.id == selectedsalle.id_customconf %}(Actif){% endif %}</option>
+                                                {% endfor %}
                                             </select>
 
                                         </div>
                                     </div>
 
 
-
-
-
-
                                     <div class="col-sm-4 col-sm-offset-4">
                                         <br /><br /><br />
                                         <div class="vert-pad">
 
-                                            <button type="button" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter...">
-                                                Appliquer
-                                            </button>
-                                        </div>      
+                                            <button type="submit" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter..." {% if disableapply %}disabled{% endif %}>
+                                                    Appliquer
+                                        </button>
+                                    </div>      
+                                </div>
+                            </form>
 
 
-                                    </div>
-
-
-
-
-
-                                </form>
-
-
-
-                            </div>
                         </div>
                     </div>
-
                 </div>
 
-                {% include 'components/footer.html' %}    
             </div>
-        </div>
 
-    </body>
+            {% include 'components/footer.html' %}    
+        </div>
+    </div>
+
+</body>
 </html>
 

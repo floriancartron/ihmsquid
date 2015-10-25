@@ -67,10 +67,10 @@
         {% if 'locale' not in fields.hidden %}
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="input_locale">Zone géographique</label>
+                <label for="input_locale">Langue</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-language"></i></span>
-                    <select id="input_locale" class='form-control select2' name="locale" disabled>
+                    <select id="input_locale" class='form-control select2' name="locale">
                         {% for option, label in locales %}
                         <option value="{{option}}" {% if (option == target_user.locale) %}selected{% endif %}>{{label}}</option>
                         {% endfor %}
@@ -101,11 +101,12 @@
         <div class="col-sm-6">
             <h5>Groupes</h5>
             <ul class="list-group permission-summary-rows">
+            <input type="hidden" name="groups[1]" data-id="1" value="1">
             {% for group in groups %}
                 <li class="list-group-item">
                     {{group.name}}
                     <span class="pull-right">
-                      <input type="checkbox" name="groups[{{group.id}}]" class="form-control bootstrapswitch" data-id="{{group.id}}" {% if group.member %}checked{% endif %} {% if group.id is sameas(1) %}disabled{% endif %}>
+                      <input type="checkbox" name="groups[{{group.id}}]" class="form-control bootstrapswitch" data-id="{{group.id}}" {% if group.member %}checked{% endif %}>
                       {% if 'primary_group_id' not in fields.hidden %} 
                       <button type="button" class="bootstrapradio btn btn-xs" name="primary_group_id" value="{{group.id}}" title="Set as primary group" data-selected="{% if group.id == target_user.primary_group_id %}true{% else %}false{% endif %}" {% if not group.member or 'primary_group_id' in fields.disabled %}disabled{% endif %}>
                         <i class="fa fa-home"></i>

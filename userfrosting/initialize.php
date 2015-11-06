@@ -133,6 +133,12 @@ $table_custom_conf_items = new \UserFrosting\DatabaseTable($app->config('db')['d
     "id_custom_conf"
 ]);
 
+$table_blacklist_categories = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "blacklist_categories", [
+    "category_name", 
+    "allowed"
+]);
+
+
 $table_group_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "group_user");
 $table_configuration = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "configuration");
 $table_authorize_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "authorize_user");
@@ -146,6 +152,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\Database::setTable("workinghours", $table_workinghours);
 \UserFrosting\Database::setTable("custom_conf", $table_custom_conf);
 \UserFrosting\Database::setTable("custom_conf_items", $table_custom_conf_items);
+\UserFrosting\Database::setTable("blacklist_categories", $table_blacklist_categories);
 \UserFrosting\Database::setTable("group_user", $table_group_user);
 \UserFrosting\Database::setTable("configuration", $table_configuration);
 \UserFrosting\Database::setTable("authorize_user", $table_authorize_user);
@@ -159,6 +166,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\MySqlCustomBlacklistLoader::init($table_customblacklist);
 \UserFrosting\MySqlCustomConfLoader::init($table_custom_conf);
 \UserFrosting\MySqlCustomConfItemLoader::init($table_custom_conf_items);
+\UserFrosting\MySqlBlacklistCategoriesLoader::init($table_blacklist_categories);
 \UserFrosting\MySqlWorkingHoursLoader::init($table_workinghours);
 
 

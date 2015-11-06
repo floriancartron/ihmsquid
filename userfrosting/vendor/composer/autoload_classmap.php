@@ -39,6 +39,8 @@ return array(
     'UserFrosting\\GroupObjectInterface' => $baseDir . '/models/DatabaseInterface.php',
     'UserFrosting\\InstallController' => $baseDir . '/controllers/InstallController.php',
     'UserFrosting\\MySqlAuthLoader' => $baseDir . '/models/mysql/MySqlAuthLoader.php',
+    'UserFrosting\\MySqlBlacklistCategories' => $baseDir . '/models/mysql/MySqlBlacklistCategories.php',
+    'UserFrosting\\MySqlBlacklistCategoriesLoader' => $baseDir . '/models/mysql/MySqlBlacklistCategoriesLoader.php',
     'UserFrosting\\MySqlCustomBlacklist' => $baseDir . '/models/mysql/MySqlCustomBlacklist.php',
     'UserFrosting\\MySqlCustomBlacklistLoader' => $baseDir . '/models/mysql/MySqlCustomBlacklistLoader.php',
     'UserFrosting\\MySqlCustomConf' => $baseDir . '/models/mysql/MySqlCustomConf.php',

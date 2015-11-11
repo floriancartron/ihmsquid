@@ -68,9 +68,9 @@ class AdminController extends \UserFrosting\BaseController {
             $this->_app->halt(400);
         }
         $data = $rf->data();
-        if (MySqlWorkingHoursLoader::update(1, $data["timepicker1"], $data["timepicker2"],$data["timepicker3"],$data["timepicker4"])){
+        if (MySqlWorkingHoursLoader::update(1, $data["timepicker1"], $data["timepicker2"], $data["timepicker3"], $data["timepicker4"])) {
             $ms->addMessageTranslated("success", "Mise à jour des horaires réussie");
-        }else{
+        } else {
             $ms->addMessageTranslated("error", "La mise à jour des horaires a échoué");
         }
         $this->pageHoraires();
@@ -142,6 +142,41 @@ class AdminController extends \UserFrosting\BaseController {
             }
         }
         $this->_app->site->store();
+    }
+
+    //Fonction d'affichage de la page de gestion des horaires
+    public function pageCategories() {
+        // On vérifie que le user à le droit d'être ici
+        if (!$this->_app->user->checkAccess('app_admin')) {
+            $this->_app->notFound();
+        }
+
+        $categories = MySqlBlacklistCategoriesLoader::fetchAll();
+        //On fait le rendu de la page, il faudra créer une bdd pour la rémanence des informations. 
+        $this->_app->render('categories.html', [
+            'page' => [
+                'author' => $this->_app->site->author,
+                'title' => "Liste noire",
+                'description' => "",
+                "form_action" => $this->_app->site->uri['public'] . "/blacklist",
+                'alerts' => $this->_app->alerts->getAndClearMessages()
+            ],
+            "categories" => $categories
+        ]);
+    }
+
+    public function changeCategories() {
+        $post = $this->_app->request->post();
+        $ms = $this->_app->alerts;
+        unset($post['csrf_token']);
+        MySqlBlacklistCategoriesLoader::reset();
+        foreach ($post as $categorie => $p) {
+            MySqlBlacklistCategoriesLoader::setAllowed($categorie);
+        }
+
+        $ms->addMessageTranslated("success", "Mise à jour des catégories bloquées réussie");
+
+        $this->pageCategories();
     }
 
 }

@@ -490,4 +490,19 @@ $app->post('/customlistitem/?', function () use ($app) {
     $controller = new UF\FilterController($app);
     return $controller->createCustomFilterListItem();
 });
+
+//Affichage de la page de gestion des catégories de blacklist
+$app->get('/blacklist/?', function () use ($app) {
+    $controller = new UF\AdminController($app);
+    return $controller->pageCategories();
+});
+
+//Changement de conf des catégories de blacklist
+$app->post('/blacklist/?', function () use ($app) {
+    $controller = new UF\AdminController($app);
+    return $controller->changeCategories();
+});
+
+
+
 $app->run();

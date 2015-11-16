@@ -138,6 +138,10 @@ $table_blacklist_categories = new \UserFrosting\DatabaseTable($app->config('db')
     "allowed"
 ]);
 
+$table_confgen = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "confgen", [
+    "libelle", 
+    "value"
+]);
 
 $table_group_user = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "group_user");
 $table_configuration = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "configuration");
@@ -153,6 +157,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\Database::setTable("custom_conf", $table_custom_conf);
 \UserFrosting\Database::setTable("custom_conf_items", $table_custom_conf_items);
 \UserFrosting\Database::setTable("blacklist_categories", $table_blacklist_categories);
+\UserFrosting\Database::setTable("confgen", $table_confgen);
 \UserFrosting\Database::setTable("group_user", $table_group_user);
 \UserFrosting\Database::setTable("configuration", $table_configuration);
 \UserFrosting\Database::setTable("authorize_user", $table_authorize_user);
@@ -166,6 +171,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\MySqlCustomBlacklistLoader::init($table_customblacklist);
 \UserFrosting\MySqlCustomConfLoader::init($table_custom_conf);
 \UserFrosting\MySqlCustomConfItemLoader::init($table_custom_conf_items);
+\UserFrosting\MySqlConfgenLoader::init($table_confgen);
 \UserFrosting\MySqlBlacklistCategoriesLoader::init($table_blacklist_categories);
 \UserFrosting\MySqlWorkingHoursLoader::init($table_workinghours);
 

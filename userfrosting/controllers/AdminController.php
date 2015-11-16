@@ -21,15 +21,23 @@ class AdminController extends \UserFrosting\BaseController {
         if (!$this->_app->user->checkAccess('app_admin')) {
             $this->_app->notFound();
         }
-
-        //On fait le rendu de la page, il faudra créer une bdd pour la rémanence des informations. 
+        $ip_squid = MySqlConfgenLoader::fetch("ip_squid", "libelle");
+        $ssh_user = MySqlConfgenLoader::fetch("ssh_user", "libelle");
+        $squidguard_conf_path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
+        $schema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/confgen.json");
+        $validators = new \Fortress\ClientSideValidator($schema, $this->_app->translator);
         $this->_app->render('confgen.html', [
             'page' => [
                 'author' => $this->_app->site->author,
-                'title' => "Paramètres de Squid",
+                'title' => "Configuration générale",
                 'description' => "",
-                'alerts' => $this->_app->alerts->getAndClearMessages()
-            ]
+                'alerts' => $this->_app->alerts->getAndClearMessages(),
+            ],
+            "form_action" => $this->_app->site->uri['public'] . "/confgen",
+            'ip_squid' => $ip_squid,
+            'ssh_user' => $ssh_user,
+            'squidguard_conf_path' => $squidguard_conf_path,
+            "validators" => $validators->formValidationRulesJson()
         ]);
     }
 

@@ -41,6 +41,8 @@ return array(
     'UserFrosting\\MySqlAuthLoader' => $baseDir . '/models/mysql/MySqlAuthLoader.php',
     'UserFrosting\\MySqlBlacklistCategories' => $baseDir . '/models/mysql/MySqlBlacklistCategories.php',
     'UserFrosting\\MySqlBlacklistCategoriesLoader' => $baseDir . '/models/mysql/MySqlBlacklistCategoriesLoader.php',
+    'UserFrosting\\MySqlConfgen' => $baseDir . '/models/mysql/MySqlConfgen.php',
+    'UserFrosting\\MySqlConfgenLoader' => $baseDir . '/models/mysql/MySqlConfgenLoader.php',
     'UserFrosting\\MySqlCustomBlacklist' => $baseDir . '/models/mysql/MySqlCustomBlacklist.php',
     'UserFrosting\\MySqlCustomBlacklistLoader' => $baseDir . '/models/mysql/MySqlCustomBlacklistLoader.php',
     'UserFrosting\\MySqlCustomConf' => $baseDir . '/models/mysql/MySqlCustomConf.php',

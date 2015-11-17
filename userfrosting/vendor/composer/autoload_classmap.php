@@ -67,6 +67,7 @@ return array(
     'UserFrosting\\MySqlWorkingHoursLoader' => $baseDir . '/models/mysql/MySqlWorkingHoursLoader.php',
     'UserFrosting\\ObjectLoaderInterface' => $baseDir . '/models/DatabaseInterface.php',
     'UserFrosting\\PageSchema' => $baseDir . '/models/PageSchema.php',
+    'UserFrosting\\ProxyController' => $baseDir . '/controllers/ProxyController.php',
     'UserFrosting\\SalleController' => $baseDir . '/controllers/SalleController.php',
     'UserFrosting\\SiteSettingsInterface' => $baseDir . '/models/DatabaseInterface.php',
     'UserFrosting\\StatsController' => $baseDir . '/controllers/StatsController.php',

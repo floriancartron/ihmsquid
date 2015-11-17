@@ -69,20 +69,15 @@
             </div>
         </div>
         <script>
-            var validators = {
-                {
-                    validators | raw
-                }
-            }
-            ;
-            $("form[name='confgen']").formValidation({
-                framework: 'bootstrap',
-                icon: {
+            var validators = {{ validators | raw }};
+                    $("form[name='confgen']").formValidation({
+            framework: 'bootstrap',
+                    icon: {
                     valid: 'fa fa-check',
-                    invalid: 'fa fa-times',
-                    validating: 'fa fa-refresh'
-                },
-                fields: validators
+                            invalid: 'fa fa-times',
+                            validating: 'fa fa-refresh'
+                    },
+                    fields: validators
             });
         </script>
 

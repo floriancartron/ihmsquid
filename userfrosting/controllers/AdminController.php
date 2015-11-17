@@ -41,6 +41,38 @@ class AdminController extends \UserFrosting\BaseController {
         ]);
     }
 
+    public function updateSquidSettings() {
+        $post = $this->_app->request->post();
+        $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/confgen.json");
+        $ms = $this->_app->alerts;
+        unset($post['csrf_token']);
+        $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
+        // Sanitize
+        $rf->sanitize();
+        // Validate, and halt on validation errors.
+        if (!$rf->validate()) {
+            $this->_app->halt(400);
+        }
+        $data = $rf->data();
+//        var_dump($data);
+
+        $newip = MySqlConfgenLoader::fetch("ip_squid", "libelle");
+        $newip->value = $data['ip_squid'];
+        $newip->store();
+
+        $newsshuser = MySqlConfgenLoader::fetch("ssh_user", "libelle");
+        $newsshuser->value = $data['ssh_user'];
+        $newsshuser->store();
+
+        $newpath = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
+        $newpath->value = $data['squidguard_conf_path'];
+        $newpath->store();
+
+        $ms->addMessageTranslated("success", "Mise à jour de la configuration réussie");
+
+        $this->pageSquidSettings();
+    }
+
     //Fonction d'affichage de la page de gestion des horaires
     public function pageHoraires() {
         // On vérifie que le user à le droit d'être ici

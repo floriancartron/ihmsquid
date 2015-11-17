@@ -389,11 +389,11 @@ $app->get('/confgen/?', function () use ($app) {
     return $controller->pageSquidSettings();
 });
 
-/* $app->post('/confgen/?', function () use ($app) {
-  $controller = new UF\AdminController($app);
-  return $controller->siteSettings();
-  });
- */
+$app->post('/confgen/?', function () use ($app) {
+    $controller = new UF\AdminController($app);
+    return $controller->updateSquidSettings();
+});
+
 
 
 

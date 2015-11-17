@@ -49,6 +49,8 @@ return array(
     'UserFrosting\\MySqlCustomConfItem' => $baseDir . '/models/mysql/MySqlCustomConfItem.php',
     'UserFrosting\\MySqlCustomConfItemLoader' => $baseDir . '/models/mysql/MySqlCustomConfItemLoader.php',
     'UserFrosting\\MySqlCustomConfLoader' => $baseDir . '/models/mysql/MySqlCustomConfLoader.php',
+    'UserFrosting\\MySqlCustomWhitelist' => $baseDir . '/models/mysql/MySqlCustomWhitelist.php',
+    'UserFrosting\\MySqlCustomWhitelistLoader' => $baseDir . '/models/mysql/MySqlCustomWhitelistLoader.php',
     'UserFrosting\\MySqlDatabase' => $baseDir . '/models/mysql/MySqlDatabase.php',
     'UserFrosting\\MySqlDatabaseObject' => $baseDir . '/models/mysql/MySqlDatabaseObject.php',
     'UserFrosting\\MySqlGroup' => $baseDir . '/models/mysql/MySqlGroup.php',

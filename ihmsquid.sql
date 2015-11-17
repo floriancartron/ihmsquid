@@ -224,6 +224,33 @@ INSERT INTO `uf_customblacklist` VALUES (3,'&','a',NULL),(7,'iezufizefb','zlkefh
 UNLOCK TABLES;
 
 --
+-- Table structure for table `uf_customwhitelist`
+--
+
+DROP TABLE IF EXISTS `uf_customwhitelist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `uf_customwhitelist` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `url` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `description` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_user` (`id_user`),
+  CONSTRAINT `uf_customwhitelist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `uf_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `uf_customwhitelist`
+--
+
+LOCK TABLES `uf_customwhitelist` WRITE;
+/*!40000 ALTER TABLE `uf_customwhitelist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `uf_customwhitelist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `uf_group`
 --
 
@@ -418,4 +445,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-17 14:17:15
+-- Dump completed on 2015-11-17 14:43:24

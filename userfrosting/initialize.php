@@ -428,7 +428,8 @@ $app->hook('includes.js.register', function () use ($app){
     
         // Blacklist JS
     $app->schema->registerJS("blacklist", "widget-blacklist.js");
-    
+            // whitelist JS
+    $app->schema->registerJS("whitelist", "widget-whitelist.js");
             // customlist JS
     $app->schema->registerJS("customlist", "widget-listes.js");
     $app->schema->registerJS("customlist", "widget-listitems.js");

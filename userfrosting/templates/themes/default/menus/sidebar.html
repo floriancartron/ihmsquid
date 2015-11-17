@@ -24,6 +24,11 @@
                 <li>
                     <a href="{{site.uri.public}}/access"><i class="fa fa-toggle-on fa-fw"></i> Gestion de la salle</a>
                 </li>
+                {% endif %}                
+                {% if checkAccess('uri_filterconf') %}
+                <li>
+                    <a href="{{site.uri.public}}/customfilter"><i class="fa fa-list-ul fa-fw"></i> Filtrage personnalisé</a>
+                </li>
                 {% endif %}
                 {% if checkAccess('uri_filterconf') %}
                 <li>
@@ -32,9 +37,10 @@
                 {% endif %}
                 {% if checkAccess('uri_filterconf') %}
                 <li>
-                    <a href="{{site.uri.public}}/customfilter"><i class="fa fa-list-ul fa-fw"></i> Filtrage personnalisé</a>
+                    <a href="{{site.uri.public}}/addwhitelist"><i class="fa fa-check-circle-o fa-fw"></i> Sites autorisés</a>
                 </li>
                 {% endif %}
+
 
             </ul>
             <!-- /.nav-second-level -->

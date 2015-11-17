@@ -1,0 +1,65 @@
+<form name="whitelist" method="post" action="{{form_action}}">
+    <div id="form-alerts">
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>URL</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-edit"></i></span>
+                    <input type="text" class="form-control" name="url" autocomplete="off" value="{{bl.url}}" placeholder="www.google.fr">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Description</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-edit"></i></span>
+                    <input type="text" class="form-control" name="description" autocomplete="off" value="{{bl.description}}" placeholder="Moteur de recherche">
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+<div class="row">
+    {% if "submit" not in buttons.hidden %}
+    <div class="col-xs-8 col-sm-4 pull-left">
+        <div class="vert-pad">
+            <button type="submit" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter...">
+                {{submit_button}}
+            </button>
+        </div>          
+    </div>
+    {% endif %}
+    {% if "edit" not in buttons.hidden %}  
+    <div class="col-xs-6 col-sm-3">
+        <div class="vert-pad">
+            <button type="button" class="btn btn-block btn-md btn-primary js-group-edit" data-id="{{group.id}}" data-toggle="modal">
+                <i class="fa fa-edit"></i> Editer
+            </button>
+        </div>
+    </div>    
+    {% endif %}
+    {% if "delete" not in buttons.hidden %}
+    <div class="col-xs-6 col-sm-3">  
+        <div class="vert-pad">
+            <button type="button" class="btn btn-block btn-md btn-danger js-group-delete" data-id="{{group.id}}" data-name="{{group.name}}" data-toggle="modal">
+                <i class="fa fa-trash-o"></i> Supprimer
+            </button>
+        </div>
+    </div>
+    {% endif %}
+    {% if "cancel" not in buttons.hidden %}        
+    <div class="col-xs-4 col-sm-3 pull-right">
+        <div class="vert-pad">
+            <button type="button" class="btn btn-block btn-lg btn-link" data-dismiss="modal">Annuler</button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+</form>
+<script>
+    // Load the validator rules for this form
+    var validators = {{validators | raw}};
+</script>

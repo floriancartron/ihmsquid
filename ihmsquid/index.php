@@ -440,6 +440,29 @@ $app->post('/addblacklist/?', function () use ($app) {
     return $controller->createBlacklist($app->user->id);
 });
 
+//Consultation des sites interdits
+$app->get('/addwhitelist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->pageCustomWhitelist();
+});
+
+//Suppression item whitelist
+$app->post('/addwhitelist/b/:bl_id/delete/?', function ($bl_id) use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->deleteWhitelist($bl_id);
+});
+
+//Whitelist creation form
+$app->get('/forms/whitelist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->formWhitelistCreate();
+});
+// Create 
+$app->post('/addwhitelist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->createWhitelist($app->user->id);
+});
+
 //Affichage de la page de configuration des horaires de cours
 $app->get('/horaires/?', function () use ($app) {
     $controller = new UF\AdminController($app);

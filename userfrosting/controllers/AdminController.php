@@ -23,7 +23,7 @@ class AdminController extends \UserFrosting\BaseController {
         }
         $ip_squid = MySqlConfgenLoader::fetch("ip_squid", "libelle");
         $ssh_user = MySqlConfgenLoader::fetch("ssh_user", "libelle");
-        $squidguard_conf_path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
+//        $squidguard_conf_path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
         $schema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/confgen.json");
         $validators = new \Fortress\ClientSideValidator($schema, $this->_app->translator);
         $this->_app->render('confgen.html', [
@@ -36,7 +36,7 @@ class AdminController extends \UserFrosting\BaseController {
             "form_action" => $this->_app->site->uri['public'] . "/confgen",
             'ip_squid' => $ip_squid,
             'ssh_user' => $ssh_user,
-            'squidguard_conf_path' => $squidguard_conf_path,
+//            'squidguard_conf_path' => $squidguard_conf_path,
             "validators" => $validators->formValidationRulesJson()
         ]);
     }
@@ -64,9 +64,9 @@ class AdminController extends \UserFrosting\BaseController {
         $newsshuser->value = $data['ssh_user'];
         $newsshuser->store();
 
-        $newpath = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
-        $newpath->value = $data['squidguard_conf_path'];
-        $newpath->store();
+//        $newpath = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
+//        $newpath->value = $data['squidguard_conf_path'];
+//        $newpath->store();
 
         $ms->addMessageTranslated("success", "Mise à jour de la configuration réussie");
 

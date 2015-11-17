@@ -38,49 +38,60 @@
                     <select id="input_theme" class='form-control select2' name="mask_cidr" >
                         {% for mask in masks %}
                         <option value="{{mask}}" {% if (salle.mask_cidr==mask) %}selected{% endif %}>{{mask}}</option>
-                    {% endfor %}
-                </select>               
+                        {% endfor %}
+                    </select>               
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>IP Formateur</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-edit"></i></span>
+                    <input type="text" data-fv-ip="true"
+                           data-fv-ip-message="Veuillez entrer une adresse IP valide" class="form-control" name="ip_formateur" autocomplete="off" value="{{salle.ip_formateur}}" placeholder="10.0.0.254">
+                </div>
             </div>
         </div>
     </div>
-</div>
-<br>
-<div class="row">
-    {% if "submit" not in buttons.hidden %}
-    <div class="col-xs-8 col-sm-4 pull-left">
-        <div class="vert-pad">
-            <button type="submit" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter...">
-                {{submit_button}}
-            </button>
-        </div>          
-    </div>
-    {% endif %}
-    {% if "edit" not in buttons.hidden %}  
-    <div class="col-xs-6 col-sm-3">
-        <div class="vert-pad">
-            <button type="button" class="btn btn-block btn-md btn-primary js-group-edit" data-id="{{group.id}}" data-toggle="modal">
-                <i class="fa fa-edit"></i> Editer
-            </button>
+    <br>
+    <div class="row">
+        {% if "submit" not in buttons.hidden %}
+        <div class="col-xs-8 col-sm-4 pull-left">
+            <div class="vert-pad">
+                <button type="submit" class="btn btn-block btn-lg btn-success" data-loading-text="Merci de patienter...">
+                    {{submit_button}}
+                </button>
+            </div>          
         </div>
-    </div>    
-    {% endif %}
-    {% if "delete" not in buttons.hidden %}
-    <div class="col-xs-6 col-sm-3">  
-        <div class="vert-pad">
-            <button type="button" class="btn btn-block btn-md btn-danger js-group-delete" data-id="{{group.id}}" data-name="{{group.name}}" data-toggle="modal">
-                <i class="fa fa-trash-o"></i> Supprimer
-            </button>
+        {% endif %}
+        {% if "edit" not in buttons.hidden %}  
+        <div class="col-xs-6 col-sm-3">
+            <div class="vert-pad">
+                <button type="button" class="btn btn-block btn-md btn-primary js-group-edit" data-id="{{group.id}}" data-toggle="modal">
+                    <i class="fa fa-edit"></i> Editer
+                </button>
+            </div>
+        </div>    
+        {% endif %}
+        {% if "delete" not in buttons.hidden %}
+        <div class="col-xs-6 col-sm-3">  
+            <div class="vert-pad">
+                <button type="button" class="btn btn-block btn-md btn-danger js-group-delete" data-id="{{group.id}}" data-name="{{group.name}}" data-toggle="modal">
+                    <i class="fa fa-trash-o"></i> Supprimer
+                </button>
+            </div>
         </div>
-    </div>
-    {% endif %}
-    {% if "cancel" not in buttons.hidden %}        
-    <div class="col-xs-4 col-sm-3 pull-right">
-        <div class="vert-pad">
-            <button type="button" class="btn btn-block btn-lg btn-link" data-dismiss="modal">Annuler</button>
+        {% endif %}
+        {% if "cancel" not in buttons.hidden %}        
+        <div class="col-xs-4 col-sm-3 pull-right">
+            <div class="vert-pad">
+                <button type="button" class="btn btn-block btn-lg btn-link" data-dismiss="modal">Annuler</button>
+            </div>
         </div>
+        {% endif %}
     </div>
-    {% endif %}
-</div>
 </form>
 <script>
     // Load the validator rules for this form

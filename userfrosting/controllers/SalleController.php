@@ -54,7 +54,7 @@ class SalleController extends \UserFrosting\BaseController {
         $data['description'] = "";
         $data['network'] = "";
         $data['mask_cidr'] = "";
-
+        $data['ip_formateur'] = "";
         // Create a dummy Salle to prepopulate fields
         $salle = new MySqlSalle($data);
 

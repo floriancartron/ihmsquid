@@ -92,7 +92,8 @@ $table_salle = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] .
     "description",
     "network",
     "mask_cidr",
-    "id_customconf"
+    "id_customconf",
+    "ip_formateur"
 ]);
 
 $table_logline = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "logline", [

@@ -40,5 +40,12 @@
                 "message": "VALIDATE_REQUIRED"
             }
         }
+    },
+    "ip_formateur": {
+        "validators": {
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        }
     }
 }

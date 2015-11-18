@@ -1,8 +1,8 @@
 <div class="sidebar-nav navbar-collapse">
     <ul class="nav" id="side-menu">
-<!--        <li>
-            <a href="{{site.uri.public}}/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-        </li>-->
+        <!--        <li>
+                    <a href="{{site.uri.public}}/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>-->
 
         <!--        {% if checkAccess('uri_zerg') %}
                 <li>
@@ -40,6 +40,12 @@
                     <a href="{{site.uri.public}}/addwhitelist"><i class="fa fa-check-circle-o fa-fw"></i> Sites autorisés</a>
                 </li>
                 {% endif %}
+                {% if checkAccess('uri_filterconf') %}
+                <li>
+                    <a href="{{site.uri.public}}/addbypasslist"><i class="fa fa-unlock fa-fw"></i> Sites sans authentification</a>
+                </li>
+                {% endif %}
+                
 
 
             </ul>

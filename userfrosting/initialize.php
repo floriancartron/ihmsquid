@@ -123,6 +123,12 @@ $table_customwhitelist = new \UserFrosting\DatabaseTable($app->config('db')['db_
     "id_user"
 ]);
 
+$table_custombypasslist = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "custombypasslist", [
+    "url", 
+    "description",
+    "id_user"
+]);
+
 $table_workinghours = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "workinghours", [
     "hourstartam", 
     "hourendam",
@@ -161,6 +167,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\Database::setTable("logline", $table_logline);
 \UserFrosting\Database::setTable("customblacklist", $table_customblacklist);
 \UserFrosting\Database::setTable("customwhitelist", $table_customwhitelist);
+\UserFrosting\Database::setTable("custombypasslist", $table_custombypasslist);
 \UserFrosting\Database::setTable("workinghours", $table_workinghours);
 \UserFrosting\Database::setTable("custom_conf", $table_custom_conf);
 \UserFrosting\Database::setTable("custom_conf_items", $table_custom_conf_items);
@@ -178,6 +185,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\MySqlLoglineLoader::init($table_logline);
 \UserFrosting\MySqlCustomBlacklistLoader::init($table_customblacklist);
 \UserFrosting\MySqlCustomWhitelistLoader::init($table_customwhitelist);
+\UserFrosting\MySqlCustomBypasslistLoader::init($table_custombypasslist);
 \UserFrosting\MySqlCustomConfLoader::init($table_custom_conf);
 \UserFrosting\MySqlCustomConfItemLoader::init($table_custom_conf_items);
 \UserFrosting\MySqlConfgenLoader::init($table_confgen);
@@ -430,6 +438,8 @@ $app->hook('includes.js.register', function () use ($app){
     $app->schema->registerJS("blacklist", "widget-blacklist.js");
             // whitelist JS
     $app->schema->registerJS("whitelist", "widget-whitelist.js");
+            // bypass JS
+    $app->schema->registerJS("bypasslist", "widget-bypasslist.js");
             // customlist JS
     $app->schema->registerJS("customlist", "widget-listes.js");
     $app->schema->registerJS("customlist", "widget-listitems.js");

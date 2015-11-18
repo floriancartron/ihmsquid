@@ -463,6 +463,30 @@ $app->post('/addwhitelist/?', function () use ($app) {
     return $controller->createWhitelist($app->user->id);
 });
 
+///////
+//Consultation des sites interdits
+$app->get('/addbypasslist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->pageCustomBypasslist();
+});
+
+//Suppression item bypasslist
+$app->post('/addbypasslist/b/:bl_id/delete/?', function ($bl_id) use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->deleteBypasslist($bl_id);
+});
+
+//Bypasslist creation form
+$app->get('/forms/bypasslist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->formBypasslistCreate();
+});
+// Create 
+$app->post('/addbypasslist/?', function () use ($app) {
+    $controller = new UF\FilterController($app);
+    return $controller->createBypasslist($app->user->id);
+});
+
 //Affichage de la page de configuration des horaires de cours
 $app->get('/horaires/?', function () use ($app) {
     $controller = new UF\AdminController($app);

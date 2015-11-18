@@ -109,6 +109,43 @@ class ProxyController extends \UserFrosting\BaseController {
         //Ecriture du fichier de conf en local
         var_dump($conf);
         shell_exec("echo \"$conf\" > /tmp/squidguard.conf");
+        //copie en scp sur le proxy
+        //comparaison avec le fichier actuel
+        //si différent, on ecrase et reload le service squidguard
+    }
+
+    public function update_delay_pools() {
+        $max_size = MySqlConfgenLoader::fetch("delay_pool_max_size", "libelle");
+        $restore_rate = MySqlConfgenLoader::fetch("delay_pool_restore_rate", "libelle");
+        $path = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
+        $sshuser = MySqlConfgenLoader::fetch("ssh_user", "libelle");
+        $ip = MySqlConfgenLoader::fetch("ip_squid", "libelle");
+        //sed en ssh pour remplacer les valeurs
+        //reload service squid
+    }
+
+    public function gen_bypasslist() {
+        //get liste sites
+        
+        //sed dans le fichier squid.conf
+        $path = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
+        $sshuser = MySqlConfgenLoader::fetch("ssh_user", "libelle");
+        $ip = MySqlConfgenLoader::fetch("ip_squid", "libelle");
+        
+        //reload service squid
+        
+    }
+    
+    public function gen_customfilter(){
+        
+    }
+    
+    public function update_blacklist(){
+        
+    }
+    
+    public function update_whitelist(){
+        
     }
 
 }

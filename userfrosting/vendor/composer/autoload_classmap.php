@@ -45,6 +45,8 @@ return array(
     'UserFrosting\\MySqlConfgenLoader' => $baseDir . '/models/mysql/MySqlConfgenLoader.php',
     'UserFrosting\\MySqlCustomBlacklist' => $baseDir . '/models/mysql/MySqlCustomBlacklist.php',
     'UserFrosting\\MySqlCustomBlacklistLoader' => $baseDir . '/models/mysql/MySqlCustomBlacklistLoader.php',
+    'UserFrosting\\MySqlCustomBypasslist' => $baseDir . '/models/mysql/MySqlCustomBypasslist.php',
+    'UserFrosting\\MySqlCustomBypasslistLoader' => $baseDir . '/models/mysql/MySqlCustomBypasslistLoader.php',
     'UserFrosting\\MySqlCustomConf' => $baseDir . '/models/mysql/MySqlCustomConf.php',
     'UserFrosting\\MySqlCustomConfItem' => $baseDir . '/models/mysql/MySqlCustomConfItem.php',
     'UserFrosting\\MySqlCustomConfItemLoader' => $baseDir . '/models/mysql/MySqlCustomConfItemLoader.php',

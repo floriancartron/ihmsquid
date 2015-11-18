@@ -1,4 +1,4 @@
-{% set page_group = "whitelist" %}
+{% set page_group = "bypasslist" %}
 <!DOCTYPE html>
 <html lang="en">
     {% include 'components/head.html' %}
@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <div class='panel panel-primary'>
                             <div class='panel-heading'>
-                                <h3 class='panel-title'><i class='fa fa-check-circle-o'></i> Sites autorisés</h3>
+                                <h3 class='panel-title'><i class='fa fa-unlock'></i> Sites accessibles sans authentification</h3>
                             </div>
                             <div class='panel-body'>
                                 <div class="table-responsive">
@@ -26,19 +26,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for whitelistitem in whitelist %}
+                                            {% for bypasslistitem in bypasslist %}
                                             <tr>
                                                 <td>
-                                                    {{whitelistitem.url}}
+                                                    {{bypasslistitem.url}}
                                                 </td>
                                                 <td>
-                                                    {{whitelistitem.description}}
+                                                    {{bypasslistitem.description}}
                                                 </td>
                                                 <td>
-                                                    {{whitelistitem.id_user}}
+                                                    {{bypasslistitem.id_user}}
                                                 </td>                                 
                                                 <td>
-                                                    <a href="#" data-id="{{whitelistitem.id}}" class="js-whitelist-delete" data-name="{{whitelistitem.url}}" data-target="#dialog-whitelist-delete" data-toggle="modal">
+                                                    <a href="#" data-id="{{bypasslistitem.id}}" class="js-bypasslist-delete" data-name="{{bypasslistitem.url}}" data-target="#dialog-bypasslist-delete" data-toggle="modal">
                                                         <i class="fa fa-trash-o"></i> Supprimer
                                                     </a>
                                                 </td>
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 ">
-                                        <button type="button" class="btn btn-success js-whitelist-create" data-toggle="modal" data-target="#dialog-whitelist-create">
+                                        <button type="button" class="btn btn-success js-bypasslist-create" data-toggle="modal" data-target="#dialog-bypasslist-create">
                                             <i class="fa fa-plus-square"></i>  Ajouter un site
                                         </button>
                                     </div>

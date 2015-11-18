@@ -26,5 +26,68 @@
         "sanitizers": {
             "raw": ""
         }
+    },
+    "squidguard_conf_path": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 100
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "squid_conf_path": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 100
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "delay_pool_max_size": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 100
+            },
+            "integer": {
+                "message": "Valeur entière attendue !"
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
+    },
+    "delay_pool_restore_rate": {
+        "validators": {
+            "length": {
+                "min": 1,
+                "max": 100
+            },
+            "integer": {
+                "message": "Valeur entière attendue !"
+            },
+            "required": {
+                "message": "VALIDATE_REQUIRED"
+            }
+        },
+        "sanitizers": {
+            "raw": ""
+        }
     }
+
 }

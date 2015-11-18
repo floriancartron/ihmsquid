@@ -100,10 +100,10 @@ DROP TABLE IF EXISTS `uf_confgen`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `uf_confgen` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `libelle` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `libelle` varchar(30) COLLATE utf8_bin DEFAULT NULL,
   `value` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +112,7 @@ CREATE TABLE `uf_confgen` (
 
 LOCK TABLES `uf_confgen` WRITE;
 /*!40000 ALTER TABLE `uf_confgen` DISABLE KEYS */;
-INSERT INTO `uf_confgen` VALUES (1,'ip_squid','192.168.1.1'),(2,'ssh_user','ihmsquid2'),(3,'squidguard_conf_path','/etc/squidguard.conf');
+INSERT INTO `uf_confgen` VALUES (1,'ip_squid','192.168.1.1'),(2,'ssh_user','ihmsquid2'),(3,'squidguard_conf_path','/etc/squidguard.conf'),(4,'squid_conf_path','/etc/squid.conf'),(5,'delay_pool_restore_rate','11'),(6,'delay_pool_max_size','22');
 /*!40000 ALTER TABLE `uf_confgen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,7 +276,7 @@ CREATE TABLE `uf_group` (
 
 LOCK TABLES `uf_group` WRITE;
 /*!40000 ALTER TABLE `uf_group` DISABLE KEYS */;
-INSERT INTO `uf_group` VALUES (1,'Utilisateurs du site',1,0,'nyx','dashboard','Utilisateur du site','fa fa-user'),(2,'Administrateur',0,0,'nyx','dashboard','Administrateur du site','fa fa-flag'),(5,'Accès de la salle',2,1,'nyx','access','Formateur','fa fa-user'),(6,'Gestion du filtrage',0,1,'nyx','dashboard','Formateur','fa fa-user'),(7,'Statistiques d\'utilisation',0,1,'nyx','dashboard','Personnel Administratif','fa fa-user');
+INSERT INTO `uf_group` VALUES (1,'Utilisateurs du site',1,0,'nyx','access','Utilisateur du site','fa fa-user'),(2,'Administrateur',0,0,'nyx','users','Administrateur du site','fa fa-flag'),(5,'Accès de la salle',2,1,'nyx','access','Formateur','fa fa-user'),(6,'Gestion du filtrage',0,1,'nyx','customfilter','Formateur','fa fa-user'),(7,'Statistiques d\'utilisation',0,1,'nyx','stats_global','Personnel Administratif','fa fa-user');
 /*!40000 ALTER TABLE `uf_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,7 +358,7 @@ CREATE TABLE `uf_salle` (
   PRIMARY KEY (`id`),
   KEY `id_customconf` (`id_customconf`),
   CONSTRAINT `uf_salle_ibfk_1` FOREIGN KEY (`id_customconf`) REFERENCES `uf_custom_conf` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,7 +367,7 @@ CREATE TABLE `uf_salle` (
 
 LOCK TABLES `uf_salle` WRITE;
 /*!40000 ALTER TABLE `uf_salle` DISABLE KEYS */;
-INSERT INTO `uf_salle` VALUES (14,'1','rez de chaussée','10.0.0.0',9,6,'10.0.0.254'),(15,'azff','a','10.1.1.1',8,6,NULL),(16,'b','a','10.2.0.0',8,NULL,NULL),(17,'azeazeazeaze','aeazeaze','10.0.2.0',21,7,NULL);
+INSERT INTO `uf_salle` VALUES (14,'1','rez de chaussée','10.0.0.0',9,6,'10.0.0.254'),(15,'azff','a','10.1.1.1',8,6,NULL),(16,'b','a','10.2.0.0',8,NULL,'10.2.0.254'),(17,'azeazeazeaze','aeazeaze','10.0.2.0',21,7,NULL),(19,'salz apizje','azeaze','10.3.0.0',8,NULL,'10.3.0.254');
 /*!40000 ALTER TABLE `uf_salle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +405,7 @@ CREATE TABLE `uf_user` (
 
 LOCK TABLES `uf_user` WRITE;
 /*!40000 ALTER TABLE `uf_user` DISABLE KEYS */;
-INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-11-17 10:33:56',1,1,'fr_FR'),(3,'florian','Florian','$2y$10$V7JHWd6ptueRVfpm3FFnyOohn.5Ev6ztIfJK2kF4jWwHRjL2Z03JO','florian.cartron@gmail.com','c1dbe8cc9f1bc58312855f0fc2920501','2015-10-24 14:19:18',0,NULL,1,'Formateur','2015-10-24 14:19:18','2015-11-16 17:21:17',1,5,'fr_FR');
+INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-11-18 01:13:41',1,1,'fr_FR'),(3,'florian','Florian','$2y$10$V7JHWd6ptueRVfpm3FFnyOohn.5Ev6ztIfJK2kF4jWwHRjL2Z03JO','florian.cartron@gmail.com','c1dbe8cc9f1bc58312855f0fc2920501','2015-10-24 14:19:18',0,NULL,1,'Formateur','2015-10-24 14:19:18','2015-11-16 17:21:17',1,5,'fr_FR');
 /*!40000 ALTER TABLE `uf_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,4 +445,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-17 14:43:24
+-- Dump completed on 2015-11-18  1:50:41

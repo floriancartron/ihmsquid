@@ -36,13 +36,36 @@
                                     </div>
                                     <br>
                                     <br><br>
-<!--                                    <div class="form-group">
+                                    <div class="form-group">
                                         <label for="squidguard_conf_path" class="col-sm-4 control-label">Chemin du fichier de configuration SquidGuard</label>
                                         <div class="col-sm-4">
                                             <input type='text' id="squidguard_conf_path" class="form-control" name="squidguard_conf_path" value='{{squidguard_conf_path.value}}' style="width: 90%;"/>
                                         </div>
-                                    </div>-->
-
+                                    </div>
+                                    <br>
+                                    <br><br>
+                                    <div class="form-group">
+                                        <label for="squid_conf_path" class="col-sm-4 control-label">Chemin du fichier de configuration Squid</label>
+                                        <div class="col-sm-4">
+                                            <input type='text' id="squidguard_conf_path" class="form-control" name="squid_conf_path" value='{{squid_conf_path.value}}' style="width: 90%;"/>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br><br>
+                                    <div class="form-group">
+                                        <label for="delay_pool_max_size" class="col-sm-4 control-label">Taille max(octets) des téléchargement avant réduction des débits</label>
+                                        <div class="col-sm-4">
+                                            <input type='text' id="delay_pool_max_size" class="form-control" name="delay_pool_max_size" value='{{delay_pool_max_size.value}}' style="width: 90%;"/>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br><br>
+                                    <div class="form-group">
+                                        <label for="delay_pool_restore_rate" class="col-sm-4 control-label">Débit(octets/s) des téléchargements excédant la taille max</label>
+                                        <div class="col-sm-4">
+                                            <input type='text' id="delay_pool_restore_rate" class="form-control" name="delay_pool_restore_rate" value='{{delay_pool_restore_rate.value}}' style="width: 90%;"/>
+                                        </div>
+                                    </div>
                                     <input type="hidden" name="{{csrf_key}}" id="{{csrf_key}}" value="{{csrf_token}}">
                                     <br><br>
                                     <div class="col-sm-4 col-sm-offset-2">
@@ -69,15 +92,15 @@
             </div>
         </div>
         <script>
-            var validators = {{ validators | raw }};
-                    $("form[name='confgen']").formValidation({
-            framework: 'bootstrap',
-                    icon: {
+            var validators = {{validators | raw}};
+            $("form[name='confgen']").formValidation({
+                framework: 'bootstrap',
+                icon: {
                     valid: 'fa fa-check',
-                            invalid: 'fa fa-times',
-                            validating: 'fa fa-refresh'
-                    },
-                    fields: validators
+                    invalid: 'fa fa-times',
+                    validating: 'fa fa-refresh'
+                },
+                fields: validators
             });
         </script>
 

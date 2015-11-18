@@ -23,7 +23,10 @@ class AdminController extends \UserFrosting\BaseController {
         }
         $ip_squid = MySqlConfgenLoader::fetch("ip_squid", "libelle");
         $ssh_user = MySqlConfgenLoader::fetch("ssh_user", "libelle");
-//        $squidguard_conf_path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
+        $squid_conf_path = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
+        $squidguard_conf_path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
+        $delay_pool_max_size = MySqlConfgenLoader::fetch("delay_pool_max_size", "libelle");
+        $delay_pool_restore_rate = MySqlConfgenLoader::fetch("delay_pool_restore_rate", "libelle");
         $schema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/confgen.json");
         $validators = new \Fortress\ClientSideValidator($schema, $this->_app->translator);
         $this->_app->render('confgen.html', [
@@ -36,7 +39,10 @@ class AdminController extends \UserFrosting\BaseController {
             "form_action" => $this->_app->site->uri['public'] . "/confgen",
             'ip_squid' => $ip_squid,
             'ssh_user' => $ssh_user,
-//            'squidguard_conf_path' => $squidguard_conf_path,
+            'squidguard_conf_path' => $squidguard_conf_path,
+            'squid_conf_path' => $squid_conf_path,
+            'delay_pool_max_size' => $delay_pool_max_size,
+            'delay_pool_restore_rate' => $delay_pool_restore_rate,
             "validators" => $validators->formValidationRulesJson()
         ]);
     }
@@ -64,9 +70,21 @@ class AdminController extends \UserFrosting\BaseController {
         $newsshuser->value = $data['ssh_user'];
         $newsshuser->store();
 
-//        $newpath = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
-//        $newpath->value = $data['squidguard_conf_path'];
-//        $newpath->store();
+        $newpathsquidguard = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
+        $newpathsquidguard->value = $data['squidguard_conf_path'];
+        $newpathsquidguard->store();
+
+        $newpathsquid = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
+        $newpathsquid->value = $data['squid_conf_path'];
+        $newpathsquid->store();
+        
+        $newdelay_pool_max_size = MySqlConfgenLoader::fetch("delay_pool_max_size", "libelle");
+        $newdelay_pool_max_size->value = $data['delay_pool_max_size'];
+        $newdelay_pool_max_size->store();
+        
+        $newdelay_pool_restore_rate = MySqlConfgenLoader::fetch("delay_pool_restore_rate", "libelle");
+        $newdelay_pool_restore_rate->value = $data['delay_pool_restore_rate'];
+        $newdelay_pool_restore_rate->store();
 
         $ms->addMessageTranslated("success", "Mise à jour de la configuration réussie");
 

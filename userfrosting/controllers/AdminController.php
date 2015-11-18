@@ -77,11 +77,11 @@ class AdminController extends \UserFrosting\BaseController {
         $newpathsquid = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
         $newpathsquid->value = $data['squid_conf_path'];
         $newpathsquid->store();
-        
+
         $newdelay_pool_max_size = MySqlConfgenLoader::fetch("delay_pool_max_size", "libelle");
         $newdelay_pool_max_size->value = $data['delay_pool_max_size'];
         $newdelay_pool_max_size->store();
-        
+
         $newdelay_pool_restore_rate = MySqlConfgenLoader::fetch("delay_pool_restore_rate", "libelle");
         $newdelay_pool_restore_rate->value = $data['delay_pool_restore_rate'];
         $newdelay_pool_restore_rate->store();
@@ -132,6 +132,9 @@ class AdminController extends \UserFrosting\BaseController {
             $ms->addMessageTranslated("error", "La mise à jour des horaires a échoué");
         }
         $this->pageHoraires();
+
+        $controller = new ProxyController($this->_app);
+        $controller->genSquidguardConf();
     }
 
     public function pageSiteSettings() {
@@ -235,6 +238,9 @@ class AdminController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Mise à jour des catégories bloquées réussie");
 
         $this->pageCategories();
+
+        $controller = new ProxyController($this->_app);
+        $controller->genSquidguardConf();
     }
 
 }

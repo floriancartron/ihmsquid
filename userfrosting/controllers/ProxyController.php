@@ -105,13 +105,55 @@ class ProxyController extends \UserFrosting\BaseController {
             $conf.="}" . PHP_EOL;
             $conf.=PHP_EOL;
         }
-        //
+
+        //Acl
+        $blocked_categories = "";
+        foreach ($categories as $category) {
+            if (!$category->allowed) {
+                $blocked_categories.="!$category->category_name ";
+            }
+        }
+        $conf.="################################" . PHP_EOL;
+        $conf.="#ACL" . PHP_EOL;
+        $conf.="################################" . PHP_EOL;
+        $conf.="acl {" . PHP_EOL;
+        $conf.=$tab . "formateurs {" . PHP_EOL;
+        $conf.=$tab . $tab . "pass all" . PHP_EOL;
+        $conf.=$tab . "}" . PHP_EOL;
+        foreach ($salles as $salle) {
+            $conf.=$tab . str_replace(" ", "_", $salle->name) . " within WorkingHours {" . PHP_EOL;
+            if ($salle->id_customconf == 1 || $salle->id_customconf == "") {
+                $conf.=$tab . $tab . "pass none" . PHP_EOL;
+            } elseif ($salle->id_customconf == 2) {
+                $conf.=$tab . $tab . "pass whitelist_ihmsquid !blacklist_ihmsquid $blocked_categories all" . PHP_EOL;
+            } else {
+                foreach ($customfilters as $customfilter) {
+                    if ($customfilter->id == $salle->id_customconf) {
+                        $conf.=$tab . $tab . "pass " . str_replace(" ", "_", $customfilter->name) . " none" . PHP_EOL;
+                        break;
+                    }
+                }
+            }
+            $conf.=$tab . "} else {" . PHP_EOL;
+            $conf.=$tab . $tab . "pass whitelist_ihmsquid !blacklist_ihmsquid $blocked_categories all" . PHP_EOL;
+            $conf.=$tab . "}" . PHP_EOL;
+            $conf.=PHP_EOL;
+        }
+        $conf.=$tab . "default {" . PHP_EOL;
+
+        $conf.=$tab . $tab . "pass none" . PHP_EOL;
+        $conf.=$tab . "}" . PHP_EOL;
+        $conf.="}" . PHP_EOL;
+
         //Ecriture du fichier de conf en local
-        var_dump($conf);
-        shell_exec("echo \"$conf\" > /tmp/squidguard.conf");
-        //copie en scp sur le proxy
-        //comparaison avec le fichier actuel
-        //si différent, on ecrase et reload le service squidguard
+        $ssh = ssh2_connect(MySqlConfgenLoader::fetch("ip_squid", "libelle")->value);
+        ssh2_auth_pubkey_file($ssh, MySqlConfgenLoader::fetch("ssh_user", "libelle")->value, SSH_PUBKEY, SSH_PRIVKEY);
+        $path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle")->value;
+        ssh2_exec($ssh, "sudo sh -c 'echo \"$conf\" > $path'");
+//        ssh2_exec($ssh,"service squidguard reload");
+//        stream_set_blocking($stream, true);
+//        $output = ssh2_fetch_stream($stream, SSH2_STREAM_STDIO);
+//        var_dump(stream_get_contents($output));
     }
 
     public function update_delay_pools() {
@@ -126,25 +168,35 @@ class ProxyController extends \UserFrosting\BaseController {
 
     public function gen_bypasslist() {
         //get liste sites
+        $bypasslist = MySqlCustomBypasslistLoader::fetchAll();
+        $domainlist = "";
+        foreach ($bypasslist as $b) {
+            $domainlist.="$b->url ";
+        }
+        str_replace(".", "\.", $domainlist);
         
         //sed dans le fichier squid.conf
         $path = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
         $sshuser = MySqlConfgenLoader::fetch("ssh_user", "libelle");
         $ip = MySqlConfgenLoader::fetch("ip_squid", "libelle");
-        
+
+        $ssh = ssh2_connect(MySqlConfgenLoader::fetch("ip_squid", "libelle")->value);
+        ssh2_auth_pubkey_file($ssh, MySqlConfgenLoader::fetch("ssh_user", "libelle")->value, SSH_PUBKEY, SSH_PRIVKEY);
+        ssh2_exec($ssh, "sudo sed -i 's/acl bypass_auth.*/acl bypass_auth dstdomain $domainlist/' $path->value");
+        var_dump($domainlist);
         //reload service squid
+        ssh2_exec($ssh, "service squid reload");
+    }
+
+    public function gen_customfilter() {
         
     }
-    
-    public function gen_customfilter(){
+
+    public function update_blacklist() {
         
     }
-    
-    public function update_blacklist(){
-        
-    }
-    
-    public function update_whitelist(){
+
+    public function update_whitelist() {
         
     }
 

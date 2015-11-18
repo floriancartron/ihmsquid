@@ -145,6 +145,9 @@ class SalleController extends \UserFrosting\BaseController {
 
         // Success message
         $ms->addMessageTranslated("success", "Salle '{{name}}' créée", $data);
+
+        $controller = new ProxyController($this->_app);
+        $controller->genSquidguardConf();
     }
 
     public function deleteSalle($salle_id) {
@@ -164,8 +167,10 @@ class SalleController extends \UserFrosting\BaseController {
 
 
         $ms->addMessageTranslated("success", "Salle '{{name}}' supprimée", ["name" => $salle->name]);
-        $salle->delete();       
+        $salle->delete();
         unset($salle);
+        $controller = new ProxyController($this->_app);
+        $controller->genSquidguardConf();
     }
 
     // Display the form for editing an existing salle
@@ -276,6 +281,9 @@ class SalleController extends \UserFrosting\BaseController {
 
         $ms->addMessageTranslated("success", "Salle '{{name}}' mise à jour", ["name" => $salle->name]);
         $salle->store();
+
+        $controller = new ProxyController($this->_app);
+        $controller->genSquidguardConf();
     }
 
 }

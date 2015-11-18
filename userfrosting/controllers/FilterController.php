@@ -74,11 +74,14 @@ class FilterController extends \UserFrosting\BaseController {
         $salle = MySqlSalleLoader::fetch($data['salle']);
         $salle->id_customconf = $data['filter'];
         if ($salle->store()) {
-            $ms->addMessageTranslated("success", "Mise à jour de l'accès de la salle réussi");
+            $ms->addMessageTranslated("success", "Mise à jour de l'accès de la salle réussie");
         } else {
             $ms->addMessageTranslated("error", "La mise à jour de l'accès a échoué");
         }
         $this->pageAccess($salle->id);
+
+        $controller = new ProxyController($this->_app);
+        $controller->genSquidguardConf();
     }
 
     public function pageCustomBlacklist() {
@@ -372,8 +375,8 @@ class FilterController extends \UserFrosting\BaseController {
         // Success message
         $ms->addMessageTranslated("success", "Site '{{url}}' ajouté", $data);
     }
-    
-       public function pageCustomBypasslist() {
+
+    public function pageCustomBypasslist() {
         // Access-controlled page
         if (!$this->_app->user->checkAccess('uri_filterconf')) {
             $this->_app->notFound();
@@ -410,6 +413,9 @@ class FilterController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Site '{{url}}' supprimé", ["url" => $bl->url]);
         $bl->delete();       // TODO: implement Group function
         unset($bl);
+
+        $controller = new ProxyController($this->_app);
+        $controller->gen_bypasslist();
     }
 
     // Display the form for creating a new bypasslist
@@ -517,8 +523,11 @@ class FilterController extends \UserFrosting\BaseController {
 
         // Success message
         $ms->addMessageTranslated("success", "Site '{{url}}' ajouté", $data);
+
+        $controller = new ProxyController($this->_app);
+        $controller->gen_bypasslist();
     }
-    
+
     public function pageCustomFilter() {
         // Access-controlled page
         if (!$this->_app->user->checkAccess('uri_filterconf')) {
@@ -657,6 +666,7 @@ class FilterController extends \UserFrosting\BaseController {
 
         // Success message
         $ms->addMessageTranslated("success", "Liste '{{name}}' ajoutée", $data);
+
     }
 
     public function deleteCustomFilterList($list_id) {
@@ -677,6 +687,7 @@ class FilterController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Liste '{{name}}' supprimée", ["name" => $l->name]);
         $l->delete();
         unset($l);
+
     }
 
     public function deleteCustomFilterItem($list_id) {

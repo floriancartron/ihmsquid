@@ -163,6 +163,9 @@ class ProxyController extends \UserFrosting\BaseController {
         $sshuser = MySqlConfgenLoader::fetch("ssh_user", "libelle");
         $ip = MySqlConfgenLoader::fetch("ip_squid", "libelle");
         //sed en ssh pour remplacer les valeurs
+        $ssh = ssh2_connect($ip->value);
+        ssh2_auth_pubkey_file($ssh, $sshuser->value, SSH_PUBKEY, SSH_PRIVKEY);
+        ssh2_exec($ssh, "sudo sed -i 's/delay_parameters.*/delay_parameters 1 $restore_rate->value\/$max_size->value/' $path->value");
         //reload service squid
     }
 
@@ -174,7 +177,7 @@ class ProxyController extends \UserFrosting\BaseController {
             $domainlist.="$b->url ";
         }
         str_replace(".", "\.", $domainlist);
-        
+
         //sed dans le fichier squid.conf
         $path = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
         $sshuser = MySqlConfgenLoader::fetch("ssh_user", "libelle");
@@ -183,7 +186,7 @@ class ProxyController extends \UserFrosting\BaseController {
         $ssh = ssh2_connect(MySqlConfgenLoader::fetch("ip_squid", "libelle")->value);
         ssh2_auth_pubkey_file($ssh, MySqlConfgenLoader::fetch("ssh_user", "libelle")->value, SSH_PUBKEY, SSH_PRIVKEY);
         ssh2_exec($ssh, "sudo sed -i 's/acl bypass_auth.*/acl bypass_auth dstdomain $domainlist/' $path->value");
-        var_dump($domainlist);
+//        var_dump($domainlist);
         //reload service squid
         ssh2_exec($ssh, "service squid reload");
     }

@@ -89,6 +89,9 @@ class AdminController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Mise à jour de la configuration réussie");
 
         $this->pageSquidSettings();
+        
+        $controller=new ProxyController($this->_app);
+        $controller->update_delay_pools();
     }
 
     //Fonction d'affichage de la page de gestion des horaires

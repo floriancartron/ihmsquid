@@ -101,20 +101,22 @@
         <div class="col-sm-6">
             <h5>Groupes</h5>
             <ul class="list-group permission-summary-rows">
-            <input type="hidden" name="groups[1]" data-id="1" value="1">
-            {% for group in groups %}
+                <input type="hidden" name="groups[1]" data-id="1" value="1" checked>
+                {% for group in groups %}
                 <li class="list-group-item">
                     {{group.name}}
                     <span class="pull-right">
-                      <input type="checkbox" name="groups[{{group.id}}]" class="form-control bootstrapswitch" data-id="{{group.id}}" {% if group.member %}checked{% endif %}>
-                      {% if 'primary_group_id' not in fields.hidden %} 
-                      <button type="button" class="bootstrapradio btn btn-xs" name="primary_group_id" value="{{group.id}}" title="Set as primary group" data-selected="{% if group.id == target_user.primary_group_id %}true{% else %}false{% endif %}" {% if not group.member or 'primary_group_id' in fields.disabled %}disabled{% endif %}>
-                        <i class="fa fa-home"></i>
-                      </button>
-                      {% endif %}
+                        <input type="checkbox" name="groups[{{group.id}}]" class="form-control bootstrapswitch" data-id="{{group.id}}" {% if group.member %}checked{% endif %} {% if group.id==1 %}disabled{% endif %}>
+                               {% if 'primary_group_id' not in fields.hidden %} 
+                               <button type="button" class="bootstrapradio btn btn-xs" name="primary_group_id" value="{{group.id}}" title="Set as primary group" data-selected="{% if group.id == target_user.primary_group_id %}true{% else %}false{% endif %}" {% if not group.member or 'primary_group_id' in fields.disabled %}disabled{% endif %} {% if group.id==1 %}disabled{% endif %}>
+                               <i class="fa fa-home"></i>
+                        </button>
+                        {% endif %}
                     </span>
                 </li>
-            {% endfor %}
+
+                {% endfor %}
+
             </ul>
         </div>
         {% endif %}
@@ -142,9 +144,9 @@
         <div class="col-xs-6 col-sm-3">      
             <div class="vert-pad">
                 {% if target_user.active == "0" %}
-                    <button type="button" class="btn btn-block btn-md btn-warning js-user-activate" data-id="{{target_user.id}}">
-                        <i class="fa fa-bolt"></i> Activer
-                    </button>
+                <button type="button" class="btn btn-block btn-md btn-warning js-user-activate" data-id="{{target_user.id}}">
+                    <i class="fa fa-bolt"></i> Activer
+                </button>
                 {% endif %}
             </div>
         </div>
@@ -153,13 +155,13 @@
         <div class="col-xs-6 col-sm-3">      
             <div class="vert-pad">
                 {% if target_user.enabled == "1" %}
-                    <button type="button" class="btn btn-block btn-md btn-warning js-user-disable" data-id="{{target_user.id}}">
-                        <i class="fa fa-minus-circle"></i> D&eacute;sactiver
-                    </button>
+                <button type="button" class="btn btn-block btn-md btn-warning js-user-disable" data-id="{{target_user.id}}">
+                    <i class="fa fa-minus-circle"></i> D&eacute;sactiver
+                </button>
                 {% else %}
-                    <button type="button" class="btn btn-block btn-md btn-warning js-user-enable" data-id="{{target_user.id}}">
-                        <i class="fa fa-plus-circle"></i> Activer
-                    </button>
+                <button type="button" class="btn btn-block btn-md btn-warning js-user-enable" data-id="{{target_user.id}}">
+                    <i class="fa fa-plus-circle"></i> Activer
+                </button>
                 {% endif %}
             </div>
         </div>
@@ -184,5 +186,5 @@
 </form>
 <script>
 // Load the validator rules for this form
-var validators = {{validators | raw}};
+    var validators = {{validators | raw}};
 </script>

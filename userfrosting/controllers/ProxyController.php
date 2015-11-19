@@ -98,7 +98,7 @@ class ProxyController extends \UserFrosting\BaseController {
         //Niveaux de filtrage personnalisé
         $customfilters = MySqlCustomConfLoader::fetchAllExceptStandard();
         foreach ($customfilters as $customfilter) {
-            $conf.="dest " . str_replace(" ", "_", $customfilter->name) . " {" . PHP_EOL;
+            $conf.="dest " . str_replace(" ", "_", $customfilter->name) . "_ihmsquid {" . PHP_EOL;
             $conf.=$tab . "domainlist " . str_replace(" ", "_", $customfilter->name) . "/domains" . PHP_EOL;
             $conf.=$tab . "urllist " . str_replace(" ", "_", $customfilter->name) . "/urls" . PHP_EOL;
             $conf.=$tab . "expressionlist " . str_replace(" ", "_", $customfilter->name) . "/expressions" . PHP_EOL;
@@ -150,7 +150,7 @@ class ProxyController extends \UserFrosting\BaseController {
         ssh2_auth_pubkey_file($ssh, MySqlConfgenLoader::fetch("ssh_user", "libelle")->value, SSH_PUBKEY, SSH_PRIVKEY);
         $path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle")->value;
         ssh2_exec($ssh, "sudo sh -c 'echo \"$conf\" > $path'");
-//        ssh2_exec($ssh,"service squidguard reload");
+        ssh2_exec($ssh,"sudo service squid reload");
 //        stream_set_blocking($stream, true);
 //        $output = ssh2_fetch_stream($stream, SSH2_STREAM_STDIO);
 //        var_dump(stream_get_contents($output));
@@ -167,6 +167,7 @@ class ProxyController extends \UserFrosting\BaseController {
         ssh2_auth_pubkey_file($ssh, $sshuser->value, SSH_PUBKEY, SSH_PRIVKEY);
         ssh2_exec($ssh, "sudo sed -i 's/delay_parameters.*/delay_parameters 1 $restore_rate->value\/$max_size->value/' $path->value");
         //reload service squid
+        ssh2_exec($ssh,"sudo service squid reload");
     }
 
     public function gen_bypasslist() {
@@ -188,19 +189,92 @@ class ProxyController extends \UserFrosting\BaseController {
         ssh2_exec($ssh, "sudo sed -i 's/acl bypass_auth.*/acl bypass_auth dstdomain $domainlist/' $path->value");
 //        var_dump($domainlist);
         //reload service squid
-        ssh2_exec($ssh, "service squid reload");
+        ssh2_exec($ssh, "sudo service squid reload");
     }
 
-    public function gen_customfilter() {
+    public function gen_customfilter($id) {
+        //get customfilter list
+        $customfilter = MySqlCustomConfLoader::fetch($id);
+//        var_dump($customfilter);
+//        exit(0);
+        //get path
+        $path = MySqlConfgenLoader::fetch("squidguard_db", "libelle");
+        //ssh initialisation
+        $sshuser = MySqlConfgenLoader::fetch("ssh_user", "libelle");
+        $ip = MySqlConfgenLoader::fetch("ip_squid", "libelle");
+        $ssh = ssh2_connect(MySqlConfgenLoader::fetch("ip_squid", "libelle")->value);
+        ssh2_auth_pubkey_file($ssh, MySqlConfgenLoader::fetch("ssh_user", "libelle")->value, SSH_PUBKEY, SSH_PRIVKEY);
+
+
+        //get items
+        $items = MySqlCustomConfItemLoader::fetchAll($customfilter->id, "id_custom_conf");
+        $domains = "";
+        foreach ($items as $item) {
+            $domains.=$item->url . PHP_EOL;
+        }
+        //delete existing
+        $dirpath = $path->value . "/" . str_replace(" ", "_", $customfilter->name) . "_ihmsquid";
+
+        ssh2_exec($ssh, "rm -f $dirpath");
+        //create folder
+        ssh2_exec($ssh, "mkdir $dirpath");
+        //create files
+        ssh2_exec($ssh, "touch $dirpath/domains");
+        ssh2_exec($ssh, "touch $dirpath/urls");
+        ssh2_exec($ssh, "touch $dirpath/exceptions");
+        //populate domainlit
+        ssh2_exec($ssh, "sudo sh -c 'echo \"$domains\" > $dirpath/domains'");
+
+        //put good rights
+        ssh2_exec($ssh, "sudo chown proxy:proxy -R  $dirpath");
+        //generate db
         
+        ssh2_exec($ssh, "sudo squidGuard -C all -d");
+        //reload service
+        ssh2_exec($ssh, "sudo service squid reload");
     }
 
-    public function update_blacklist() {
-        
-    }
+    public function update_black_or_white_list($l) {
 
-    public function update_whitelist() {
+        $path = MySqlConfgenLoader::fetch("squidguard_db", "libelle");
+        //ssh initialisation
+        $sshuser = MySqlConfgenLoader::fetch("ssh_user", "libelle");
+        $ip = MySqlConfgenLoader::fetch("ip_squid", "libelle");
+        $ssh = ssh2_connect(MySqlConfgenLoader::fetch("ip_squid", "libelle")->value);
+        ssh2_auth_pubkey_file($ssh, MySqlConfgenLoader::fetch("ssh_user", "libelle")->value, SSH_PUBKEY, SSH_PRIVKEY);
+
+
+        //get items
+        if ($l == "black") {
+            $items = MySqlCustomBlacklistLoader::fetchAll();
+        } else {
+            $items = MySqlCustomWhitelistLoader::fetchAll();
+        }
         
+        $domains = "";
+        foreach ($items as $item) {
+            $domains.=$item->url . PHP_EOL;
+        }
+        var_dump($domains);
+        //delete existing
+        $dirpath = $path->value . "/".$l."list_ihmsquid";
+
+        ssh2_exec($ssh, "rm -f $dirpath");
+        //create folder
+        ssh2_exec($ssh, "mkdir $dirpath");
+        //create files
+        ssh2_exec($ssh, "touch $dirpath/domains");
+        ssh2_exec($ssh, "touch $dirpath/urls");
+        ssh2_exec($ssh, "touch $dirpath/exceptions");
+        //populate domainlit
+        ssh2_exec($ssh, "sudo sh -c 'echo \"$domains\" > $dirpath/domains'");
+
+        //put good rights
+        ssh2_exec($ssh, "sudo chown proxy:proxy -R  $dirpath");
+        //generate db
+        ssh2_exec($ssh, "sudo squidGuard -C all -d");
+        //reload service
+        ssh2_exec($ssh, "sudo service squid reload");
     }
 
 }

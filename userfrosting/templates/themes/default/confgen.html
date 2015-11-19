@@ -45,6 +45,14 @@
                                     <br>
                                     <br><br>
                                     <div class="form-group">
+                                        <label for="squidguard_db" class="col-sm-4 control-label">Chemin de la blacklist SquidGuard</label>
+                                        <div class="col-sm-4">
+                                            <input type='text' id="squidguard_db" class="form-control" name="squidguard_db" value='{{squidguard_db.value}}' style="width: 90%;"/>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br><br>
+                                    <div class="form-group">
                                         <label for="squid_conf_path" class="col-sm-4 control-label">Chemin du fichier de configuration Squid</label>
                                         <div class="col-sm-4">
                                             <input type='text' id="squidguard_conf_path" class="form-control" name="squid_conf_path" value='{{squid_conf_path.value}}' style="width: 90%;"/>
@@ -58,8 +66,8 @@
                                             <input type='text' id="delay_pool_max_size" class="form-control" name="delay_pool_max_size" value='{{delay_pool_max_size.value}}' style="width: 90%;"/>
                                         </div>
                                     </div>
-                                    <br>
                                     <br><br>
+                                    <br><br><br>
                                     <div class="form-group">
                                         <label for="delay_pool_restore_rate" class="col-sm-4 control-label">Débit(octets/s) des téléchargements excédant la taille max</label>
                                         <div class="col-sm-4">
@@ -92,7 +100,7 @@
             </div>
         </div>
         <script>
-            var validators = {{validators | raw}};
+            var validators = {{ validators | raw }};
             $("form[name='confgen']").formValidation({
                 framework: 'bootstrap',
                 icon: {

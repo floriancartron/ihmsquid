@@ -75,10 +75,10 @@ DROP TABLE IF EXISTS `uf_blacklist_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `uf_blacklist_categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `category_name` varchar(30) COLLATE utf8_bin DEFAULT NULL,
   `allowed` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +87,7 @@ CREATE TABLE `uf_blacklist_categories` (
 
 LOCK TABLES `uf_blacklist_categories` WRITE;
 /*!40000 ALTER TABLE `uf_blacklist_categories` DISABLE KEYS */;
-INSERT INTO `uf_blacklist_categories` VALUES (1,'adult',0),(2,'agressif',0),(3,'arjel',0),(4,'astrology',0),(5,'audio',0),(6,'bank',0),(7,'bitcoin',0),(8,'blog',0),(9,'celebrity',0),(10,'chat',1),(11,'child',0),(12,'cleaning',0),(13,'cooking',1),(14,'dangerous',0),(15,'dating',0),(16,'ddos',0),(17,'dialer',0),(18,'download',0),(19,'drogue',0),(20,'educational_games',0),(21,'filehosting',0),(22,'financial',0),(23,'forums',0),(24,'gambling',0),(25,'games',0),(26,'hacking',0),(27,'jobsearch',0),(28,'lingerie',0),(29,'liste',0),(30,'malware',0),(31,'manga',0),(32,'marketingware',0),(33,'mixed_adult',0),(34,'mobile',0),(35,'phishing',0),(36,'press',0),(37,'publicite',0),(38,'radio',0),(39,'reaffected',0),(40,'redirector',0),(41,'remote',0),(42,'control',0),(43,'sect',0),(44,'sexual_education',0),(45,'shopping',0),(46,'shortener',0),(47,'social_networks',0),(48,'sports',0),(49,'strict',0),(50,'strong',0),(51,'translation',0),(52,'tricheur',0),(53,'update',0),(54,'warez',0),(55,'webmail',0);
+INSERT INTO `uf_blacklist_categories` VALUES (1,'adult',0),(2,'agressif',1),(3,'arjel',1),(4,'astrology',1),(5,'audio-video',1),(6,'bank',1),(7,'bitcoin',1),(8,'blog',1),(9,'celebrity',1),(10,'chat',1),(11,'child',1),(12,'cleaning',1),(13,'cooking',1),(14,'dangerous_material',1),(15,'dating',1),(16,'ddos',1),(17,'dialer',1),(18,'download',1),(19,'drogue',1),(20,'educational_games',1),(21,'filehosting',1),(22,'financial',1),(23,'forums',1),(24,'gambling',1),(25,'games',1),(26,'hacking',1),(27,'jobsearch',1),(28,'lingerie',0),(29,'liste',1),(30,'malware',1),(31,'manga',1),(32,'marketingware',1),(33,'mixed_adult',1),(34,'mobile',1),(35,'phishing',1),(36,'press',1),(37,'publicite',1),(38,'radio',1),(39,'reaffected',1),(40,'redirector',1),(41,'remote-control',1),(43,'sect',0),(44,'sexual_education',1),(45,'shopping',1),(46,'shortener',1),(47,'social_networks',1),(48,'sports',1),(49,'strict_redirector',1),(50,'strong_redirector',1),(51,'translation',1),(52,'tricheur',1),(53,'update',1),(54,'warez',1),(55,'webmail',1),(56,'associations_religieuses',1);
 /*!40000 ALTER TABLE `uf_blacklist_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +103,7 @@ CREATE TABLE `uf_confgen` (
   `libelle` varchar(30) COLLATE utf8_bin DEFAULT NULL,
   `value` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +112,7 @@ CREATE TABLE `uf_confgen` (
 
 LOCK TABLES `uf_confgen` WRITE;
 /*!40000 ALTER TABLE `uf_confgen` DISABLE KEYS */;
-INSERT INTO `uf_confgen` VALUES (1,'ip_squid','192.168.1.1'),(2,'ssh_user','ihmsquid2'),(3,'squidguard_conf_path','/etc/squidguard.conf'),(4,'squid_conf_path','/etc/squid.conf'),(5,'delay_pool_restore_rate','11'),(6,'delay_pool_max_size','22');
+INSERT INTO `uf_confgen` VALUES (1,'ip_squid','192.168.186.129'),(2,'ssh_user','ihmsquid'),(3,'squidguard_conf_path','/etc/squidguard.conf'),(4,'squid_conf_path','/etc/squid.conf'),(5,'delay_pool_restore_rate','11'),(6,'delay_pool_max_size','22'),(7,'squidguard_db','/tmp');
 /*!40000 ALTER TABLE `uf_confgen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +155,7 @@ CREATE TABLE `uf_custom_conf` (
   `name` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   `description` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +164,7 @@ CREATE TABLE `uf_custom_conf` (
 
 LOCK TABLES `uf_custom_conf` WRITE;
 /*!40000 ALTER TABLE `uf_custom_conf` DISABLE KEYS */;
-INSERT INTO `uf_custom_conf` VALUES (1,'Aucun accès',''),(2,'Accès total',''),(5,'a','a'),(6,'b','b'),(7,'Cours cisco','aazd'),(8,'toto','toto');
+INSERT INTO `uf_custom_conf` VALUES (1,'Aucun accès',''),(2,'Accès total',''),(5,'a','a'),(7,'Cours cisco','aazd'),(8,'toto','toto'),(9,'b','b');
 /*!40000 ALTER TABLE `uf_custom_conf` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +182,7 @@ CREATE TABLE `uf_custom_conf_items` (
   PRIMARY KEY (`id`),
   KEY `id_custom_conf` (`id_custom_conf`),
   CONSTRAINT `uf_custom_conf_items_ibfk_1` FOREIGN KEY (`id_custom_conf`) REFERENCES `uf_custom_conf` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `uf_custom_conf_items` (
 
 LOCK TABLES `uf_custom_conf_items` WRITE;
 /*!40000 ALTER TABLE `uf_custom_conf_items` DISABLE KEYS */;
-INSERT INTO `uf_custom_conf_items` VALUES (1,'netacad.com',7),(2,'toto.fr',8);
+INSERT INTO `uf_custom_conf_items` VALUES (13,'netacad.com',7),(14,'a',5),(15,'d',8);
 /*!40000 ALTER TABLE `uf_custom_conf_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +210,7 @@ CREATE TABLE `uf_customblacklist` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `uf_customblacklist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `uf_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `uf_customblacklist` (
 
 LOCK TABLES `uf_customblacklist` WRITE;
 /*!40000 ALTER TABLE `uf_customblacklist` DISABLE KEYS */;
-INSERT INTO `uf_customblacklist` VALUES (3,'&','a',NULL),(7,'iezufizefb','zlkefhzkejfb',3);
+INSERT INTO `uf_customblacklist` VALUES (10,'aeazeaze','azeazeaze',1);
 /*!40000 ALTER TABLE `uf_customblacklist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +238,7 @@ CREATE TABLE `uf_custombypasslist` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `uf_custombypasslist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `uf_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +265,7 @@ CREATE TABLE `uf_customwhitelist` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `uf_customwhitelist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `uf_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,6 +274,7 @@ CREATE TABLE `uf_customwhitelist` (
 
 LOCK TABLES `uf_customwhitelist` WRITE;
 /*!40000 ALTER TABLE `uf_customwhitelist` DISABLE KEYS */;
+INSERT INTO `uf_customwhitelist` VALUES (2,'auto','a',1);
 /*!40000 ALTER TABLE `uf_customwhitelist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +320,7 @@ CREATE TABLE `uf_group_user` (
   `user_id` int(10) unsigned NOT NULL,
   `group_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='Maps users to their group(s)';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='Maps users to their group(s)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,7 +395,7 @@ CREATE TABLE `uf_salle` (
 
 LOCK TABLES `uf_salle` WRITE;
 /*!40000 ALTER TABLE `uf_salle` DISABLE KEYS */;
-INSERT INTO `uf_salle` VALUES (14,'1','rez de chaussée','10.0.0.0',9,6,'10.0.0.254'),(15,'azff','a','10.1.1.1',8,6,NULL),(16,'b','a','10.2.0.0',8,NULL,'10.2.0.254'),(17,'azeazeazeaze','aeazeaze','10.0.2.0',21,7,NULL),(19,'salz apizje','azeaze','10.3.0.0',8,NULL,'10.3.0.254');
+INSERT INTO `uf_salle` VALUES (14,'1','rez de chaussée','10.0.0.0',9,7,'10.0.0.254'),(15,'azff','a','10.1.1.1',8,2,NULL),(17,'azeazeazeaze','aeazeaze','10.0.2.0',21,7,NULL),(19,'salz apizje','azeaze','10.3.0.0',8,NULL,'10.3.0.254');
 /*!40000 ALTER TABLE `uf_salle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,7 +424,7 @@ CREATE TABLE `uf_user` (
   `primary_group_id` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Specifies the primary group for the user.',
   `locale` varchar(10) NOT NULL DEFAULT 'en_US' COMMENT 'The language and locale to use for this user.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,7 +433,7 @@ CREATE TABLE `uf_user` (
 
 LOCK TABLES `uf_user` WRITE;
 /*!40000 ALTER TABLE `uf_user` DISABLE KEYS */;
-INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-11-18 09:27:01',1,1,'fr_FR'),(3,'florian','Florian','$2y$10$V7JHWd6ptueRVfpm3FFnyOohn.5Ev6ztIfJK2kF4jWwHRjL2Z03JO','florian.cartron@gmail.com','c1dbe8cc9f1bc58312855f0fc2920501','2015-10-24 14:19:18',0,NULL,1,'Formateur','2015-10-24 14:19:18','2015-11-16 17:21:17',1,5,'fr_FR');
+INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-11-19 09:35:12',1,1,'fr_FR'),(3,'florian','Florian','$2y$10$V7JHWd6ptueRVfpm3FFnyOohn.5Ev6ztIfJK2kF4jWwHRjL2Z03JO','florian.cartron@gmail.com','c1dbe8cc9f1bc58312855f0fc2920501','2015-10-24 14:19:18',0,NULL,1,'Formateur','2015-10-24 14:19:18','2015-11-19 14:05:25',1,5,'fr_FR');
 /*!40000 ALTER TABLE `uf_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,7 +460,7 @@ CREATE TABLE `uf_workinghours` (
 
 LOCK TABLES `uf_workinghours` WRITE;
 /*!40000 ALTER TABLE `uf_workinghours` DISABLE KEYS */;
-INSERT INTO `uf_workinghours` VALUES (1,'9:00','12:30','14:00','17:30');
+INSERT INTO `uf_workinghours` VALUES (1,'9:15','12:30','14:00','17:30');
 /*!40000 ALTER TABLE `uf_workinghours` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -472,4 +473,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-18  9:44:56
+-- Dump completed on 2015-11-19 15:07:00

@@ -14,8 +14,8 @@ session_cache_limiter(false);
 session_name("UserFrosting");
 session_start();
 
-define("SSH_PUBKEY", "/tmp/.ssh/id_rsa.pub");
-define("SSH_PRIVKEY", "/tmp/.ssh/id_rsa");
+define("SSH_PUBKEY", "/opt/lampp/ssh/id_rsa.pub");
+define("SSH_PRIVKEY", "/opt/lampp/ssh/id_rsa");
 
 /* Instantiate the Slim application */
 $app = new \UserFrosting\UserFrosting([

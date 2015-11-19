@@ -25,6 +25,7 @@ class AdminController extends \UserFrosting\BaseController {
         $ssh_user = MySqlConfgenLoader::fetch("ssh_user", "libelle");
         $squid_conf_path = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
         $squidguard_conf_path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle");
+        $squidguard_db = MySqlConfgenLoader::fetch("squidguard_db", "libelle");
         $delay_pool_max_size = MySqlConfgenLoader::fetch("delay_pool_max_size", "libelle");
         $delay_pool_restore_rate = MySqlConfgenLoader::fetch("delay_pool_restore_rate", "libelle");
         $schema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/confgen.json");
@@ -41,6 +42,7 @@ class AdminController extends \UserFrosting\BaseController {
             'ssh_user' => $ssh_user,
             'squidguard_conf_path' => $squidguard_conf_path,
             'squid_conf_path' => $squid_conf_path,
+            'squidguard_db' => $squidguard_db,
             'delay_pool_max_size' => $delay_pool_max_size,
             'delay_pool_restore_rate' => $delay_pool_restore_rate,
             "validators" => $validators->formValidationRulesJson()
@@ -74,6 +76,10 @@ class AdminController extends \UserFrosting\BaseController {
         $newpathsquidguard->value = $data['squidguard_conf_path'];
         $newpathsquidguard->store();
 
+        $newpathsquidguarddb = MySqlConfgenLoader::fetch("squidguard_db", "libelle");
+        $newpathsquidguarddb->value = $data['squidguard_db'];
+        $newpathsquidguarddb->store();
+
         $newpathsquid = MySqlConfgenLoader::fetch("squid_conf_path", "libelle");
         $newpathsquid->value = $data['squid_conf_path'];
         $newpathsquid->store();
@@ -89,8 +95,8 @@ class AdminController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Mise à jour de la configuration réussie");
 
         $this->pageSquidSettings();
-        
-        $controller=new ProxyController($this->_app);
+
+        $controller = new ProxyController($this->_app);
         $controller->update_delay_pools();
     }
 

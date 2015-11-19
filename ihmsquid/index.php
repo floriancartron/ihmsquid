@@ -553,7 +553,7 @@ $app->post('/blacklist/?', function () use ($app) {
 
 $app->get('/squid/?', function () use ($app) {
     $controller = new UF\ProxyController($app);
-    return $controller->gen_bypasslist();
+    return $controller->update_black_or_white_list('white');
 });
 
 $app->run();

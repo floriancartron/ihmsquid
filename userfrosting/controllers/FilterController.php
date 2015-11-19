@@ -121,6 +121,9 @@ class FilterController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Site '{{url}}' supprimé", ["url" => $bl->url]);
         $bl->delete();       // TODO: implement Group function
         unset($bl);
+        
+        $controller = new ProxyController($this->_app);
+        $controller->update_black_or_white_list('black');
     }
 
     // Display the form for creating a new blacklist
@@ -228,6 +231,9 @@ class FilterController extends \UserFrosting\BaseController {
 
         // Success message
         $ms->addMessageTranslated("success", "Site '{{url}}' ajouté", $data);
+        
+        $controller = new ProxyController($this->_app);
+        $controller->update_black_or_white_list('black');
     }
 
     public function pageCustomWhitelist() {
@@ -267,6 +273,9 @@ class FilterController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Site '{{url}}' supprimé", ["url" => $bl->url]);
         $bl->delete();       // TODO: implement Group function
         unset($bl);
+        
+        $controller = new ProxyController($this->_app);
+        $controller->update_black_or_white_list('white');
     }
 
     // Display the form for creating a new whitelist
@@ -374,6 +383,9 @@ class FilterController extends \UserFrosting\BaseController {
 
         // Success message
         $ms->addMessageTranslated("success", "Site '{{url}}' ajouté", $data);
+        
+        $controller = new ProxyController($this->_app);
+        $controller->update_black_or_white_list('white');
     }
 
     public function pageCustomBypasslist() {
@@ -666,7 +678,6 @@ class FilterController extends \UserFrosting\BaseController {
 
         // Success message
         $ms->addMessageTranslated("success", "Liste '{{name}}' ajoutée", $data);
-
     }
 
     public function deleteCustomFilterList($list_id) {
@@ -687,13 +698,12 @@ class FilterController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Liste '{{name}}' supprimée", ["name" => $l->name]);
         $l->delete();
         unset($l);
-
     }
 
     public function deleteCustomFilterItem($list_id) {
 
         $l = MySqlCustomConfItemLoader::fetch($list_id);
-
+        $id_custom_conf=$l->id_custom_conf;
         // Get the alert message stream
         $ms = $this->_app->alerts;
 
@@ -708,6 +718,9 @@ class FilterController extends \UserFrosting\BaseController {
         $ms->addMessageTranslated("success", "Site '{{url}}' supprimé", ["url" => $l->url]);
         $l->delete();
         unset($l);
+
+        $controller = new ProxyController($this->_app);
+        $controller->gen_customfilter($id_custom_conf);
     }
 
     // Display the form for creating a new list item
@@ -810,6 +823,9 @@ class FilterController extends \UserFrosting\BaseController {
 
         // Success message
         $ms->addMessageTranslated("success", "Site '{{url}}' ajouté à la liste", $data);
+
+        $controller = new ProxyController($this->_app);
+        $controller->gen_customfilter($data["id_custom_conf"]);
     }
 
 }

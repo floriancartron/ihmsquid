@@ -92,6 +92,35 @@ INSERT INTO `uf_blacklist_categories` VALUES (1,'adult',0),(2,'agressif',1),(3,'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `uf_blockedsitelog`
+--
+
+DROP TABLE IF EXISTS `uf_blockedsitelog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `uf_blockedsitelog` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `datelog` datetime DEFAULT NULL,
+  `category` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `url` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `id_salle` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_salle` (`id_salle`),
+  CONSTRAINT `uf_blockedsitelog_ibfk_1` FOREIGN KEY (`id_salle`) REFERENCES `uf_salle` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=537 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `uf_blockedsitelog`
+--
+
+LOCK TABLES `uf_blockedsitelog` WRITE;
+/*!40000 ALTER TABLE `uf_blockedsitelog` DISABLE KEYS */;
+INSERT INTO `uf_blockedsitelog` VALUES (522,'2015-11-20 13:16:10','adult','http://fr.youporn.com/',14),(523,'2015-11-20 13:16:13','adult','http://www.youporn.com/recommended/',14),(524,'2015-11-20 13:16:26','adult','http://www.xvideos.com/tags/youporn',14),(525,'2015-11-20 13:16:26','adult','http://www.xvideos.com/favicon.ico',14),(526,'2015-11-20 13:16:26','adult','http://www.xvideos.com/favicon.ico',14),(527,'2015-11-20 13:16:28','adult','http://www.you-porn.ca/',14),(528,'2015-11-20 13:16:29','adult','http://www.you-porn.ca/favicon.ico',14),(529,'2015-11-20 13:16:29','adult','http://www.you-porn.ca/favicon.ico',14),(530,'2015-11-20 13:16:32','adult','http://www.xnxx.com/tags/youporn',14),(531,'2015-11-20 13:16:32','adult','http://www.xnxx.com/favicon.ico',14),(532,'2015-11-20 13:16:32','adult','http://www.xnxx.com/favicon.ico',14),(533,'2015-11-20 13:18:37','adult','http://www.youporn.com/',14),(534,'2015-11-20 13:18:47','adult','http://www.tukif.com/channels/34/jeune-18-21ans',14),(535,'2015-11-20 13:18:47','adult','http://www.tukif.com/favicon.ico',14),(536,'2015-11-20 13:18:47','adult','http://www.tukif.com/favicon.ico',14);
+/*!40000 ALTER TABLE `uf_blockedsitelog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `uf_confgen`
 --
 
@@ -238,7 +267,7 @@ CREATE TABLE `uf_custombypasslist` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `uf_custombypasslist_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `uf_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,7 +349,7 @@ CREATE TABLE `uf_group_user` (
   `user_id` int(10) unsigned NOT NULL,
   `group_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='Maps users to their group(s)';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='Maps users to their group(s)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -395,7 +424,7 @@ CREATE TABLE `uf_salle` (
 
 LOCK TABLES `uf_salle` WRITE;
 /*!40000 ALTER TABLE `uf_salle` DISABLE KEYS */;
-INSERT INTO `uf_salle` VALUES (14,'1','rez de chaussée','10.0.0.0',9,7,'10.0.0.254'),(15,'azff','a','10.1.1.1',8,2,NULL),(17,'azeazeazeaze','aeazeaze','10.0.2.0',21,7,NULL),(19,'salz apizje','azeaze','10.3.0.0',8,NULL,'10.3.0.254');
+INSERT INTO `uf_salle` VALUES (14,'1','rez de chaussée','10.0.0.0',9,1,'10.0.0.254'),(15,'azff','a','10.1.1.1',8,2,NULL),(17,'azeazeazeaze','aeazeaze','10.0.2.0',21,7,NULL),(19,'salz apizje','azeaze','10.3.0.0',8,NULL,'10.3.0.254');
 /*!40000 ALTER TABLE `uf_salle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -424,7 +453,7 @@ CREATE TABLE `uf_user` (
   `primary_group_id` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Specifies the primary group for the user.',
   `locale` varchar(10) NOT NULL DEFAULT 'en_US' COMMENT 'The language and locale to use for this user.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -433,7 +462,7 @@ CREATE TABLE `uf_user` (
 
 LOCK TABLES `uf_user` WRITE;
 /*!40000 ALTER TABLE `uf_user` DISABLE KEYS */;
-INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-11-19 09:35:12',1,1,'fr_FR'),(3,'florian','Florian','$2y$10$V7JHWd6ptueRVfpm3FFnyOohn.5Ev6ztIfJK2kF4jWwHRjL2Z03JO','florian.cartron@gmail.com','c1dbe8cc9f1bc58312855f0fc2920501','2015-10-24 14:19:18',0,NULL,1,'Formateur','2015-10-24 14:19:18','2015-11-19 14:05:25',1,5,'fr_FR');
+INSERT INTO `uf_user` VALUES (1,'admin','admin','$2y$10$aRDK/rBvEgJitNuxtvenCuPJcKfIxjmvqsFL8eabFSGi6mIIDR6PK','admin@admin.fr','4bd088cd3f96f75d5eb2d9ee1729652b','2015-09-01 13:45:58',0,NULL,1,'Utilisateur root','2015-09-01 13:45:58','2015-11-22 18:21:10',1,1,'fr_FR'),(3,'florian','Florian','$2y$10$V7JHWd6ptueRVfpm3FFnyOohn.5Ev6ztIfJK2kF4jWwHRjL2Z03JO','florian.cartron@gmail.com','c1dbe8cc9f1bc58312855f0fc2920501','2015-10-24 14:19:18',0,NULL,1,'Formateur','2015-10-24 14:19:18','2015-11-20 18:38:20',1,5,'fr_FR');
 /*!40000 ALTER TABLE `uf_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -473,4 +502,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-19 15:07:00
+-- Dump completed on 2015-11-23 22:35:23

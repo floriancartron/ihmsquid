@@ -51,6 +51,7 @@ class ProxyController extends \UserFrosting\BaseController {
             //Pour chaque salle, création du src
             $src.="src " . str_replace(" ", "_", $salle->name) . " {" . PHP_EOL;
             $src.=$tab . "ip $salle->network/$salle->mask_cidr" . PHP_EOL;
+            $src .= $tab . "log $salle->id" . "_logsquidguard" . PHP_EOL;
             $src.="}" . PHP_EOL;
             $src.=PHP_EOL;
         }
@@ -150,7 +151,7 @@ class ProxyController extends \UserFrosting\BaseController {
         ssh2_auth_pubkey_file($ssh, MySqlConfgenLoader::fetch("ssh_user", "libelle")->value, SSH_PUBKEY, SSH_PRIVKEY);
         $path = MySqlConfgenLoader::fetch("squidguard_conf_path", "libelle")->value;
         ssh2_exec($ssh, "sudo sh -c 'echo \"$conf\" > $path'");
-        ssh2_exec($ssh,"sudo service squid reload");
+        ssh2_exec($ssh, "sudo service squid reload");
 //        stream_set_blocking($stream, true);
 //        $output = ssh2_fetch_stream($stream, SSH2_STREAM_STDIO);
 //        var_dump(stream_get_contents($output));
@@ -167,7 +168,7 @@ class ProxyController extends \UserFrosting\BaseController {
         ssh2_auth_pubkey_file($ssh, $sshuser->value, SSH_PUBKEY, SSH_PRIVKEY);
         ssh2_exec($ssh, "sudo sed -i 's/delay_parameters.*/delay_parameters 1 $restore_rate->value\/$max_size->value/' $path->value");
         //reload service squid
-        ssh2_exec($ssh,"sudo service squid reload");
+        ssh2_exec($ssh, "sudo service squid reload");
     }
 
     public function gen_bypasslist() {
@@ -228,7 +229,7 @@ class ProxyController extends \UserFrosting\BaseController {
         //put good rights
         ssh2_exec($ssh, "sudo chown proxy:proxy -R  $dirpath");
         //generate db
-        
+
         ssh2_exec($ssh, "sudo squidGuard -C all -d");
         //reload service
         ssh2_exec($ssh, "sudo service squid reload");
@@ -250,14 +251,14 @@ class ProxyController extends \UserFrosting\BaseController {
         } else {
             $items = MySqlCustomWhitelistLoader::fetchAll();
         }
-        
+
         $domains = "";
         foreach ($items as $item) {
             $domains.=$item->url . PHP_EOL;
         }
         var_dump($domains);
         //delete existing
-        $dirpath = $path->value . "/".$l."list_ihmsquid";
+        $dirpath = $path->value . "/" . $l . "list_ihmsquid";
 
         ssh2_exec($ssh, "rm -f $dirpath");
         //create folder

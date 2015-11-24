@@ -556,4 +556,16 @@ $app->get('/squid/?', function () use ($app) {
     return $controller->update_black_or_white_list('white');
 });
 
+//Affichage stats
+$app->get('/stats/?', function () use ($app) {
+    $controller = new UF\StatsController($app);
+    return $controller->pageStatsGet();
+});
+
+//Affichage stats avec options
+$app->post('/stats/?', function () use ($app) {
+    $controller = new UF\StatsController($app);
+    return $controller->pageStatsPost();
+});
+
 $app->run();

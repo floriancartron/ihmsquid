@@ -59,11 +59,9 @@
             <ul class="nav nav-second-level">
                 {% if checkAccess('uri_stats') %}
                 <li>
-                    <a href="{{site.uri.public}}/stats_global"><i class="fa fa-pie-chart fa-fw"></i> Statistiques Globales</a>
+                    <a href="{{site.uri.public}}/stats"><i class="fa fa-pie-chart fa-fw"></i> Statistiques</a>
                 </li>
-                <li>
-                    <a href="{{site.uri.public}}/stats_salle"><i class="fa fa-bar-chart fa-fw"></i> Statistiques par Salle</a>
-                </li>
+
                 {% endif %}
                 {% if checkAccess('app_admin') %}
                 <li>

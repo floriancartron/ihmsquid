@@ -24,7 +24,7 @@ class ProxyController extends \UserFrosting\BaseController {
         $conf.=PHP_EOL;
         $conf.=PHP_EOL;
         $conf.="dbhome /var/lib/squidguard/db/blacklists" . PHP_EOL;
-        $conf.="logdir /var/log/squidguard/" . PHP_EOL;
+        $conf.="logdir /var/log/ihmsquid/" . PHP_EOL;
         $conf.=PHP_EOL;
         $conf.=PHP_EOL;
 

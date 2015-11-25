@@ -390,7 +390,7 @@ $app->hook('includes.css.register', function () use ($app){
     
     // Dashboard CSS
     $app->schema->registerCSS("dashboard", "timeline.css");
-    $app->schema->registerCSS("dashboard", "lib/morris.css");
+    $app->schema->registerCSS("common", "lib/morris.css");
     $app->schema->registerCSS("dashboard", "http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");    
     
     // Logged-out CSS
@@ -420,8 +420,8 @@ $app->hook('includes.js.register', function () use ($app){
     $app->schema->registerJS("common", "bootstrap-timepicker.min.js");
     
     // Dashboard JS
-    $app->schema->registerJS("dashboard", "lib/raphael.js");
-    $app->schema->registerJS("dashboard", "lib/morris.js");
+    $app->schema->registerJS("common", "lib/raphael.js");
+    $app->schema->registerJS("common", "lib/morris.js");
     $app->schema->registerJS("dashboard", "morris-data.js");
     $app->schema->registerJS("dashboard", "http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0");    
     

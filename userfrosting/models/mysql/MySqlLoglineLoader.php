@@ -49,18 +49,108 @@ class MySqlLoglineLoader extends MySqlObjectLoader {
         return $results;
     }
 
-    public static function hits4day($day) {
+    public static function hits4day($day, $network = "", $mask = "") {
         $db = static::connection();
 
         $query = "SELECT COUNT(*)"
                 . "FROM uf_logline "
                 . "WHERE DATE(datelog) = ? ";
-        
+        $args = array($day);
+        if ($network != "") {
+            $query.="AND (INET_ATON(host_ip) & INET_ATON(?)) = INET_ATON(?)";
+            $args = array($day, $mask, $network);
+        }
         $stmt = $db->prepare($query);
-        $stmt->execute(array($day));
+        $stmt->execute($args);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result["COUNT(*)"];
-        
+    }
+
+    public static function blocks4day($day, $salle = "") {
+        $db = static::connection();
+
+        $query = "SELECT COUNT(*)"
+                . "FROM uf_blockedsitelog "
+                . "WHERE DATE(datelog) = ? ";
+
+        $args = array($day);
+        if ($salle != "") {
+            $query.="AND id_salle = ?";
+            $args = array($day, $salle);
+        }
+        $stmt = $db->prepare($query);
+        $stmt->execute($args);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result["COUNT(*)"];
+    }
+
+    public static function top10hits($daystart, $dayend, $network = "", $mask = "") {
+        $db = static::connection();
+
+        $query = "SELECT COUNT(*) as nbhits,substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) as url " .
+                "from uf_logline " .
+                "where DATE(datelog) between ? and ? " .
+                "group by substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) " .
+                "order by count(*) desc " .
+                "limit 10";
+
+        $args = array($daystart, $dayend);
+        if ($network != "") {
+            $query.="AND (INET_ATON(host_ip) & INET_ATON(?)) = INET_ATON(?)";
+            $args = array($daystart, $dayend, $network, $mask);
+        }
+        $stmt = $db->prepare($query);
+        $stmt->execute($args);
+        $results = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $results[] = $row;
+        }
+        return $results;
+    }
+    public static function top10blocks($daystart, $dayend, $salle = "") {
+        $db = static::connection();
+
+        $query = "SELECT COUNT(*) as nbblocks,substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) as url " .
+                "from uf_blockedsitelog " .
+                "where DATE(datelog) between ? and ? " .
+                "group by substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) " .
+                "order by count(*) desc " .
+                "limit 10";
+
+        $args = array($daystart, $dayend);
+        if ($salle != "") {
+            $query.="AND id_salle = ?";
+            $args = array($daystart, $dayend, $salle);
+        }
+        $stmt = $db->prepare($query);
+        $stmt->execute($args);
+        $results = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $results[] = $row;
+        }
+        return $results;
+    }
+    
+    public static function blocksPerCategory($daystart, $dayend, $salle = "") {
+        $db = static::connection();
+
+        $query = "SELECT COUNT(*) as nbblocks,category " .
+                "from uf_blockedsitelog " .
+                "where DATE(datelog) between ? and ? " .
+                "group by category ";
+
+        $args = array($daystart, $dayend);
+        if ($salle != "") {
+            $query.="AND id_salle = ?";
+            $args = array($daystart, $dayend, $salle);
+        }
+        $stmt = $db->prepare($query);
+        $stmt->execute($args);
+        $results = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $results[] = $row;
+        }
+        return $results;
     }
 
 }

@@ -35,10 +35,11 @@ class StatsController extends \UserFrosting\BaseController {
         ]);
     }
 
-    public function pageStatsGet(){
+    public function pageStatsGet() {
         $di = new \DateInterval('P6D');
         $di->invert = 1;
-        $this->pageStats(date_add(new \DateTime(),$di),new \DateTime(),"all");
+        $salle = new MySqlSalle(array("name" => "", "desctiption" => "", "network" => "", "mask_cidr" => "", "id_customconf" => "", "ip_formateur" => ""));
+        $this->pageStats(date_add(new \DateTime(), $di), new \DateTime(), $salle);
     }
 
     public function pageStatsPost() {
@@ -54,27 +55,69 @@ class StatsController extends \UserFrosting\BaseController {
             $this->_app->halt(400);
         }
         $data = $rf->data();
-        
-        $this->stats($data["startday"],$data["endday"],$data["salle"]);
+
+        $this->stats($data["startday"], $data["endday"], MySqlSalleLoader::fetch($data["salle"]));
     }
 
-    private function pageStats($startday,$endday,$salle) {
-        
-        $di=new \DateInterval('P1D');
-        $dates=array();
-        while($startday != $endday){
-            $dates[]=$startday->format("Y-m-d");
-            date_add($startday,$di);
+    private function pageStats($startday, $endday, $salle) {
+        if (!$this->_app->user->checkAccess('uri_stats')) {
+            $this->_app->notFound();
         }
-        $dates[]=$startday->format("Y-m-d");
-//        var_dump($dates);
-        $nbhits=array();
-        foreach($dates as $date){
-            $nbhits[]=array("date"=>$date,"hits"=>MySqlLoglineLoader::hits4day($date));
+        $di = new \DateInterval('P1D');
+        $dates = array();
+        while ($startday != $endday) {
+            $dates[] = $startday->format("Y-m-d");
+            date_add($startday, $di);
         }
-        var_dump($nbhits);
-        exit(0);
-        
+        $dates[] = $startday->format("Y-m-d");
+        $nbhits = array();
+        foreach ($dates as $date) {
+            $nbhits[$date] = MySqlLoglineLoader::hits4day($date, $salle->network, $salle->mask_cidr);
+        }
+
+        $nbaccess = array();
+        foreach ($dates as $date) {
+            $nbaccess[] = array("date" => $date, "hits" => $nbhits[$date],"blocks" => MySqlLoglineLoader::blocks4day($date, $salle->id));
+        }
+
+        $top10hits = MySqlLoglineLoader::top10hits(reset($dates), end($dates), $salle->network, $salle->mask_cidr);
+        $top10blocks = MySqlLoglineLoader::top10blocks(reset($dates), end($dates), $salle->id);
+
+        $totalhits = 0;
+        $totalblocks = 0;
+        foreach ($nbaccess as $n) {
+            $totalhits+=$n["hits"];
+            $totalblocks+=$n["blocks"];
+        }
+
+
+        $percentblock = round($totalblocks / $totalhits * 100, 2);
+        $percentnonblock = 100 - $percentblock;
+
+        $blocksPerCategory = MySqlLoglineLoader::blocksPerCategory(reset($dates), end($dates), $salle->id);
+        $totalblocks = 0;
+        foreach ($blocksPerCategory as $b) {
+            $totalblocks+=$b["nbblocks"];
+        }
+        $percentBlockPerCategory = array();
+        foreach ($blocksPerCategory as $b) {
+            $percentBlockPerCategory[] = array("category"=>$b["category"], "percent" => round($b["nbblocks"] / $totalblocks * 100, 2));
+        }
+
+        $this->_app->render('stats.html', [
+            'page' => [
+                'author' => $this->_app->site->author,
+                'title' => "Statistiques",
+                'description' => "",
+                'alerts' => $this->_app->alerts->getAndClearMessages()
+            ],
+            'nbaccess' => $nbaccess,
+            'percentblock' => $percentblock,
+            'percentnonblock' => $percentnonblock,
+            'percentblockpercategory' => $percentBlockPerCategory,
+            'top10hits' => $top10hits,
+            'top10blocks' => $top10blocks
+        ]);
     }
 
 }

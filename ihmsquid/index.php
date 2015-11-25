@@ -6,10 +6,7 @@ use UserFrosting as UF;
 
 // Front page
 $app->get('/', function () use ($app) {
-    // Forward to installation if not complete
-    if (!isset($app->site->install_status) || $app->site->install_status == "pending") {
-        $app->redirect($app->urlFor('uri_install'));
-    }
+
     // Forward to the user's landing page (if logged in), otherwise take them to the home page
     if ($app->user->isGuest()) {
         $controller = new UF\AccountController($app);
@@ -26,22 +23,6 @@ $app->get('/', function () use ($app) {
     }
 })->name('uri_home');
 
-// Miscellaneous pages
-$app->get('/dashboard/?', function () use ($app) {
-    // Access-controlled page
-    if (!$app->user->checkAccess('uri_dashboard')) {
-        $app->notFound();
-    }
-
-    $app->render('dashboard.html', [
-        'page' => [
-            'author' => $app->site->author,
-            'title' => "Dashboard",
-            'description' => "Your user dashboard.",
-            'alerts' => $app->alerts->getAndClearMessages()
-        ]
-    ]);
-});
 
 
 // Account management pages
@@ -550,11 +531,6 @@ $app->post('/blacklist/?', function () use ($app) {
     return $controller->changeCategories();
 });
 
-
-$app->get('/squid/?', function () use ($app) {
-    $controller = new UF\ProxyController($app);
-    return $controller->update_black_or_white_list('white');
-});
 
 //Affichage stats
 $app->get('/stats/?', function () use ($app) {

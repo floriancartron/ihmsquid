@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'components/head.html' %}
+
+    <body>
+        <div id="wrapper">
+            {% include 'components/nav-account.html' %}
+            <div id="page-wrapper">
+                {% include 'components/alerts.html' %}
+
+                <div class="row">
+                    <div class="col-m-12">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-area-chart-o'></i> Nombre d'accès</h3>
+                            </div>
+                            <div class='panel-body'>
+
+                                <div id="access-area-chart"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-pie-chart'></i> Efficacité du filtrage</h3>
+                            </div>
+                            <div class='panel-body'>
+
+                                <div id="eff-pie-chart"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-pie-chart'></i> Catégories bloquées</h3>
+                            </div>
+                            <div class='panel-body'>
+
+                                <div id="category-pie-chart"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-bar-chart'></i> Top 10 consultations</h3>
+                            </div>
+                            <div class='panel-body'>
+
+                                <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Site</th>
+                                                    <th>Nombre de consultations</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for s in top10hits %}
+                                            
+                                                <tr>
+                                                    <td>{{s.url}}</td>
+                                                    <td>{{s.nbhits}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            
+                                        </table>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-bar-chart'></i> Top 10 blocages</h3>
+                            </div>
+                            <div class='panel-body'>
+
+                                                              <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Site</th>
+                                                    <th>Nombre de consultations</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for s in top10blocks %}
+                                            
+                                                <tr>
+                                                    <td>{{s.url}}</td>
+                                                    <td>{{s.nbblocks}}</td>
+                                                </tr>
+                                            
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {% include 'components/footer.html' %}    
+                <script>
+
+                    $(function () {
+
+                    Morris.Area({
+                    element: 'access-area-chart',
+                            data: [
+                            {% for n in nbaccess %}
+                            {
+                            day: '{{n.date}}',
+                                    access: {{n.hits}},
+                                    block: {{n.blocks}}
+                            },
+                            {% endfor %}
+                            ],
+                            xkey: 'day',
+                            ykeys: ['access', 'block'],
+                            labels: ['Requêtes', 'Sites bloqués'],
+                            pointSize: 2,
+                            hideHover: 'auto',
+                            resize: true
+                    });
+                            Morris.Donut({
+                            element: 'eff-pie-chart',
+                                    data: [{
+                                    label: "Sites autorisés",
+                                            value: {{percentnonblock}}
+                                    }, {
+                                    label: "Sites bloqués",
+                                            value: {{percentblock}}
+                                    }],
+                                formatter: function (value, data) { return (value) + '%'; },
+                                    resize: true
+                            });
+                            Morris.Donut({
+                            element: 'category-pie-chart',
+                                    data: [{% for c in percentblockpercategory %}
+                            {
+                                    label: "{{c.category}}",
+                                            value: {{c.percent}}
+                                    },
+                            {% endfor %}],
+                                formatter: function (value, data) { return (value) + '%'; },
+                                    resize: true
+                            });
+                    });
+
+                </script>
+            </div>
+        </div>
+
+    </body>
+</html>
+

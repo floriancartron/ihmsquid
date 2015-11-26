@@ -43,6 +43,8 @@ class StatsController extends \UserFrosting\BaseController {
     }
 
     public function pageStatsPost() {
+        var_dump($this->_app->request->post());
+        exit(0);
         $post = $this->_app->request->post();
         $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/stats.json");
         $ms = $this->_app->alerts;
@@ -65,6 +67,7 @@ class StatsController extends \UserFrosting\BaseController {
         }
         $di = new \DateInterval('P1D');
         $dates = array();
+        
         while ($startday != $endday) {
             $dates[] = $startday->format("Y-m-d");
             date_add($startday, $di);
@@ -103,7 +106,9 @@ class StatsController extends \UserFrosting\BaseController {
         foreach ($blocksPerCategory as $b) {
             $percentBlockPerCategory[] = array("category"=>$b["category"], "percent" => round($b["nbblocks"] / $totalblocks * 100, 2));
         }
-
+        
+        
+        $salles=  MySqlSalleLoader::fetchAll();
         $this->_app->render('stats.html', [
             'page' => [
                 'author' => $this->_app->site->author,
@@ -116,7 +121,11 @@ class StatsController extends \UserFrosting\BaseController {
             'percentnonblock' => $percentnonblock,
             'percentblockpercategory' => $percentBlockPerCategory,
             'top10hits' => $top10hits,
-            'top10blocks' => $top10blocks
+            'top10blocks' => $top10blocks,
+            'startday' => reset($dates),
+            'endday' => end($dates),
+            "salles" => $salles,
+            "selectedsalle" => $salle->id
         ]);
     }
 

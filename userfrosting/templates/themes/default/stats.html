@@ -12,7 +12,50 @@
                     <div class="col-m-12">
                         <div class='panel panel-primary'>
                             <div class='panel-heading'>
-                                <h3 class='panel-title'><i class='fa fa-area-chart-o'></i> Nombre d'accès</h3>
+                                <h3 class='panel-title'><i class='fa fa-area-chart'></i> Filtres</h3>
+                            </div>
+                            <div class='panel-body'>
+                                <form name="filters" method="post" action="{{form_action}}">
+                                    <input type="hidden" name="{{csrf_key}}" id="{{csrf_key}}" value="{{csrf_token}}">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="input-group input-daterange">
+                                                <span class="input-group-addon"> Du</span>
+                                                <input type="text" class="form-control" name="startday" value="{{startday}}">
+                                                <span class="input-group-addon"> Au</span>
+                                                <input type="text" class="form-control" name="endday" value="{{endday}}">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <select id='salleselect' class='form-control select2' name="salleselect">
+                                                <option value="all">Toutes les salles</option>
+                                                {% for s in salles %}
+                                                <option value="{{s.id}}" {% if s.id == selectedsalle %}selected{% endif %}>{{s.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+
+                                        </div>
+                                        <div class="col-sm-2 ">
+                                            <button type="submit" class="btn btn-success" >
+                                                Appliquer les filtres
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-m-12">
+                        <div class='panel panel-primary'>
+                            <div class='panel-heading'>
+                                <h3 class='panel-title'><i class='fa fa-area-chart'></i> Nombre d'accès</h3>
                             </div>
                             <div class='panel-body'>
 
@@ -50,7 +93,7 @@
                     </div>
 
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class='panel panel-primary'>
@@ -60,26 +103,26 @@
                             <div class='panel-body'>
 
                                 <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Site</th>
-                                                    <th>Nombre de consultations</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for s in top10hits %}
-                                            
-                                                <tr>
-                                                    <td>{{s.url}}</td>
-                                                    <td>{{s.nbhits}}</td>
-                                                </tr>
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Site</th>
+                                                <th>Nombre de consultations</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for s in top10hits %}
+
+                                            <tr>
+                                                <td>{{s.url}}</td>
+                                                <td>{{s.nbhits}}</td>
+                                            </tr>
                                             {% endfor %}
-                                            </tbody>
-                                            
-                                        </table>
+                                        </tbody>
+
+                                    </table>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -90,25 +133,25 @@
                             </div>
                             <div class='panel-body'>
 
-                                                              <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Site</th>
-                                                    <th>Nombre de consultations</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for s in top10blocks %}
-                                            
-                                                <tr>
-                                                    <td>{{s.url}}</td>
-                                                    <td>{{s.nbblocks}}</td>
-                                                </tr>
-                                            
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Site</th>
+                                                <th>Nombre de consultations</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for s in top10blocks %}
+
+                                            <tr>
+                                                <td>{{s.url}}</td>
+                                                <td>{{s.nbblocks}}</td>
+                                            </tr>
+
                                             {% endfor %}
-                                            </tbody>
-                                        </table>
+                                        </tbody>
+                                    </table>
                                 </div>
 
                             </div>
@@ -149,18 +192,18 @@
                                     label: "Sites bloqués",
                                             value: {{percentblock}}
                                     }],
-                                formatter: function (value, data) { return (value) + '%'; },
+                                    formatter: function (value, data) { return (value) + '%'; },
                                     resize: true
                             });
                             Morris.Donut({
                             element: 'category-pie-chart',
                                     data: [{% for c in percentblockpercategory %}
-                            {
+                                    {
                                     label: "{{c.category}}",
                                             value: {{c.percent}}
                                     },
-                            {% endfor %}],
-                                formatter: function (value, data) { return (value) + '%'; },
+                                    {% endfor %}],
+                                    formatter: function (value, data) { return (value) + '%'; },
                                     resize: true
                             });
                     });

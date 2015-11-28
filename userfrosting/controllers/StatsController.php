@@ -36,6 +36,7 @@ class StatsController extends \UserFrosting\BaseController {
     }
 
     public function pageStatsGet() {
+
         $di = new \DateInterval('P6D');
         $di->invert = 1;
         $salle = new MySqlSalle(array("name" => "", "desctiption" => "", "network" => "", "mask_cidr" => "", "id_customconf" => "", "ip_formateur" => ""));
@@ -43,8 +44,7 @@ class StatsController extends \UserFrosting\BaseController {
     }
 
     public function pageStatsPost() {
-        var_dump($this->_app->request->post());
-        exit(0);
+
         $post = $this->_app->request->post();
         $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/stats.json");
         $ms = $this->_app->alerts;
@@ -58,7 +58,12 @@ class StatsController extends \UserFrosting\BaseController {
         }
         $data = $rf->data();
 
-        $this->stats($data["startday"], $data["endday"], MySqlSalleLoader::fetch($data["salle"]));
+        if ($data["salleselect"] == "all")
+            $salle = new MySqlSalle(array("name" => "", "desctiption" => "", "network" => "", "mask_cidr" => "", "id_customconf" => "", "ip_formateur" => ""));
+        else
+            $salle = MySqlSalleLoader::fetch($data["salleselect"]);
+
+        $this->pageStats(new \DateTime($data["startday"]), new \DateTime($data["endday"]), $salle);
     }
 
     private function pageStats($startday, $endday, $salle) {
@@ -67,7 +72,7 @@ class StatsController extends \UserFrosting\BaseController {
         }
         $di = new \DateInterval('P1D');
         $dates = array();
-        
+
         while ($startday != $endday) {
             $dates[] = $startday->format("Y-m-d");
             date_add($startday, $di);
@@ -75,15 +80,15 @@ class StatsController extends \UserFrosting\BaseController {
         $dates[] = $startday->format("Y-m-d");
         $nbhits = array();
         foreach ($dates as $date) {
-            $nbhits[$date] = MySqlLoglineLoader::hits4day($date, $salle->network, $salle->mask_cidr);
+            $nbhits[$date] = MySqlLoglineLoader::hits4day($date, $salle->network, long2ip(-1 << (32 - (int)$salle->mask_cidr)));
         }
-
+        
         $nbaccess = array();
         foreach ($dates as $date) {
-            $nbaccess[] = array("date" => $date, "hits" => $nbhits[$date],"blocks" => MySqlLoglineLoader::blocks4day($date, $salle->id));
+            $nbaccess[] = array("date" => $date, "hits" => $nbhits[$date], "blocks" => MySqlLoglineLoader::blocks4day($date, $salle->id));
         }
 
-        $top10hits = MySqlLoglineLoader::top10hits(reset($dates), end($dates), $salle->network, $salle->mask_cidr);
+        $top10hits = MySqlLoglineLoader::top10hits(reset($dates), end($dates), $salle->network, long2ip(-1 << (32 - (int)$salle->mask_cidr)));
         $top10blocks = MySqlLoglineLoader::top10blocks(reset($dates), end($dates), $salle->id);
 
         $totalhits = 0;
@@ -93,7 +98,8 @@ class StatsController extends \UserFrosting\BaseController {
             $totalblocks+=$n["blocks"];
         }
 
-
+        if ($totalhits == 0)
+            $totalhits = 1;
         $percentblock = round($totalblocks / $totalhits * 100, 2);
         $percentnonblock = 100 - $percentblock;
 
@@ -104,11 +110,11 @@ class StatsController extends \UserFrosting\BaseController {
         }
         $percentBlockPerCategory = array();
         foreach ($blocksPerCategory as $b) {
-            $percentBlockPerCategory[] = array("category"=>$b["category"], "percent" => round($b["nbblocks"] / $totalblocks * 100, 2));
+            $percentBlockPerCategory[] = array("category" => $b["category"], "percent" => round($b["nbblocks"] / $totalblocks * 100, 2));
         }
-        
-        
-        $salles=  MySqlSalleLoader::fetchAll();
+
+
+        $salles = MySqlSalleLoader::fetchAll();
         $this->_app->render('stats.html', [
             'page' => [
                 'author' => $this->_app->site->author,

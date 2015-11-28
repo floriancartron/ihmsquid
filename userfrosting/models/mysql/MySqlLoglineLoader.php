@@ -52,7 +52,7 @@ class MySqlLoglineLoader extends MySqlObjectLoader {
     public static function hits4day($day, $network = "", $mask = "") {
         $db = static::connection();
 
-        $query = "SELECT COUNT(*)"
+        $query = "SELECT COUNT(*) "
                 . "FROM uf_logline "
                 . "WHERE DATE(datelog) = ? ";
         $args = array($day);
@@ -69,7 +69,7 @@ class MySqlLoglineLoader extends MySqlObjectLoader {
     public static function blocks4day($day, $salle = "") {
         $db = static::connection();
 
-        $query = "SELECT COUNT(*)"
+        $query = "SELECT COUNT(*) "
                 . "FROM uf_blockedsitelog "
                 . "WHERE DATE(datelog) = ? ";
 
@@ -89,16 +89,15 @@ class MySqlLoglineLoader extends MySqlObjectLoader {
 
         $query = "SELECT COUNT(*) as nbhits,substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) as url " .
                 "from uf_logline " .
-                "where DATE(datelog) between ? and ? " .
-                "group by substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) " .
-                "order by count(*) desc " .
-                "limit 10";
-
+                "where DATE(datelog) between ? and ? ";
         $args = array($daystart, $dayend);
         if ($network != "") {
-            $query.="AND (INET_ATON(host_ip) & INET_ATON(?)) = INET_ATON(?)";
+            $query.="AND (INET_ATON(host_ip) & INET_ATON(?)) = INET_ATON(?) ";
             $args = array($daystart, $dayend, $network, $mask);
         }
+        $query.= "group by substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) " .
+                "order by count(*) desc " .
+                "limit 10 ";
         $stmt = $db->prepare($query);
         $stmt->execute($args);
         $results = [];
@@ -107,21 +106,22 @@ class MySqlLoglineLoader extends MySqlObjectLoader {
         }
         return $results;
     }
+
     public static function top10blocks($daystart, $dayend, $salle = "") {
         $db = static::connection();
 
         $query = "SELECT COUNT(*) as nbblocks,substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) as url " .
                 "from uf_blockedsitelog " .
-                "where DATE(datelog) between ? and ? " .
-                "group by substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) " .
-                "order by count(*) desc " .
-                "limit 10";
+                "where DATE(datelog) between ? and ? ";
 
         $args = array($daystart, $dayend);
         if ($salle != "") {
-            $query.="AND id_salle = ?";
+            $query.="AND id_salle = ? ";
             $args = array($daystart, $dayend, $salle);
         }
+        $query.= "group by substring_index(substring_index(substring_index(url,'http://',-1),'/',1),':',1) " .
+                "order by count(*) desc " .
+                "limit 10 ";
         $stmt = $db->prepare($query);
         $stmt->execute($args);
         $results = [];
@@ -130,7 +130,7 @@ class MySqlLoglineLoader extends MySqlObjectLoader {
         }
         return $results;
     }
-    
+
     public static function blocksPerCategory($daystart, $dayend, $salle = "") {
         $db = static::connection();
 

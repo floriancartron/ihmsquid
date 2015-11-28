@@ -12,7 +12,7 @@
                     <div class="col-m-12">
                         <div class='panel panel-primary'>
                             <div class='panel-heading'>
-                                <h3 class='panel-title'><i class='fa fa-area-chart'></i> Filtres</h3>
+                                <h3 class='panel-title'><i class='fa fa-filter'></i> Filtres</h3>
                             </div>
                             <div class='panel-body'>
                                 <form name="filters" method="post" action="{{form_action}}">
@@ -21,9 +21,9 @@
                                         <div class="col-md-4">
                                             <div class="input-group input-daterange">
                                                 <span class="input-group-addon"> Du</span>
-                                                <input type="text" class="form-control" name="startday" value="{{startday}}">
+                                                <input type="text" class="form-control" id="startday" name="startday" value="{{startday}}">
                                                 <span class="input-group-addon"> Au</span>
-                                                <input type="text" class="form-control" name="endday" value="{{endday}}">
+                                                <input type="text" class="form-control" id="endday" name="endday" value="{{endday}}">
 
                                             </div>
                                         </div>
@@ -179,6 +179,7 @@
                             xkey: 'day',
                             ykeys: ['access', 'block'],
                             labels: ['Requêtes', 'Sites bloqués'],
+                            xLabels: 'day',
                             pointSize: 2,
                             hideHover: 'auto',
                             resize: true
@@ -207,7 +208,25 @@
                                     resize: true
                             });
                     });
-
+                    $('#startday').datepicker({
+                        weekStart: '1',
+                        format: 'yyyy-mm-dd',
+                        endDate: '0d',
+                        autoclose: 'true'
+                    });
+                    $('#endday').datepicker({
+                        weekStart: '1',
+                        format: 'yyyy-mm-dd',
+                        endDate: '0d',
+                        autoclose: 'true'
+                    });
+                    $('#startday').datepicker('setEndDate',$('#endday').datepicker('getDate'));
+                    $('#endday').datepicker().on('changeDate', function(e){
+                        $('#startday').datepicker('setEndDate',$('#endday').datepicker('getDate'));
+                        if ($('#endday').datepicker('getDate').getTime() <= $('#startday').datepicker('getDate').getTime()){
+                            $('#startday').datepicker('setDate',$('#endday').datepicker('getDate'));
+                        }
+                    });
                 </script>
             </div>
         </div>

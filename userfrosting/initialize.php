@@ -387,6 +387,7 @@ $app->hook('includes.css.register', function () use ($app){
     $app->schema->registerCSS("common", "select2/select2-bootstrap.css");
     $app->schema->registerCSS("common", "bootstrapradio.css");
     $app->schema->registerCSS("common", "bootstrap-timepicker.min.css");
+    $app->schema->registerCSS("common", "datepicker.css");
     
     // Dashboard CSS
     $app->schema->registerCSS("dashboard", "timeline.css");
@@ -418,6 +419,7 @@ $app->hook('includes.js.register', function () use ($app){
     $app->schema->registerJS("common", "bootstrap-switch.js");
     $app->schema->registerJS("common", "userfrosting.js");
     $app->schema->registerJS("common", "bootstrap-timepicker.min.js");
+    $app->schema->registerJS("common", "bootstrap-datepicker.js");
     
     // Dashboard JS
     $app->schema->registerJS("common", "lib/raphael.js");

@@ -55,6 +55,8 @@ return array(
     'UserFrosting\\MySqlCustomWhitelistLoader' => $baseDir . '/models/mysql/MySqlCustomWhitelistLoader.php',
     'UserFrosting\\MySqlDatabase' => $baseDir . '/models/mysql/MySqlDatabase.php',
     'UserFrosting\\MySqlDatabaseObject' => $baseDir . '/models/mysql/MySqlDatabaseObject.php',
+    'UserFrosting\\MySqlExtSites' => $baseDir . '/models/mysql/MySqlExtSites.php',
+    'UserFrosting\\MySqlExtSitesLoader' => $baseDir . '/models/mysql/MySqlExtSitesLoader.php',
     'UserFrosting\\MySqlGroup' => $baseDir . '/models/mysql/MySqlGroup.php',
     'UserFrosting\\MySqlGroupLoader' => $baseDir . '/models/mysql/MySqlGroupLoader.php',
     'UserFrosting\\MySqlLogline' => $baseDir . '/models/mysql/MySqlLogline.php',

@@ -129,6 +129,11 @@ $table_custombypasslist = new \UserFrosting\DatabaseTable($app->config('db')['db
     "id_user"
 ]);
 
+$table_ext_sites = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "ext_sites", [
+    "description",
+    "url"
+]);
+
 $table_workinghours = new \UserFrosting\DatabaseTable($app->config('db')['db_prefix'] . "workinghours", [
     "hourstartam", 
     "hourendam",
@@ -168,6 +173,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\Database::setTable("customblacklist", $table_customblacklist);
 \UserFrosting\Database::setTable("customwhitelist", $table_customwhitelist);
 \UserFrosting\Database::setTable("custombypasslist", $table_custombypasslist);
+\UserFrosting\Database::setTable("ext_sites", $table_ext_sites);
 \UserFrosting\Database::setTable("workinghours", $table_workinghours);
 \UserFrosting\Database::setTable("custom_conf", $table_custom_conf);
 \UserFrosting\Database::setTable("custom_conf_items", $table_custom_conf_items);
@@ -186,6 +192,7 @@ $table_authorize_group = new \UserFrosting\DatabaseTable($app->config('db')['db_
 \UserFrosting\MySqlCustomBlacklistLoader::init($table_customblacklist);
 \UserFrosting\MySqlCustomWhitelistLoader::init($table_customwhitelist);
 \UserFrosting\MySqlCustomBypasslistLoader::init($table_custombypasslist);
+\UserFrosting\MySqlExtSitesLoader::init($table_ext_sites);
 \UserFrosting\MySqlCustomConfLoader::init($table_custom_conf);
 \UserFrosting\MySqlCustomConfItemLoader::init($table_custom_conf_items);
 \UserFrosting\MySqlConfgenLoader::init($table_confgen);
@@ -212,7 +219,8 @@ $setting_values = [
         'version' => '0.3.0', 
         'author' => 'Alex Weissman',
         'show_terms_on_register' => '1',
-        'site_location' => 'The State of Indiana'
+        'site_location' => 'The State of Indiana',
+        'ext_sites' => ''
     ]
 ];
 $setting_descriptions = [
@@ -231,7 +239,8 @@ $setting_descriptions = [
         "version" => "The current version of UserFrosting.", 
         "author" => "The author of the site.  Will be used in the site's author meta tag.",
         "show_terms_on_register" => "Specify whether or not to show terms and conditions when registering.",
-        "site_location" => "The nation or state in which legal jurisdiction for this site falls."
+        "site_location" => "The nation or state in which legal jurisdiction for this site falls.",
+        "ext_sites" => ""
     ]
 ];
 
@@ -259,7 +268,10 @@ $app->hook('settings.register', function () use ($app){
     $app->site->register('userfrosting', 'reset_password_timeout', "Password Recovery Timeout (s)");
     $app->site->register('userfrosting', 'minify_css', "Minify CSS", "toggle", [0 => "Off", 1 => "On"]);
     $app->site->register('userfrosting', 'minify_js', "Minify JS", "toggle", [0 => "Off", 1 => "On"]);
+    $app->site->register('userfrosting', 'ext_sites', "");
 }, 1);
+
+
 
 /**** Session and User Setup ****/
 $db_error = $app->setupUser();    
@@ -435,7 +447,8 @@ $app->hook('includes.js.register', function () use ($app){
     
     // Salles JS
     $app->schema->registerJS("salle", "widget-salles.js");
-    
+          // extsites JS
+    $app->schema->registerJS("extsites", "widget-extsites.js");  
         // Blacklist JS
     $app->schema->registerJS("blacklist", "widget-blacklist.js");
             // whitelist JS

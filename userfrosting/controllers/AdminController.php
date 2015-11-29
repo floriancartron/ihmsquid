@@ -236,6 +236,9 @@ class AdminController extends \UserFrosting\BaseController {
     }
 
     public function changeCategories() {
+        if (!$this->_app->user->checkAccess('app_admin')) {
+            $this->_app->notFound();
+        }
         $post = $this->_app->request->post();
         $ms = $this->_app->alerts;
         unset($post['csrf_token']);
@@ -250,6 +253,168 @@ class AdminController extends \UserFrosting\BaseController {
 
         $controller = new ProxyController($this->_app);
         $controller->genSquidguardConf();
+    }
+
+    public function pageExtSites() {
+        // Access-controlled page
+        if (!$this->_app->user->checkAccess('app_admin')) {
+            $this->_app->notFound();
+        }
+
+        $extsites = MySqlExtSitesLoader::fetchAll();
+
+        $this->_app->render('extsites.html', [
+            'page' => [
+                'author' => $this->_app->site->author,
+                'title' => "Autres sites",
+                'description' => "",
+                'alerts' => $this->_app->alerts->getAndClearMessages()
+            ],
+            "extsites" => $extsites
+        ]);
+    }
+
+    public function formExtSitesCreate() {
+
+        // Access-controlled resource
+        if (!$this->_app->user->checkAccess('app_admin')) {
+            $this->_app->notFound();
+        }
+
+        $get = $this->_app->request->get();
+
+        if (isset($get['render']))
+            $render = $get['render'];
+        else
+            $render = "modal";
+
+
+        // Set default values
+        $data['url'] = "";
+        $data['description'] = "";
+
+        // Create a dummy Salle to prepopulate fields
+        $es = new MySqlExtSites($data);
+
+
+        $template = "components/extsite-info-modal.html";
+
+
+//        // Determine authorized fields
+//        $show_fields = ['name', 'new_user_title', 'landing_page', 'theme', 'is_default', 'icon'];
+        $disabled_fields = [];
+
+// Load validator rules
+        $schema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/extsite-create.json");
+        $validators = new \Fortress\ClientSideValidator($schema, $this->_app->translator);
+
+        $this->_app->render($template, [
+            "box_id" => $get['box_id'],
+            "box_title" => "Ajout d'un site interdit",
+            "submit_button" => "Ajouter le site",
+            "form_action" => $this->_app->site->uri['public'] . "/ext_sites",
+            "es" => $es,
+            "fields" => [
+                "disabled" => $disabled_fields,
+                "hidden" => []
+            ],
+            "buttons" => [
+                "hidden" => [
+                    "edit", "delete"
+                ]
+            ],
+            "validators" => $validators->formValidationRulesJson()
+        ]);
+    }
+
+    public function createExtSites() {
+        $post = $this->_app->request->post();
+
+        // DEBUG: view posted data
+//        error_log(print_r($post, true));
+        // Load the request schema
+        $requestSchema = new \Fortress\RequestSchema($this->_app->config('schema.path') . "/forms/extsite-create.json");
+
+        // Get the alert message stream
+        $ms = $this->_app->alerts;
+
+        // Access-controlled resource
+        if (!$this->_app->user->checkAccess('app_admin')) {
+            $ms->addMessageTranslated("danger", "ACCESS_DENIED");
+            $this->_app->halt(403);
+        }
+
+        // Set up Fortress to process the request
+        $rf = new \Fortress\HTTPRequestFortress($ms, $requestSchema, $post);
+
+        $rf->sanitize();
+        // Validate, and halt on validation errors.
+        $error = !$rf->validate(true);
+
+        // Get the filtered data
+        $data = $rf->data();
+
+//        
+        // Remove csrf_token from object data
+        $rf->removeFields(['csrf_token']);
+
+        // Check if url already exists
+        if (MySqlExtSitesLoader::exists($data['url'], 'url')) {
+            $ms->addMessageTranslated("danger", "L'url entrée existe déjà", $post);
+            $error = true;
+        }
+
+        if (MySqlExtSitesLoader::exists($data['description'], 'description')) {
+            $ms->addMessageTranslated("danger", "Le site entré existe déjà", $post);
+            $error = true;
+        }
+
+        // Halt on any validation errors
+        if ($error) {
+            $this->_app->halt(400);
+        }
+
+
+        $es = new MySqlExtSites($data);
+        $es->store();
+
+        // Success message
+        $ms->addMessageTranslated("success", "Site '{{description}}' ajouté", $data);
+        
+        $this->updateExtSitesConf();
+
+    }
+    
+        public function deleteExtSites($es_id) {
+
+        $es = MySqlExtSitesLoader::fetch($es_id);
+
+        // Get the alert message stream
+        $ms = $this->_app->alerts;
+
+        // Check authorization
+        if (!$this->_app->user->checkAccess('app_admin')) {
+            $ms->addMessageTranslated("danger", "ACCESS_DENIED");
+            $this->_app->halt(403);
+        }
+
+
+
+        $ms->addMessageTranslated("success", "Site '{{description}}' supprimé", ["description" => $es->description]);
+        $es->delete();       // TODO: implement Group function
+        unset($es);
+        
+        $this->updateExtSitesConf();
+
+    }
+    
+    private function updateExtSitesConf(){
+        $extsites=  MySqlExtSitesLoader::fetchAll();
+        $extsitesconf="";
+        foreach ($extsites as $extsite){
+            $extsitesconf.="<li><a href=\"".$extsite->url."\"  target=\"_blank\">".$extsite->description."</a></li>";
+        }
+        MySqlExtSitesLoader::updateConf($extsitesconf);
     }
 
 }

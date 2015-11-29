@@ -41,7 +41,7 @@ class FilterController extends \UserFrosting\BaseController {
         }
 
         $selectedsalle = MySqlSalleLoader::fetch($idsalle);
-        //On fait le rendu de la page, il faudra créer une bdd pour la rémanence des informations. 
+
         $this->_app->render('access.html', [
             'page' => [
                 'author' => $this->_app->site->author,
@@ -95,7 +95,7 @@ class FilterController extends \UserFrosting\BaseController {
         $this->_app->render('addblacklist.html', [
             'page' => [
                 'author' => $this->_app->site->author,
-                'title' => "SItes interdits",
+                'title' => "Sites interdits",
                 'description' => "",
                 'alerts' => $this->_app->alerts->getAndClearMessages()
             ],
